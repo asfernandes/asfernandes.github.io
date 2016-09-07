@@ -5,9 +5,28 @@
     <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
     <link>http://asfernandes.github.io/</link>
     <atom:link href="http://asfernandes.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 07 Sep 2016 18:52:25 -0300</pubDate>
-    <lastBuildDate>Wed, 07 Sep 2016 18:52:25 -0300</lastBuildDate>
+    <pubDate>Wed, 07 Sep 2016 19:20:16 -0300</pubDate>
+    <lastBuildDate>Wed, 07 Sep 2016 19:20:16 -0300</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Blogging with Jekyll and Github</title>
+        <description>&lt;p&gt;I’ve migrated the &lt;a href=&quot;http://asfernandes.blogspot.com&quot;&gt;old blog&lt;/a&gt; to this new platform. It uses &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; and is hosted in github.&lt;/p&gt;
+
+&lt;p&gt;The blog’s source code is in a private repository and I’ll only push the generated content to the github repository.&lt;/p&gt;
+
+&lt;p&gt;I did manually converted some old posts from Blogger to markdown for this blog. This is clear when you see a code listing. The others posts I just throwed here and is probably ok.&lt;/p&gt;
+
+&lt;p&gt;This platform seems much cooler to write than with Blogger, which was a nightmare to write posts and change the layout.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 07 Sep 2016 00:00:00 -0300</pubDate>
+        <link>http://asfernandes.github.io/2016/09/07/blogging-with-jekyll-and-github.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2016/09/07/blogging-with-jekyll-and-github.html</guid>
+        
+        <category>others</category>
+        
+        
+      </item>
     
       <item>
         <title>JavaScript x Java - closures e lambdas</title>
@@ -361,20 +380,6 @@
         <pubDate>Sun, 22 Dec 2013 20:49:00 -0200</pubDate>
         <link>http://asfernandes.github.io/2013/12/22/artigo-novidades-do-firebird-25_22.html</link>
         <guid isPermaLink="true">http://asfernandes.github.io/2013/12/22/artigo-novidades-do-firebird-25_22.html</guid>
-        
-        <category>artigo</category>
-        
-        <category>firebird</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Artigo &quot;Novidades do Firebird 2.5&quot;: Introdução</title>
-        <description>O desenvolvimento do SGBD Firebird foi iniciado em Julho do ano 2000 a partir do código fonte da versão beta do InterBase 6.0, disponibilizado pela Inprise (Borland) sob licença open source. Desde então cinco versões foram lançadas pela sua equipe de desenvolvimento, mostrando uma evolução contínua do produto. O foco deste artigo é mostrar as principais funcionalidades para desenvolvedores adicionadas à versão 2.5, lançada em outubro de 2010, no ano em que o projeto faz seu décimo aniversário. Antes de aprofundar nestes temas, gostaria de mostrar um breve histórico da evolução do Firebird nestes dez anos.&lt;br /&gt;&lt;br /&gt;Na versão 1.0 a maior parte do trabalho foi interna, já que o código inicial não tinha documentação e não chegava nem mesmo a compilar. Uma das alterações mais importantes nesta versão foi a correção de um bug de segurança do InterBase, que foi rapidamente identificado quando seu código tornou-se público.&lt;br /&gt;&lt;br /&gt;Na versão 1.5 o código fonte foi convertido de C para C++. Algumas novidades que apareceram nesta versão foram variáveis de contexto como CURRENT_USER e CURRENT_ROLE, funções como COALESCE e NULLIF, expressões CASE, o tipo de dados BIGINT, melhorias em alguns comandos DDL (CREATE OR ALTER, RECREATE), o comando EXECUTE STATEMENT, as cláusulas FIRST e SKIP e suporte a savepoints e locks pessimistas.&lt;br /&gt;&lt;br /&gt;A versão 2.0 introduziu as tabelas derivadas [1], cursores explícitos, valores default para parâmetros, as funções IIF, CHAR_LENGTH, TRIM, RDB$GET_CONTEXT e RDB$SET_CONTEXT, o operador IS [NOT] DISTINCT, os comandos EXECUTE BLOCK e COMMENT ON, a cláusula RETURNING, índices definidos por expressões, collates (PT_BR e WIN_PTBR) para o Brasil, suporte a Unicode, melhorias de performance relacionadas à nova implementação de índices e diversas mudanças no otimizador, backups físicos e incrementais com o NBackup e suporte a plataformas 64-bit.&lt;br /&gt;&lt;br /&gt;A versão 2.1 introduziu dezenas de novas funções internas, triggers de eventos de conexão e transação, tabelas temporárias, collates customizáveis com CREATE COLLATION, queries recursivas com Common Table Expression (CTE) [2], os comandos UPDATE OR INSERT e MERGE, a função agregada LIST, a possibilidade de uso de domains em PSQL, a interoperabilidade entre BLOBs e strings, tabelas de monitoração, o utilitário fbsvcmgr e diversas melhorias implementadas no protocolo de comunicação, melhorando a performance de comunicação cliente/servidor via internet.&lt;br /&gt;&lt;br /&gt;Diante de toda essa evolução, é importante ressaltar que toda alteração e nova funcionalidade do Firebird é pensada levando em consideração dois princípios estabelecidos pelo projeto: compatibilidade e padronização SQL. A compatibilidade é sempre levada extremamente a sério, e dificilmente algo que funciona em uma versão deixa de funcionar em outra, respeitando o investimento feito pelos desenvolvedores. Em relação ao padrão SQL, ele é sempre consultado e analisado em detalhes, e quando possível, as implementações são realizadas com base neste padrão.&lt;br /&gt;&lt;br /&gt;A versão 2.5, assim como as anteriores, possui diversas novas funcionalidades. Primeiramente, veremos sobre possíveis problemas durante o processo de migração. Em seguida, veremos sobre a nova arquitetura SuperClassic, que permite melhor aproveitamento de recursos e melhor desempenho em máquinas multiprocessadas, e as alterações diretamente relacionadas ao desenvolvimento. Os exemplos presentes nas listagem foram feitos para o ISQL, mas devem funcionar sem problemas em qualquer ferramenta.&lt;br /&gt;&lt;br /&gt;&lt;div&gt;&lt;b&gt;Notas&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;[1] - Tabela derivada (derived table) é o nome dado pelo padrão SQL a uma query usada na claúsula FROM de outra query. Por exemplo: SELECT X.* FROM (SELECT * FROM PESSOA) X. Neste caso, X é uma tabela derivada. Veja mais exemplos no &lt;a href=&quot;http://www.firebirdsql.org/file/documentation/release_notes/html/rlsnotes207.html&quot; target=&quot;_blank&quot;&gt;release notes da versão 2.0&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;[2] - Common Table Expression (CTE) é similar as tabelas derivadas, mas o nome da tabela é definido no começo da instrução com a cláusula WITH. Exemplo: WITH X AS (SELECT * FROM PESSOA) SELECT * FROM X. Com as CTEs é possível fazer queries hierárquicas (recursivas) usando-se WITH RECURSIVE e UNION ALL. Veja mais exemplos no &lt;a href=&quot;http://www.firebirdsql.org/file/documentation/release_notes/html/rlsnotes210.html&quot; target=&quot;_blank&quot;&gt;release notes da versão 2.1&lt;/a&gt;.&lt;/div&gt;</description>
-        <pubDate>Fri, 20 Dec 2013 00:01:00 -0200</pubDate>
-        <link>http://asfernandes.github.io/2013/12/20/artigo-novidades-do-firebird-25.html</link>
-        <guid isPermaLink="true">http://asfernandes.github.io/2013/12/20/artigo-novidades-do-firebird-25.html</guid>
         
         <category>artigo</category>
         
