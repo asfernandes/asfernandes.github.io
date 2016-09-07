@@ -5,15 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>C++: Argument-dependent name lookup</title>
-  <meta name="description" content="Sometimes C++ still surprises me. Consider this code:">
+  <title>The buggy const</title>
+  <meta name="description" content="In C/C++, there are constants and pointer to constants. I’m talking here about constants (i.e., const int var1; int* const var2) and not pointer to constants...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://asfernandes.github.io/2014/11/18/c-argument-dependent-name-lookup.html">
+  <link rel="canonical" href="http://asfernandes.github.io/2009/08/09/buggy-const.html">
   <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
 </head>
 
@@ -57,9 +57,9 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <div class="post-heading">
-        <h1>C++: Argument-dependent name lookup</h1>
+        <h1>The buggy const</h1>
         
-        <span class="post-meta">Posted on November 18, 2014</span>
+        <span class="post-meta">Posted on August 9, 2009</span>
       </div>
      </div>
   </div>
@@ -68,33 +68,61 @@
 <article>
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    <p>Sometimes C++ still surprises me. Consider this code:</p>
+	    <p>In C/C++, there are constants and pointer to constants. I’m talking here about constants (i.e., <code class="highlighter-rouge">const int var1; int* const var2</code>) and not pointer to constants (i.e., <code class="highlighter-rouge">const int* var3</code>).</p>
 
-<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">namespace</span> <span class="n">ns1</span>
+<p>In 90% of cases that I see, usage of constants for <strong>local “variables” and parameters</strong> is “wrong”. People seems to use it for a variable that is not changing, while, in my opinion, it should rather be used for variables that should never change.</p>
+
+<p>Anyway, I always thought that constant parameters were not part of function signatures, because a const parameter has nothing to do with the caller, but is routine implementation detail. Indeed, this code compiles, links and run with G++ and MSVC++ and is also validated by the <a href="http://www.comeaucomputing.com/tryitout/">Comeau online validator</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cp">#include &lt;stdio.h&gt;
+</span>
+<span class="k">class</span> <span class="nc">Test</span>
 <span class="p">{</span>
-    <span class="k">class</span> <span class="nc">C1</span>
-    <span class="p">{</span>
-    <span class="p">};</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="n">m1</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">n</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">m2</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">};</span>
 
-    <span class="kt">void</span> <span class="nf">f1</span><span class="p">(</span><span class="k">const</span> <span class="n">C1</span><span class="o">&amp;</span><span class="p">)</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Test</span> <span class="n">t</span><span class="p">;</span>
+    <span class="n">t</span><span class="p">.</span><span class="n">m1</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="n">t</span><span class="p">.</span><span class="n">m2</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="kt">void</span> <span class="n">Test</span><span class="o">::</span><span class="n">m1</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">ns1</span><span class="o">::</span><span class="n">C1</span> <span class="n">c1</span><span class="p">;</span>
-    <span class="n">f1</span><span class="p">(</span><span class="n">c1</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">}</span>
 
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">void</span> <span class="n">Test</span><span class="o">::</span><span class="n">m2</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>If you think it’s wrong and causes a compiler error, you’re wrong.</p>
+<p>But not all compilers agree. It has been sent some patches fixing these inconsistencies to compile Firebird with Solaris Sun Studio compiler. This usage seems to cause problems because the compiler treat the declaration and implementation as different signatures.</p>
 
-<p>The function “f1” is not in the scope of “main”, but its argument has a type of the same namespace, causing the function to be located.</p>
+<p>In Java, <code class="highlighter-rouge">final</code> could be used for the same thing. Let see what it think about:</p>
 
-<p>This rule is called Argument-dependent name lookup (or Koenig lookup) and it is also very necessary in relation to operators.</p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">interface</span> <span class="nc">Int</span>
+<span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">m1</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">n</span><span class="o">);</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">m2</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Test</span> <span class="kd">implements</span> <span class="n">Int</span>
+<span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">m1</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span>
+    <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">m2</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span>
+    <span class="o">{</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Java also accepts this code.</p>
 
 	  </div>
   </div>
@@ -105,12 +133,12 @@
     <ul class="pager blog-pager">
       
       <li class="previous">
-        <a href="/2014/01/02/artigo-novidades-do-firebird-25.html" data-toggle="tooltip" data-placement="top" title="Artigo "Novidades do Firebird 2.5": A arquitetura SuperClassic">&larr; Previous Post</a>
+        <a href="/2009/08/02/cvsnt-client-is-slow.html" data-toggle="tooltip" data-placement="top" title="CVSNT client is slow">&larr; Previous Post</a>
       </li>
       
       
       <li class="next">
-        <a href="/2015/01/22/corrigindo-schemas-do-web-service.html" data-toggle="tooltip" data-placement="top" title="Corrigindo schemas do Web Service Distribuição de DF-e da NF-e">Next Post &rarr;</a>
+        <a href="/2009/11/02/ubuntu-910-review.html" data-toggle="tooltip" data-placement="top" title="Ubuntu 9.10 review">Next Post &rarr;</a>
       </li>
       
     </ul>

@@ -5,13 +5,13 @@
     <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
     <link>http://asfernandes.github.io/</link>
     <atom:link href="http://asfernandes.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 07 Sep 2016 11:30:18 -0300</pubDate>
-    <lastBuildDate>Wed, 07 Sep 2016 11:30:18 -0300</lastBuildDate>
+    <pubDate>Wed, 07 Sep 2016 13:57:15 -0300</pubDate>
+    <lastBuildDate>Wed, 07 Sep 2016 13:57:15 -0300</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
         <title>JavaScript x Java - closures e lambdas</title>
-        <description>&lt;p&gt;Em geral as linguagens de programação são bem parecidas e por esse motivo acho fácil aprender novas linguagens. E o que dizer então quando uma se chama Java e a outra JavaScript? :)&lt;/p&gt;
+        <description>&lt;p&gt;Em geral as linguagens de programação são bem parecidas e por esse motivo acho fácil aprender novas linguagens. E o que dizer então quando uma se chama Java e a outra JavaScript? :smiley:&lt;/p&gt;
 
 &lt;p&gt;Ultimamente tenho programado bastante em JavaScript. Apesar de não conhecer ainda todos os detalhes da linguagem, tenho me virado bem, porém, hoje perdi um certo tempo programando em JavaScript como se estivesse programando em Java.&lt;/p&gt;
 
@@ -90,7 +90,7 @@
     
       <item>
         <title>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</title>
-        <description>&lt;p&gt;Na &lt;a href=&quot;https://www.google.com.br/url?sa=t&amp;amp;rct=j&amp;amp;q=&amp;amp;esrc=s&amp;amp;source=web&amp;amp;cd=1&amp;amp;cad=rja&amp;amp;uact=8&amp;amp;ved=0CB8QFjAA&amp;amp;url=http%3A%2F%2Fwww.nfe.fazenda.gov.br%2Fportal%2FexibirArquivo.aspx%3Fconteudo%3D2Z%2520kcHOdpHs%3D&amp;amp;ei=Qf7AVMahIYXiggTzvIGQCA&amp;amp;usg=AFQjCNGQhPOg75_Yz9ef4mHmrvye8Fip2g&amp;amp;sig2=JfGl0mLlOas2WnKKyzkl-g&amp;amp;bvm=bv.83829542,d.eXY&quot;&gt;Nota Técnica 2014/002&lt;/a&gt; da Nota Fiscal Eletrônica, o governo &lt;del&gt;brasileiro&lt;/del&gt; do PT, &lt;del&gt;por falta do que fazer&lt;/del&gt; com o intuito de evoluir o sistema, substituiu o web service de consulta de NF-e emitidas por terceiros pelo web service de distribuição de documentos fiscais.&lt;/p&gt;
+        <description>&lt;p&gt;Na &lt;a href=&quot;http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=2Z%20kcHOdpHs=&quot;&gt;Nota Técnica 2014/002&lt;/a&gt; da Nota Fiscal Eletrônica, o governo &lt;del&gt;brasileiro&lt;/del&gt; do PT, &lt;del&gt;por falta do que fazer&lt;/del&gt; com o intuito de evoluir o sistema, substituiu o web service de consulta de NF-e emitidas por terceiros pelo web service de distribuição de documentos fiscais.&lt;/p&gt;
 
 &lt;p&gt;Definiram que a partir de 06/10/2014 o novo web service já estaria funcionando no ambiente de produção, enquanto o antigo seria desativado em 02/02/2015. Estava tentando há duas semanas usar o novo web service e ele ainda não funcionava. Hoje consegui.&lt;/p&gt;
 
@@ -181,6 +181,135 @@
         <guid isPermaLink="true">http://asfernandes.github.io/2014/01/02/artigo-novidades-do-firebird-25.html</guid>
         
         <category>artigo</category>
+        
+        <category>firebird</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu 9.10 review</title>
+        <description>&lt;p&gt;I’ve upgraded Ubuntu 9.04 to 9.10, and here is what I found about it.&lt;/p&gt;
+
+&lt;p&gt;At upgrade start, it asked about keyboard. Surprisingly, it has nothing about Brazilian keyboards and I choose to maintain “kernel keymaps” without know what exactly that is and why that keyboard popup appeared.&lt;/p&gt;
+
+&lt;p&gt;During the upgrade, flash_plugin and package_hook updates crashed. Nvidia driver, as always failed too. So after restarting in safe mode, I changed nvidia driver to nv to be able to enter in the graphical mode.&lt;/p&gt;
+
+&lt;p&gt;Then, to fix the system:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo aptitude safe-upgrade
+sudo aptitude safe-upgrade
+sudo aptitude dist-upgrade&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And reverted to nvidia driver.&lt;/p&gt;
+
+&lt;p&gt;They claim to have new beautiful and faster boot. Lies. The new boot screen is horrible, specially when running fsck. And appears to be slower than in 9.04.&lt;/p&gt;
+
+&lt;p&gt;The “fast user switch” gnome applet do not exist as before. It can’t show your IM status anymore, nor can be compact as before. I changed it by the shutdown applet to have the same functionality that I used to have.&lt;/p&gt;
+
+&lt;p&gt;As with Ubuntu 9.04, Firefox 3.5 continues slow as the 9.04 Shiretoko in my system. And the flash plugin continue crashing. I use the AMD64 version, which requires wrapper to 32 bit flash, because Adobe didn’t released the final AMD64 version yet.&lt;/p&gt;
+
+&lt;p&gt;Resuming, you decide. I want an updated system anyway. :smiley:&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 Nov 2009 14:44:00 -0200</pubDate>
+        <link>http://asfernandes.github.io/2009/11/02/ubuntu-910-review.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2009/11/02/ubuntu-910-review.html</guid>
+        
+        <category>linux</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>The buggy const</title>
+        <description>&lt;p&gt;In C/C++, there are constants and pointer to constants. I’m talking here about constants (i.e., &lt;code class=&quot;highlighter-rouge&quot;&gt;const int var1; int* const var2&lt;/code&gt;) and not pointer to constants (i.e., &lt;code class=&quot;highlighter-rouge&quot;&gt;const int* var3&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;In 90% of cases that I see, usage of constants for &lt;strong&gt;local “variables” and parameters&lt;/strong&gt; is “wrong”. People seems to use it for a variable that is not changing, while, in my opinion, it should rather be used for variables that should never change.&lt;/p&gt;
+
+&lt;p&gt;Anyway, I always thought that constant parameters were not part of function signatures, because a const parameter has nothing to do with the caller, but is routine implementation detail. Indeed, this code compiles, links and run with G++ and MSVC++ and is also validated by the &lt;a href=&quot;http://www.comeaucomputing.com/tryitout/&quot;&gt;Comeau online validator&lt;/a&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdio.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Test&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Test&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%d&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%d&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;But not all compilers agree. It has been sent some patches fixing these inconsistencies to compile Firebird with Solaris Sun Studio compiler. This usage seems to cause problems because the compiler treat the declaration and implementation as different signatures.&lt;/p&gt;
+
+&lt;p&gt;In Java, &lt;code class=&quot;highlighter-rouge&quot;&gt;final&lt;/code&gt; could be used for the same thing. Let see what it think about:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Int&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;m1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;m2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Test&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;m1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;m2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Java also accepts this code.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 09 Aug 2009 12:45:00 -0300</pubDate>
+        <link>http://asfernandes.github.io/2009/08/09/buggy-const.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2009/08/09/buggy-const.html</guid>
+        
+        <category>c++</category>
+        
+        <category>java</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>CVSNT client is slow</title>
+        <description>&lt;p&gt;For years I was using CVSNT client to work with Firebird and any other CVS repository. I started to use it because I needed a client capable of handling the “sserver” protocol method, which the “standard” CVS can’t.&lt;/p&gt;
+
+&lt;p&gt;A first thing I’ve noted has that it most times refetches completely (or just crashes trying) Firebird ChangeLog file during updates because some “corruption” (supposedly because it has more than 2MB). But that was OK with me, I just press Ctrl+Break and continue working.&lt;/p&gt;
+
+&lt;p&gt;By some reason, I had to use Cygwin’s CVS to checkout whole firebird2 tree. It was &lt;strong&gt;much faster&lt;/strong&gt;. So I switched to non-NT client and anything is much faster with it.&lt;/p&gt;
+
+&lt;p&gt;I’ve just started a merge of HEAD in my branch now. A lot of conflicts to resolve, most of them related to cleanups and formating changes. Unfortunately, it can’t make this faster. :smiley:&lt;/p&gt;
+
+&lt;p&gt;BTW1, to open all conflicted files in gedit, I’m using:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;grep -RlZ &lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&quot;&lt;/span&gt; builds/ src/ |xargs -0 gedit&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;BTW2, CVS is dead. Who cares?&lt;/p&gt;
+
+&lt;p&gt;BTW3, GIT seems excellent, but is somewhat difficult to grasp.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 02 Aug 2009 20:45:00 -0300</pubDate>
+        <link>http://asfernandes.github.io/2009/08/02/cvsnt-client-is-slow.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2009/08/02/cvsnt-client-is-slow.html</guid>
         
         <category>firebird</category>
         
