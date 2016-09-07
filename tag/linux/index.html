@@ -5,15 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Problema com Java 1.6.0_22 e NF-e de SP</title>
-  <meta name="description" content="Tivemos um problema, em ambiente interno de testes, com os webservices da Nota Fiscal Eletrônica do estado de São Paulo. O sistema estava sendo migrado de si...">
+  <title>Posts Tagged &ldquo;linux&rdquo;</title>
+  <meta name="description" content="Adriano dos Santos Fernandes on Software development, Firebird and others things">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://asfernandes.github.io/2010/12/14/problema-com-java-16022-e-nf-e-de-sp.html">
+  <link rel="canonical" href="http://asfernandes.github.io/tag/linux/">
   <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
 
   
@@ -65,77 +65,238 @@
 </nav>
 
     <div role="main" class="container main-content">
-        <header class="header-post">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      <div class="post-heading">
-        <h1>Problema com Java 1.6.0_22 e NF-e de SP</h1>
-        
-        <span class="post-meta">Posted on December 14, 2010 in
-        
-          
-          
-          <a href="/tag/nf-e" class="blog-tags">nf-e</a>,
-        
-          
-          
-          <a href="/tag/java" class="blog-tags">java</a>
-        
-        </span>
-      </div>
-     </div>
-  </div>
-</header>
+        <h2 class="post_title">Posts Tagged &ldquo;linux&rdquo;:</h2>
 
-<article>
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    Tivemos um problema, em ambiente interno de testes, com os webservices da Nota Fiscal Eletrônica do estado de São Paulo. O sistema estava sendo migrado de sistema operacional HP-UX (com Java distribuído pela HP) para um novo servidor com Red Hat Enterprise Linux (com Java da <s>Sun</s> Oracle).<div>Ao acessar os webservices a aplicação congelava ou dava erros de "read timed out". O primeiro passo foi verificar se o servidor estava acessando a internet normalmente. Através do elinks era possível acessar sites via http e https normalmente. O webservice retornava corretamente o erro de falta de certificado cliente.</div><div>Depois tentei fazer conexões pela aplicação adicionando "?WSDL" às URLs. Nem o ambiente de homologação nem o de produção da NF-e funcionavam. Outros endereços http funcionavam normalmente pela aplicação. Pra debugar o problema, adicionamos a opção -Djavax.net.debug=all. A requisição era enviada mas não vinha a resposta.</div><div>Resolvi fazer o teste com os webservices de contingência do SCAN e funcionou. Analisando os logs da conexão, resolvi procurar sobre o termo no_renegotiation que estava aparecendo quando acontecia o erro.</div><div><a href="http://www.oracle.com/technetwork/java/javase/documentation/tlsreadme2-176330.html">Esta página</a> esclareceu o problema, que foi causado devido a uma alteração no Java para prevenir uma vulnerabilidade do protocolo TLS. Adicionamos as opções -Dsun.security.ssl.allowUnsafeRenegotiation=true e sun.security.ssl.allowLegacyHelloMessages=true até que o ambiente de SP seja atualizado.</div>
-	  </div>
-  </div>
-</article>
+<div class="posts-list">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <article class="post-preview">
+    <a href="/2011/08/20/beautiful-fonts-in-ubuntu.html">
+      <h3 class="post-title">Beautiful fonts in Ubuntu</h3>
 
-<div class="row">
-  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-    <ul class="pager blog-pager">
       
-      <li class="previous">
-        <a href="/2010/10/04/firebird-25-introduces-new-audit.html" data-toggle="tooltip" data-placement="top" title="Firebird 2.5 Introduces New Audit Features and Improved Scalability">&larr; Previous Post</a>
-      </li>
+    </a>
+
+    <p class="post-meta">
+      Posted on August 20, 2011 in
+
       
+        
+        
+        <a href="/tag/linux" class="blog-tags">linux</a>
       
-      <li class="next">
-        <a href="/2010/12/18/introducing-boolean-datatype.html" data-toggle="tooltip" data-placement="top" title="Introducing the boolean datatype">Next Post &rarr;</a>
-      </li>
+    </p>
+
+    <div class="post-entry">
+      In the old days, fonts in Linux were really ugly by default. There are patents involved, so it was possible to make them beautiful recompiling freetype with some options.Since some time, this is not necessary.But if you're like me, you may note that some fonts are very blurry in some...
+      <a href="/2011/08/20/beautiful-fonts-in-ubuntu.html" class="post-read-more">[Read&nbsp;More]</a>
+    </div>
+  </article>
+  
+  
+  
+  
+  
+  <article class="post-preview">
+    <a href="/2011/05/01/ubuntu-natty-narwhal-in-vmware.html">
+      <h3 class="post-title">Ubuntu Natty Narwhal in VMware</h3>
+
       
-    </ul>
-  </div>
+    </a>
+
+    <p class="post-meta">
+      Posted on May 1, 2011 in
+
+      
+        
+        
+        <a href="/tag/linux" class="blog-tags">linux</a>
+      
+    </p>
+
+    <div class="post-entry">
+      Here are some tips to use Ubuntu 11.04 Natty Narwhal on VMware.First upgrade the host vmware (player) to the latest (3.1.4) version. Although the release notes mention nothing on Natty, the vmware-tools from this version compiles ok on the Natty kernel.You may have some luck with the open-vm-tools. I didn't...
+      <a href="/2011/05/01/ubuntu-natty-narwhal-in-vmware.html" class="post-read-more">[Read&nbsp;More]</a>
+    </div>
+  </article>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <article class="post-preview">
+    <a href="/2009/11/02/ubuntu-910-review.html">
+      <h3 class="post-title">Ubuntu 9.10 review</h3>
+
+      
+    </a>
+
+    <p class="post-meta">
+      Posted on November 2, 2009 in
+
+      
+        
+        
+        <a href="/tag/linux" class="blog-tags">linux</a>
+      
+    </p>
+
+    <div class="post-entry">
+      I've upgraded Ubuntu 9.04 to 9.10, and here is what I found about it. At upgrade start, it asked about keyboard. Surprisingly, it has nothing about Brazilian keyboards and I choose to maintain &quot;kernel keymaps&quot; without know what exactly that is and why that keyboard popup appeared. During the upgrade,...
+      <a href="/2009/11/02/ubuntu-910-review.html" class="post-read-more">[Read&nbsp;More]</a>
+    </div>
+  </article>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </div>
-
-
-<div class="row disqus-comments">
-  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-    
-<div class="comments">
-	<div id="disqus_thread"></div>
-	<script type="text/javascript">
-	    var disqus_shortname = 'asfernandes-blog';
-	    // ensure that pages with query string get the same discussion
-            var url_parts = window.location.href.split("?");
-            var disqus_url = url_parts[0];	    
-	    (function() {
-	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	    })();
-	</script>
-	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-
-
-  </div>
-</div>
-
 
     </div>
     <footer>
