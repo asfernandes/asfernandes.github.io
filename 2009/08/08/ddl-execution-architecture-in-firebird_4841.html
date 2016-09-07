@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>DDL execution architecture in Firebird - why we need to move on</title>
+  <meta name="description" content="Here I'm going to explain how Firebird DDL commands works in the architecture, why it stops innovation and how it is supposed to work in Firebird 3.0. DDL in...">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://asfernandes.github.io/2009/08/08/ddl-execution-architecture-in-firebird_4841.html">
+  <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://asfernandes.github.io">asfernandes' blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        <li>
+      <a href="/contact">Contact</a>
+    </li>
+    
+      </ul>
+    </div>
+
+  
+  <div class="avatar-container">
+    <div class="avatar-img-border">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
+    </a>
+    </div>
+  </div>
+  
+
+  </div>
+</nav>
+    <div role="main" class="container main-content">
+        <header class="header-post">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h1>DDL execution architecture in Firebird - why we need to move on</h1>
+        
+        <span class="post-meta">Posted on August 8, 2009</span>
+      </div>
+     </div>
+  </div>
+</header>
+
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    Here I'm going to explain how Firebird DDL commands works in the architecture, why it stops innovation and how it is supposed to work in Firebird 3.0.<br><br> DDL in FB works more or less like DML, so first a briefly explanation of how DML works. When a DML command is prepared, it starts in the parser constructing a tree of nodes. That nodes are all a single pointer type, used for all node types and others usages (like storing constants). A node have a list of child nodes.<br><br> After parsing, it enters in the semantics phase, where things are verified and adjusted with execution in mind. After that, it enters in the generation phase, that outputs BLR bytes and stores them in the statement. <br><br> The DSQL API is a layer around the engine API. The engine API knows only how to execute BLR. Hence the DSQL API does passes the stored BLR to that lower level functions (engine API).<br><br> For engine API, there is no knowledge of DSQL nodes and the processing done in the semantics phase. The engine does a parse of BLR, reconstruct another tree and compiles it. That does almost what DSQL does, but DSQL does it on SQL code and engine does it on BLR bytes.<br><br> When a statement is executed, the BLR tree is traversed and everything runs.<br><br> So back to DDL... DDL is not described as BLR, but in an equivalent binary format: DYN. Some DYN verbs have BLR bytes embedded, like the body of a stored procedure, but that is not relevant for generic DDL handling.<br><br> As in DML case, the engine knows nothing about DDL nodes constructed in DSQL. The engine knows only how to run DYN, with the isc_ddl API. In DSQL, everything works as in DML, but the generation phase emits DYN bytes, and statement execution is layered around isc_ddl.<br><br> So you might ask, what's wrong with DDL execution if it's so consistent with DML?<br><br> A lot of things, I'd say:<br> <br><ul><li> DYN codes are very badly structured. Some codes that would be private for some specific verbs shares the "number space" of all verbs. That make things visible wrong. </li></ul><ul><li>Related to above, we're going out of space. In v2.5, we're at number 247. We could go only at 254, and use the 255 to make a second number space. This would make things even worse. <br></li></ul><ul><li>While some may say that BLR is also bad, this is a model not invented in InterBase/Firebird. This is how compilers works (assembly, byte codes, etc). But that model does not have any practical benefit in DDL.</li></ul><ul><li>Too much code is used to convert DSQL structures to bytes and to engine again.</li></ul><div><ul><li>There is large code duplication to handle similar things, like CREATE / ALTER commands.</li></ul><ul><li>DYN execution is totally unnatural for a RDBMS system. A CREATE PROCEDURE command is more or less defined this way: <br></li></ul></div><div> <br><div style="margin-left: 40px;"> <span style="font-family: Courier New;">isc_dyn_def_procedure, &lt;name&gt;,</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> isc_dyn_prc_source, &lt;source&gt;,</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> ...,</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> // for each parameter - begin</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> isc_dyn_def_parameter, &lt;name&gt;,</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> isc_dyn_prm_number, &lt;number&gt;,</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> isc_dyn_prm_type, &lt;type&gt;,</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> ...,</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> isc_dyn_end,</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> // for each parameter - end</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> isc_dyn_prc_blr, &lt;bytes&gt;,</span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> isc_dyn_end</span><br style="font-family: Courier New;"></div> <br><div style="margin-left: 40px;"> And is executed in this way (pseudo-code):<br><br></div>  <div style="margin-left: 80px;"><span style="font-family: Courier New;">function DYN_execute() </span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> { </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;while ((dynVerb = getDynByte()) != isc_dyn_end) </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;{ </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;switch (dynVerb) </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{ </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;case isc_dyn_def_procedure: </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; DYN_define_procedure(); </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; break; </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;case isc_dyn_def_parameter: </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;DYN_define_parameter(); </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;break; </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; ... </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; } </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;} </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">} </span><br style="font-family: Courier New;"><br style="font-family: Courier New;"><span style="font-family: Courier New;"> function DYN_define_procedure() </span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> { </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; procName = getString(); </span><br style="font-family: Courier New;"><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; while ((dynVerb = getDynByte()) != isc_dyn_end) </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; { </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;switch (dynVerb) </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; { </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; case isc_dyn_prc_source: </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; procSource = getString(); </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; break; </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; case isc_dyn_prc_blr: </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; procBlr = getBytes(); </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; break; </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; ... </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; default: </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; DYN_execute(); </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;} </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; } </span><br style="font-family: Courier New;"><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; INSERT INTO RDB$PROCEDURES </span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> } </span><br style="font-family: Courier New;"><br style="font-family: Courier New;"><span style="font-family: Courier New;"> function DYN_define_parameter() </span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> { </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">     &nbsp;&nbsp; &nbsp;paramName = getString(); </span><br style="font-family: Courier New;"><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; while ((dynVerb = getDynByte()) != isc_dyn_end) </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; { </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; switch (dynVerb) </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; { </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; case isc_dyn_prm_number: </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;paramNumber = getNumber(); </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; break; </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; case isc_dyn_prm_type: </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; paramType = getParamType(); </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; break; </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; ...</span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; } </span><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; } </span><br style="font-family: Courier New;"><br style="font-family: Courier New;"><span style="font-family: Courier New;">&nbsp;&nbsp;&nbsp; INSERT INTO RDB$PROCEDURE_PARAMETERS </span><br style="font-family: Courier New;"><span style="font-family: Courier New;"> } </span><br style="font-family: Courier New;"></div>       <div style="margin-left: 40px;"><br> Did you see what is wrong? Did you ever asked why Firebird system tables does not have primary and foreign keys?<br><br> The answer is simple, there is no way to have a FK from RDB$PROCEDURE_PARAMETERS to RDB$PROCEDURES if the records in RDB$PROCEDURE_PARAMETERS are inserted first.<br></div> <br> With these problems defined, I started an alternate DDL path in v2.5, with the ALTER CHARACTER SET command. This command does not emit DYN, and when asked to execute, it does execute directly in DSQL with a new C++ friendly node (also used in the parser).<br><br> This was not sufficient through. To have benefits, existing commands shall also be migrated to the new scheme, and DYN should better be totally eliminated. The problem of this is that, documented or not, DYN and isc_ddl are part of the API, and used by client tools. The GDEF utility is totally based on it, as well DDL commands of GPRE.<br><br> These archaic utilities are the reason of how things had been defined in this way and why it never changed. Natively, former InterBase versions didn't understand text commands. DDL and DML had been part of client utilities, that compiles them and send BLR/DYN to the server.<br><br> Fortunately the Firebird team agreed to deprecate (in the sense of warn to tell to not use anymore) these things in v2.5, so it will be eliminated in v3.0.<br><br> <a href="http://firebird.cvs.sourceforge.net/viewvc/firebird/firebird2/?pathrev=B2_5_ExtEngines">In my branch for v3.0</a>, I started to implement this conversion. Procedures and triggers had been refactored and their DYN handling was eliminated. The new external function was also done in the new scheme. With nice C++ classes, the architecture of PACKAGES became smooth. Also, the implementation of these commands became shorter, self-contained and much more readable.<br><br> Yesterday, I did a step further and did some unification of EXECUTE BLOCK (DML) with procedures and triggers (DDL) code. A prototype of sub-procedures is in the way...<br></div><br>
+	  </div>
+  </div>
+</article>
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <ul class="pager blog-pager">
+      
+      <li class="previous">
+        <a href="/2009/08/02/cvsnt-client-is-slow.html" data-toggle="tooltip" data-placement="top" title="CVSNT client is slow">&larr; Previous Post</a>
+      </li>
+      
+      
+      <li class="next">
+        <a href="/2009/08/09/buggy-const.html" data-toggle="tooltip" data-placement="top" title="The buggy const">Next Post &rarr;</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
+
+    </div>
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/asfernandes" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://twitter.com/adrianosf" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="mailto:adrianosf@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://linkedin.com/in/adrianosf" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+      
+      <li>
+      <a href="/feed.xml" title="RSS">
+        <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+      </li>   
+               
+        </ul>
+        <p class="copyright text-muted">
+      Adriano dos Santos Fernandes
+      &nbsp;&bull;&nbsp;
+      2016
+      
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+    
+  </body>
+</html>

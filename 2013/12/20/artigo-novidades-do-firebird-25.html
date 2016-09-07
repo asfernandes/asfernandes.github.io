@@ -5,15 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</title>
-  <meta name="description" content="Na Nota Técnica 2014/002 da Nota Fiscal Eletrônica, o governo brasileiro do PT, por falta do que fazer com o intuito de evoluir o sistema, substituiu o web s...">
+  <title>Artigo "Novidades do Firebird 2.5": Introdução</title>
+  <meta name="description" content="O desenvolvimento do SGBD Firebird foi iniciado em Julho do ano 2000 a partir do código fonte da versão beta do InterBase 6.0, disponibilizado pela Inprise (...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://asfernandes.github.io/2015/01/22/corrigindo-schemas-do-web-service.html">
+  <link rel="canonical" href="http://asfernandes.github.io/2013/12/20/artigo-novidades-do-firebird-25.html">
   <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
 </head>
 
@@ -57,9 +57,9 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <div class="post-heading">
-        <h1>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</h1>
+        <h1>Artigo "Novidades do Firebird 2.5": Introdução</h1>
         
-        <span class="post-meta">Posted on January 22, 2015</span>
+        <span class="post-meta">Posted on December 20, 2013</span>
       </div>
      </div>
   </div>
@@ -68,28 +68,7 @@
 <article>
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    <p>Na <a href="http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=2Z%20kcHOdpHs=">Nota Técnica 2014/002</a> da Nota Fiscal Eletrônica, o governo <del>brasileiro</del> do PT, <del>por falta do que fazer</del> com o intuito de evoluir o sistema, substituiu o web service de consulta de NF-e emitidas por terceiros pelo web service de distribuição de documentos fiscais.</p>
-
-<p>Definiram que a partir de 06/10/2014 o novo web service já estaria funcionando no ambiente de produção, enquanto o antigo seria desativado em 02/02/2015. Estava tentando há duas semanas usar o novo web service e ele ainda não funcionava. Hoje consegui.</p>
-
-<p>O web service retornou resposta, mas é claro, resposta errada que não é validada pelo próprio <a href="http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=cI%202zLXpcts=">schema</a> distribuído por eles. Como uso Java com JAXB, após desativar a validação da resposta, o conteúdo do arquivo não estava sendo “desserializado” corretamente.</p>
-
-<p>Eles criaram uma tag DocZip que armazena um XML compactado com GZIP no formato BASE-64 e declararam o conteúdo da tag como se tivesse um documento XML. É óbvio que algo em BASE-64 não é um XML válido.</p>
-
-<p>Como o governo incompetente não testa o que faz, tive que corrigir o schema e estou disponibilizando para que outros também não percam tempo. Mesmo sem saber escrever schemas XML, cheguei <a href="http://stackoverflow.com/questions/376582/xml-schema-element-with-attributes-containing-only-text">nessa dúvida</a> que me ajudou a fazer a correção.</p>
-
-<p><a href="http://pastebin.com/bNRspBSd">Link para o arquivo retDistDFeInt_v1.00.xsd corrigido</a></p>
-
-<p><a href="http://pastebin.com/8c1RSCKZ">Link para o diff/patch contra o arquivo XSD original</a></p>
-
-<p>Edit:</p>
-
-<p>Se tem uma coisa pior que incompetência que acontece com muita frequência na Receita Federal do PT ultimamente é a sacanagem. Após escrever esse artigo, mandei a mesma informação através do Fale Conosco, e antes mesmo de obter resposta (geralmente é um robô que responde algo sem sentido), desconfiei de uma coisa e fui verificar.</p>
-
-<p>A Receita Federal, na tentativa de esconder seus erros, costuma lançar correções de arquivos e disponibilizá-los com o mesmo número de versão. E não é que aconteceu exatamente isso agora?</p>
-
-<p>Tenho o arquivo PL_NFeDistDFe_100.zip com data de 07/01/2015 que tinha o problema. O arquivo presente <a href="http://www.nfe.fazenda.gov.br/portal/listaConteudo.aspx?tipoConteudo=/fwLvLUSmU8=">nesta página</a> nesse momento tem o mesmo nome e diz que foi atualizado em 19/09/2014, porém ele já está corrigido!</p>
-
+	    O desenvolvimento do SGBD Firebird foi iniciado em Julho do ano 2000 a partir do código fonte da versão beta do InterBase 6.0, disponibilizado pela Inprise (Borland) sob licença open source. Desde então cinco versões foram lançadas pela sua equipe de desenvolvimento, mostrando uma evolução contínua do produto. O foco deste artigo é mostrar as principais funcionalidades para desenvolvedores adicionadas à versão 2.5, lançada em outubro de 2010, no ano em que o projeto faz seu décimo aniversário. Antes de aprofundar nestes temas, gostaria de mostrar um breve histórico da evolução do Firebird nestes dez anos.<br /><br />Na versão 1.0 a maior parte do trabalho foi interna, já que o código inicial não tinha documentação e não chegava nem mesmo a compilar. Uma das alterações mais importantes nesta versão foi a correção de um bug de segurança do InterBase, que foi rapidamente identificado quando seu código tornou-se público.<br /><br />Na versão 1.5 o código fonte foi convertido de C para C++. Algumas novidades que apareceram nesta versão foram variáveis de contexto como CURRENT_USER e CURRENT_ROLE, funções como COALESCE e NULLIF, expressões CASE, o tipo de dados BIGINT, melhorias em alguns comandos DDL (CREATE OR ALTER, RECREATE), o comando EXECUTE STATEMENT, as cláusulas FIRST e SKIP e suporte a savepoints e locks pessimistas.<br /><br />A versão 2.0 introduziu as tabelas derivadas [1], cursores explícitos, valores default para parâmetros, as funções IIF, CHAR_LENGTH, TRIM, RDB$GET_CONTEXT e RDB$SET_CONTEXT, o operador IS [NOT] DISTINCT, os comandos EXECUTE BLOCK e COMMENT ON, a cláusula RETURNING, índices definidos por expressões, collates (PT_BR e WIN_PTBR) para o Brasil, suporte a Unicode, melhorias de performance relacionadas à nova implementação de índices e diversas mudanças no otimizador, backups físicos e incrementais com o NBackup e suporte a plataformas 64-bit.<br /><br />A versão 2.1 introduziu dezenas de novas funções internas, triggers de eventos de conexão e transação, tabelas temporárias, collates customizáveis com CREATE COLLATION, queries recursivas com Common Table Expression (CTE) [2], os comandos UPDATE OR INSERT e MERGE, a função agregada LIST, a possibilidade de uso de domains em PSQL, a interoperabilidade entre BLOBs e strings, tabelas de monitoração, o utilitário fbsvcmgr e diversas melhorias implementadas no protocolo de comunicação, melhorando a performance de comunicação cliente/servidor via internet.<br /><br />Diante de toda essa evolução, é importante ressaltar que toda alteração e nova funcionalidade do Firebird é pensada levando em consideração dois princípios estabelecidos pelo projeto: compatibilidade e padronização SQL. A compatibilidade é sempre levada extremamente a sério, e dificilmente algo que funciona em uma versão deixa de funcionar em outra, respeitando o investimento feito pelos desenvolvedores. Em relação ao padrão SQL, ele é sempre consultado e analisado em detalhes, e quando possível, as implementações são realizadas com base neste padrão.<br /><br />A versão 2.5, assim como as anteriores, possui diversas novas funcionalidades. Primeiramente, veremos sobre possíveis problemas durante o processo de migração. Em seguida, veremos sobre a nova arquitetura SuperClassic, que permite melhor aproveitamento de recursos e melhor desempenho em máquinas multiprocessadas, e as alterações diretamente relacionadas ao desenvolvimento. Os exemplos presentes nas listagem foram feitos para o ISQL, mas devem funcionar sem problemas em qualquer ferramenta.<br /><br /><div><b>Notas</b><br /><br />[1] - Tabela derivada (derived table) é o nome dado pelo padrão SQL a uma query usada na claúsula FROM de outra query. Por exemplo: SELECT X.* FROM (SELECT * FROM PESSOA) X. Neste caso, X é uma tabela derivada. Veja mais exemplos no <a href="http://www.firebirdsql.org/file/documentation/release_notes/html/rlsnotes207.html" target="_blank">release notes da versão 2.0</a>.<br /><br />[2] - Common Table Expression (CTE) é similar as tabelas derivadas, mas o nome da tabela é definido no começo da instrução com a cláusula WITH. Exemplo: WITH X AS (SELECT * FROM PESSOA) SELECT * FROM X. Com as CTEs é possível fazer queries hierárquicas (recursivas) usando-se WITH RECURSIVE e UNION ALL. Veja mais exemplos no <a href="http://www.firebirdsql.org/file/documentation/release_notes/html/rlsnotes210.html" target="_blank">release notes da versão 2.1</a>.</div>
 	  </div>
   </div>
 </article>
@@ -99,12 +78,12 @@
     <ul class="pager blog-pager">
       
       <li class="previous">
-        <a href="/2014/12/01/artigo-novidades-do-firebird-25.html" data-toggle="tooltip" data-placement="top" title="Artigo "Novidades do Firebird 2.5": Linguagem PSQL">&larr; Previous Post</a>
+        <a href="/2013/12/18/artigo-novidades-do-firebird-25_18.html" data-toggle="tooltip" data-placement="top" title="Artigo "Novidades do Firebird 2.5"">&larr; Previous Post</a>
       </li>
       
       
       <li class="next">
-        <a href="/2015/02/11/javascript-x-java-closures-e-lambdas.html" data-toggle="tooltip" data-placement="top" title="JavaScript x Java - closures e lambdas">Next Post &rarr;</a>
+        <a href="/2013/12/22/artigo-novidades-do-firebird-25_22.html" data-toggle="tooltip" data-placement="top" title="Artigo "Novidades do Firebird 2.5": Migrando de versões anteriores">Next Post &rarr;</a>
       </li>
       
     </ul>

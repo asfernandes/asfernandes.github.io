@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Firebird 2.5 Introduces New Audit Features and Improved Scalability</title>
+  <meta name="description" content="October 4, 2010The Firebird Project today announces Firebird 2.5, the fifth and newest major release of its open source relational database management system...">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://asfernandes.github.io/2010/10/04/firebird-25-introduces-new-audit.html">
+  <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://asfernandes.github.io">asfernandes' blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        <li>
+      <a href="/contact">Contact</a>
+    </li>
+    
+      </ul>
+    </div>
+
+  
+  <div class="avatar-container">
+    <div class="avatar-img-border">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
+    </a>
+    </div>
+  </div>
+  
+
+  </div>
+</nav>
+    <div role="main" class="container main-content">
+        <header class="header-post">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h1>Firebird 2.5 Introduces New Audit Features and Improved Scalability</h1>
+        
+        <span class="post-meta">Posted on October 4, 2010</span>
+      </div>
+     </div>
+  </div>
+</header>
+
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    October 4, 2010<br /><br />The Firebird Project today announces Firebird 2.5, the fifth and newest major release of its open source relational database management system. Enhancements in this new release are pitched at better serving the needs of businesses of any scale, from embedded device to enterprise resource planning solutions.<br /><br />Philippe Makowski, President of the non-profit <a href="http://www.firebirdsql.org/pop/index.php?op=ffoundation">Firebird Foundation</a> observes that the Firebird 2.5 release is a very important step in Firebird's 10th anniversary year, not just for the Firebird Project but for the whole open-source world, too.<br /><br />"Today businesses all around the world are looking for mature, cost-effective solutions and Firebird 2.5 offers them a solution that is truly powerful and truly free", he noted.<br /><br />The mix of high performance, small footprint, supreme scalability, silent and simple installation and royalty-free deployment make Firebird a highly attractive choice for all types of software developers and vendors. Firebird deployments are well established around the globe, serving data to hundreds of thousands of business systems with hundreds of users and databases exceeding 300GB.<br /><br />Known Firebird installations number more than 2,000 each day, according to download statistics.<br /><br />"Many of our customers have Firebird databases with sizes from 200GB to 400GB and they keep growing", said Stewart Spink, CTO of <a href="http://www.watermarktech.co.uk/">Watermark Software</a>. "The performance improvements in Firebird 2.5 will ensure that their future demands will be satisfied completely."<br /><br />Alexander Shaposhnikov, CIO of medical distributor <a href="http://www.profitmed.net/">Profitmed</a> predicts that Firebird 2.5 will support the growth of Profitmed's business. "Currently we have a 65Gb database and 250 active users working 24x7. We intend to double both the size of the database and the number of users in two years and we have chosen Firebird 2.5 for this business-critical task."<br /><br />Firebird binaries are distributed for a variety of system and hardware platforms: Windows, Linux, MacOS, Solaris, HP-UX and more. Firebird runs on on x86, x64, PowerPC, Sparc and other hardware platforms, providing an easy migration mechanism between these diverse platforms.<br /><br />The V.2.5 release binaries ship for 32-bit and 64-bit Windows and Linux, with MacOSX x86 to follow. Other POSIX platform builds are likely to appear before the year is out, in response to demand.<br /><br />New features of Firebird 2.5<br /><ul><li>New SuperClassic Architecture  Firebird 2.5 introduces a new architecture, tagged "SuperClassic", to gain better leverage from multi-core and multi-CPU hardware environments and improve resource usage for systems with large numbers of users and huge databases.</li></ul><ul><li>Audit  System audit tracing and user trace sessions via the Services API enable nearly real-time monitoring and analysis of everything going on in a database</li></ul><ul><li>Cross-database queries  Firebird 2.5 opens the way for Firebird database instances to query one another and to exchange information</li></ul><ul><li>Enhanced user management  User management becomes accessible and flexible through SQL requests submitted from user databases</li></ul><ul><li>Other features include autonomous transactions within PSQL modules (stored procedures, triggers, SQL blocks), support for regular expressions as arguments in SQL using the SIMILAR TO predicate, asynchronous cancellation of connections, enhancements of monitoring capabilities and much more.</li></ul>Paul Beach, President and CEO of <a href="http://www.ibphoenix.com/">IBPhoenix</a>, an organisation that offers professional services and contributes to Firebird development, considers the new security features and the impressive scaling capability of Firebird 2.5 will be welcomed by many existing Firebird users.<br /><br />"In particular, it will help those in the finance and health industries to meet the growing requirements of their businesses", he notes, "especially in pushing the limits of performance."<br /><br />David Wilder, CTO of <a href="http://www.basx.com.au/">Bas-X</a>, welcomed the Firebird 2.5 release for its improved useability and flexibility. "It will enable our customers to turn over more transactions and run more concurrent users on the same hardware," he said.<br /><br /><b>Pricing and Availability</b><br /><br />Firebird 2.5 is an open source database system that is available free of charge for any kind of usage, be it commercial, educational, non-profit or simply for private use. Both binary packages and the complete source code can be <a href="http://www.firebirdsql.org/index.php?op=files&amp;id=engine_250">downloaded</a> at no cost through the Firebird Project website for immediate installation. No registration or activation is required.<br /><br /><b>About the Firebird Foundation</b><br /><br />The <a href="http://www.firebirdsql.org/index.php?op=ffoundation">Firebird Foundation</a> is a non-profit organization with the goal to support the development and growth of the Firebird relational database system. The Foundation was incorporated in 2002 and is currently supported by more than <a href="http://www.firebirdsql.org/index.php?op=ffoundation&amp;id=members_alpha">300 active members</a>, several of whom are also <a href="http://www.firebirdsql.org/index.php?op=ffoundation&amp;id=sponsorship">cash sponsors</a>. It also accepts and manages donations of cash and resources from persons and organisations that are not regular members. The Foundation redistributes these funds as grants to some of the key workers in the Firebird Project. The Firebird Project has no other source of income.<br /><br />Media Contact: Alexey Kovyazin * +7 910 402 94 34 * admin AT mindthebird DOT com
+	  </div>
+  </div>
+</article>
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <ul class="pager blog-pager">
+      
+      <li class="previous">
+        <a href="/2010/09/30/firebird-25-launch.html" data-toggle="tooltip" data-placement="top" title="Firebird 2.5 launch">&larr; Previous Post</a>
+      </li>
+      
+      
+      <li class="next">
+        <a href="/2010/12/14/problema-com-java-16022-e-nf-e-de-sp.html" data-toggle="tooltip" data-placement="top" title="Problema com Java 1.6.0_22 e NF-e de SP">Next Post &rarr;</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
+
+    </div>
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/asfernandes" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://twitter.com/adrianosf" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="mailto:adrianosf@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://linkedin.com/in/adrianosf" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+      
+      <li>
+      <a href="/feed.xml" title="RSS">
+        <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+      </li>   
+               
+        </ul>
+        <p class="copyright text-muted">
+      Adriano dos Santos Fernandes
+      &nbsp;&bull;&nbsp;
+      2016
+      
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+    
+  </body>
+</html>

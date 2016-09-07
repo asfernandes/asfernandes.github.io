@@ -5,15 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Contact</title>
-  <meta name="description" content="Adriano dos Santos Fernandes on Software development, Firebird and others things">
+  <title>Ubuntu Natty Narwhal in VMware</title>
+  <meta name="description" content="Here are some tips to use Ubuntu 11.04 Natty Narwhal on VMware.First upgrade the host vmware (player) to the latest (3.1.4) version. Although the release not...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://asfernandes.github.io/contact/">
+  <link rel="canonical" href="http://asfernandes.github.io/2011/05/01/ubuntu-natty-narwhal-in-vmware.html">
   <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
 </head>
 
@@ -53,32 +53,67 @@
   </div>
 </nav>
     <div role="main" class="container main-content">
-        
-<header class="header-page">
+        <header class="header-post">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	  <div class="page-heading">
-	    <h1>Contact</h1>
-	    
-	  </div>
-    </div>
+      <div class="post-heading">
+        <h1>Ubuntu Natty Narwhal in VMware</h1>
+        
+        <span class="post-meta">Posted on May 1, 2011</span>
+      </div>
+     </div>
   </div>
 </header>
 
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    <div>Here are some tips to use Ubuntu 11.04 Natty Narwhal on VMware.<br /></div><div>First upgrade the host vmware (player) to the latest (3.1.4) version. Although the release notes mention nothing on Natty, the vmware-tools from this version compiles ok on the Natty kernel.<br /></div><div>You may have some luck with the open-vm-tools. I didn't had much. It didn't recognized the machine as a VM, but still worked. I was having problems with the video looking very ugly and was thinking it was a vmware-tools problem, but looks like not. Below is a workaround to run on the terminal which makes things beautiful again:<br /></div><div>killall gnome-settings-daemon</div><div>gnome-settings-daemon &amp;</div>
+	  </div>
+  </div>
+</article>
 
 <div class="row">
   <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-    <p>My name is Adriano dos Santos Fernandes. I’m a software developer from Brazil.</p>
-
-<p>On this blog I’ll write most about software development and <a href="http://www.firebirdsql.org">Firebird</a> (I’m one of its core developers), but you may find here others things I also want to write about.</p>
-
-<p>Posts will be in English or Portuguese as I found more convenient.</p>
-
-<p>In the end of this page and every post there is my contact info and social media.</p>
-
-	
+    <ul class="pager blog-pager">
+      
+      <li class="previous">
+        <a href="/2011/04/20/alguns-links-de-artigos-e-videos-que.html" data-toggle="tooltip" data-placement="top" title="Alguns links de artigos e vídeos que acho interessantes">&larr; Previous Post</a>
+      </li>
+      
+      
+      <li class="next">
+        <a href="/2011/08/20/beautiful-fonts-in-ubuntu.html" data-toggle="tooltip" data-placement="top" title="Beautiful fonts in Ubuntu">Next Post &rarr;</a>
+      </li>
+      
+    </ul>
   </div>
 </div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
 
     </div>
     <footer>

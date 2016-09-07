@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>CVSNT client is slow</title>
-  <meta name="description" content="For years I was using CVSNT client to work with Firebird and any other CVS repository. I started to use it because I needed a client capable of handling the ...">
+  <title>Firebird 10th anniversary. How I came to it.</title>
+  <meta name="description" content="July 31th, 2010. Today Firebird completes its 10th anniversary. The Firebird website has a set of history documents about how that started. It’s something yo...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic%7COpen+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://asfernandes.github.io/2009/08/02/cvsnt-client-is-slow.html">
+  <link rel="canonical" href="http://asfernandes.github.io/2010/07/31/firebird-10th-anniversary-how-i-came-to.html">
   <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
 </head>
 
@@ -44,8 +43,8 @@
   
   <div class="avatar-container">
     <div class="avatar-img-border">
-      <a href="http://asfernandes.github.io%20">
-        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
     </a>
     </div>
   </div>
@@ -58,9 +57,9 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <div class="post-heading">
-        <h1>CVSNT client is slow</h1>
+        <h1>Firebird 10th anniversary. How I came to it.</h1>
         
-        <span class="post-meta">Posted on August 2, 2009</span>
+        <span class="post-meta">Posted on July 31, 2010</span>
       </div>
      </div>
   </div>
@@ -69,22 +68,7 @@
 <article>
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    <p>For years I was using CVSNT client to work with Firebird and any other CVS repository. I started to use it because I needed a client capable of handling the “sserver” protocol method, which the “standard” CVS can’t.</p>
-
-<p>A first thing I’ve noted has that it most times refetches completely (or just crashes trying) Firebird ChangeLog file during updates because some “corruption” (supposedly because it has more than 2MB). But that was OK with me, I just press Ctrl+Break and continue working.</p>
-
-<p>By some reason, I had to use Cygwin’s CVS to checkout whole firebird2 tree. It was <strong>much faster</strong>. So I switched to non-NT client and anything is much faster with it.</p>
-
-<p>I’ve just started a merge of HEAD in my branch now. A lot of conflicts to resolve, most of them related to cleanups and formating changes. Unfortunately, it can’t make this faster. <img class="emoji" title=":smiley:" alt=":smiley:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f603.png" height="20" width="20" align="absmiddle"></p>
-
-<p>BTW1, to open all conflicted files in gedit, I’m using:</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">grep -RlZ <span class="s2">"&lt;&lt;&lt;&lt;&lt;&lt;&lt;"</span> builds/ src/ |xargs -0 gedit</code></pre></figure>
-
-<p>BTW2, CVS is dead. Who cares?</p>
-
-<p>BTW3, GIT seems excellent, but is somewhat difficult to grasp.</p>
-
+	    July 31th, 2010. Today <a href="http://www.firebirdsql.org/">Firebird</a> completes its 10th anniversary. The Firebird website has a set of <a href="http://firebirdsql.org/index.php?op=history">history documents</a> about how that started. It’s something you must read if you’re interested in Firebird.<br /><br />I’m sometimes asked about how I became one of its team members. So I’m going to tell something about this.<br /><br />First things first. My first contact with InterBase was with the one present in the Delphi 3 CD. Searches says it was InterBase 4.2. I must say I didn’t like it too much. But my main problem at the time was with SQL. Not with its syntax, but with the idea of manipulating a database with text commands, and not via an API in a programming language. Fortunately, I was a child and grew up since then. :-)<br /><br />The second important thing I remember about InterBase was about it becoming open source. This was something I liked, but just forgot soon later.<br /><br />Then sometime later I came to the <a href="http://info.abril.com.br/downloads">Info</a> download site and it had Firebird with a text saying something like “Download it, while it’s free”. I downloaded it (the 1.0 version) and saw on its website that there was no plan to make it non-free. I started using and liked it. What most attracted me was it excellent transaction control mechanism.<br /><br />I then started using the 1.5 RC versions and found a security bug on it. I tried to report on the SourceForge bug tracker without success. So I subscribed myself to firebird-devels mailing list and reported it there. That happened around in December 2003, and I never leaved the list since then. :-)<br /><br />Lurking at firebird-devel was a challenge. I didn’t understand much English nor the technical talks, but I stayed there reading every message. I started to read the source code and understand the subsystems. I then started following firebird-checkins mailing list, where I could better understand how each feature/fix got implemented.<br /><br />Around July 2004, I joined the Firebird PT_BR project to adapt for Firebird 1.5 the Brazilian collation done by Paulo Henrique Albanez for Firebird 1.0. I proposed different approach to definitively integrate it in Firebird and it was also rejected. So I got the work to do the “right” changes to the Firebird International Language (INTL) subsystem. In September 2004 I officially joined the project.<br /><br />What’s more nice about being there is that I can work with very competent team, delivering a good software to millions of people. And just doing something I really like, designing features, programming in C++ and working with compiler (SQL / PSQL) implementation...<br /><br />Long live Firebird!
 	  </div>
   </div>
 </article>
@@ -94,12 +78,12 @@
     <ul class="pager blog-pager">
       
       <li class="previous">
-        <a href="/2009/07/12/network-latency-influence-on-firebird.html" data-toggle="tooltip" data-placement="top" title="Influence of network latency in the Firebird wire protocol">← Previous Post</a>
+        <a href="/2010/02/19/window-functions-part3-new-functions.html" data-toggle="tooltip" data-placement="top" title="Window functions (part3) - new functions">&larr; Previous Post</a>
       </li>
       
       
       <li class="next">
-        <a href="/2009/08/08/ddl-execution-architecture-in-firebird_4841.html" data-toggle="tooltip" data-placement="top" title="DDL execution architecture in Firebird - why we need to move on">Next Post →</a>
+        <a href="/2010/09/30/firebird-25-launch.html" data-toggle="tooltip" data-placement="top" title="Firebird 2.5 launch">Next Post &rarr;</a>
       </li>
       
     </ul>
@@ -123,8 +107,7 @@
 	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 	    })();
 	</script>
-	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-</noscript>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
 
 
@@ -193,7 +176,7 @@
         </ul>
         <p class="copyright text-muted">
       Adriano dos Santos Fernandes
-       • 
+      &nbsp;&bull;&nbsp;
       2016
       
       

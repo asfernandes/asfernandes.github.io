@@ -74,55 +74,91 @@
     <div class="posts-list">
   
   <article class="post-preview">
-    <a href="/2009/08/09/buggy-const.html">
-    <h2 class="post-title">The buggy const</h2>
+    <a href="/2014/01/12/artigo-novidades-do-firebird-25_12.html">
+    <h2 class="post-title">Artigo "Novidades do Firebird 2.5": Comandos DDL</h2>
   
       
     </a>
 
     <p class="post-meta">
-      Posted on August 9, 2009
+      Posted on January 12, 2014
     </p>
   
     <div class="post-entry">
-      In C/C++, there are constants and pointer to constants. I’m talking here about constants (i.e., const int var1; int* const var2) and not pointer to constants (i.e., const int* var3). In 90% of cases that I see, usage of constants for local “variables” and parameters is “wrong”. People...
-    <a href="/2009/08/09/buggy-const.html" class="post-read-more">[Read&nbsp;More]</a>
+      Além do comando CREATE COLLATION, mostrado na seção anterior, o Firebird 2.5 acrescenta comandos DDL que aliviam limitações anteriores e outros comandos totalmente novos. Duas limitações existentes nas versões anteriores eram relacionadas à impossibilidade de alteração de colunas COMPUTED BY e views. Era preciso eliminar estes objetos e recriá-los com...
+    <a href="/2014/01/12/artigo-novidades-do-firebird-25_12.html" class="post-read-more">[Read&nbsp;More]</a>
     </div>
   
    </article>
   
   <article class="post-preview">
-    <a href="/2009/08/02/cvsnt-client-is-slow.html">
-    <h2 class="post-title">CVSNT client is slow</h2>
+    <a href="/2014/01/05/artigo-novidades-do-firebird-25_5.html">
+    <h2 class="post-title">Artigo "Novidades do Firebird 2.5": Character Sets e Collates</h2>
   
       
     </a>
 
     <p class="post-meta">
-      Posted on August 2, 2009
+      Posted on January 5, 2014
     </p>
   
     <div class="post-entry">
-      For years I was using CVSNT client to work with Firebird and any other CVS repository. I started to use it because I needed a client capable of handling the “sserver” protocol method, which the “standard” CVS can’t. A first thing I’ve noted has that it most times refetches completely...
-    <a href="/2009/08/02/cvsnt-client-is-slow.html" class="post-read-more">[Read&nbsp;More]</a>
+      No Firebird, diferentes tabelas ou até mesmo diferentes colunas de uma mesma tabela podem usar diferentes character sets e collates. Isto permite uma grande flexibilidade mas pode causar problemas caso o desenvolvedor ou DBA não se atente às necessidades da aplicação. Por isso, um banco de dados pode ter um...
+    <a href="/2014/01/05/artigo-novidades-do-firebird-25_5.html" class="post-read-more">[Read&nbsp;More]</a>
     </div>
   
    </article>
   
   <article class="post-preview">
-    <a href="/2009/07/12/network-latency-influence-on-firebird.html">
-    <h2 class="post-title">Influence of network latency in the Firebird wire protocol</h2>
+    <a href="/2014/01/02/artigo-novidades-do-firebird-25.html">
+    <h2 class="post-title">Artigo "Novidades do Firebird 2.5": A arquitetura SuperClassic</h2>
   
       
     </a>
 
     <p class="post-meta">
-      Posted on July 12, 2009
+      Posted on January 2, 2014
     </p>
   
     <div class="post-entry">
-      People often talk that Firebird performs badly in networks with high latency. I did some tests to see how the new protocol has been improved compared to the old one, and to see how it could be improved even more. My tests only cares about latency, and not about bandwidth....
-    <a href="/2009/07/12/network-latency-influence-on-firebird.html" class="post-read-more">[Read&nbsp;More]</a>
+      Desde sua primeira versão, o Firebird foi disponibilizado em dois modos de operação (chamados de arquiteturas) diferentes, a SuperServer e a Classic. Na SuperServer as conexões aos bancos de dados são gerenciadas com múltiplas threads em um único processo do SO, enquanto que na Classic é aberto um processo para...
+    <a href="/2014/01/02/artigo-novidades-do-firebird-25.html" class="post-read-more">[Read&nbsp;More]</a>
+    </div>
+  
+   </article>
+  
+  <article class="post-preview">
+    <a href="/2013/12/22/artigo-novidades-do-firebird-25_22.html">
+    <h2 class="post-title">Artigo "Novidades do Firebird 2.5": Migrando de versões anteriores</h2>
+  
+      
+    </a>
+
+    <p class="post-meta">
+      Posted on December 22, 2013
+    </p>
+  
+    <div class="post-entry">
+      Conforme citado na introdução, a compatibilidade é levada a sério no Firebird. Infelizmente, porém, às vezes é preciso fazer mudanças que causam certas dificuldades de migração. Antes da versão 2.1 o Firebird tinha importantes bugs referentes a implementação de character sets multibyte herdados do InterBase. Um destes character sets...
+    <a href="/2013/12/22/artigo-novidades-do-firebird-25_22.html" class="post-read-more">[Read&nbsp;More]</a>
+    </div>
+  
+   </article>
+  
+  <article class="post-preview">
+    <a href="/2013/12/20/artigo-novidades-do-firebird-25.html">
+    <h2 class="post-title">Artigo "Novidades do Firebird 2.5": Introdução</h2>
+  
+      
+    </a>
+
+    <p class="post-meta">
+      Posted on December 20, 2013
+    </p>
+  
+    <div class="post-entry">
+      O desenvolvimento do SGBD Firebird foi iniciado em Julho do ano 2000 a partir do código fonte da versão beta do InterBase 6.0, disponibilizado pela Inprise (Borland) sob licença open source. Desde então cinco versões foram lançadas pela sua equipe de desenvolvimento, mostrando uma evolução contínua do produto. O foco...
+    <a href="/2013/12/20/artigo-novidades-do-firebird-25.html" class="post-read-more">[Read&nbsp;More]</a>
     </div>
   
    </article>
@@ -136,6 +172,10 @@
     <a href="/">&larr; Newer Posts</a>
   </li>
   
+  
+  <li class="next">
+    <a href="/page3">Older Posts &rarr;</a>
+  </li>
   
 </ul>
 

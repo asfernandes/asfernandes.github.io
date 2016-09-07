@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>CVSNT client is slow</title>
-  <meta name="description" content="For years I was using CVSNT client to work with Firebird and any other CVS repository. I started to use it because I needed a client capable of handling the ...">
+  <title>Como se tornar (ou não) um "Firebird Developer"</title>
+  <meta name="description" content="Recentemente eu divulguei em meu twitter que estava fazendo sete anos do meu primeiro commit no projeto Firebird. Daí citaram isso no FirebirdNews e em newsl...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic%7COpen+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://asfernandes.github.io/2009/08/02/cvsnt-client-is-slow.html">
+  <link rel="canonical" href="http://asfernandes.github.io/2011/10/22/como-se-tornar-ou-nao-um-firebird.html">
   <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
 </head>
 
@@ -44,8 +43,8 @@
   
   <div class="avatar-container">
     <div class="avatar-img-border">
-      <a href="http://asfernandes.github.io%20">
-        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
     </a>
     </div>
   </div>
@@ -58,9 +57,9 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <div class="post-heading">
-        <h1>CVSNT client is slow</h1>
+        <h1>Como se tornar (ou não) um "Firebird Developer"</h1>
         
-        <span class="post-meta">Posted on August 2, 2009</span>
+        <span class="post-meta">Posted on October 22, 2011</span>
       </div>
      </div>
   </div>
@@ -69,22 +68,7 @@
 <article>
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    <p>For years I was using CVSNT client to work with Firebird and any other CVS repository. I started to use it because I needed a client capable of handling the “sserver” protocol method, which the “standard” CVS can’t.</p>
-
-<p>A first thing I’ve noted has that it most times refetches completely (or just crashes trying) Firebird ChangeLog file during updates because some “corruption” (supposedly because it has more than 2MB). But that was OK with me, I just press Ctrl+Break and continue working.</p>
-
-<p>By some reason, I had to use Cygwin’s CVS to checkout whole firebird2 tree. It was <strong>much faster</strong>. So I switched to non-NT client and anything is much faster with it.</p>
-
-<p>I’ve just started a merge of HEAD in my branch now. A lot of conflicts to resolve, most of them related to cleanups and formating changes. Unfortunately, it can’t make this faster. <img class="emoji" title=":smiley:" alt=":smiley:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f603.png" height="20" width="20" align="absmiddle"></p>
-
-<p>BTW1, to open all conflicted files in gedit, I’m using:</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">grep -RlZ <span class="s2">"&lt;&lt;&lt;&lt;&lt;&lt;&lt;"</span> builds/ src/ |xargs -0 gedit</code></pre></figure>
-
-<p>BTW2, CVS is dead. Who cares?</p>
-
-<p>BTW3, GIT seems excellent, but is somewhat difficult to grasp.</p>
-
+	    Recentemente eu divulguei em meu twitter que estava fazendo sete anos do meu primeiro commit no projeto Firebird. Daí citaram isso no FirebirdNews e em newsletter da Firebase.<br /><br />Estou dizendo isso porque apareceram algumas pessoas com aquele tipo comum de questionamento "Como entrar para o time Firebird?". O problema é que, como citado na newsletter da Firebase, desses sete anos pra cá nenhum desenvolvedor se juntou ao Firebird (core). Isso mesmo, com exceção de um ou outro patch específico (geralmente dos mantenedores das distros Linux), o Firebird é desenvolvido pelas mesmas poucas pessoas há mais de sete anos.<br /><br />Sempre respondi esses e-mails, mas geralmente a "vontade" da pessoa já termina aí. E olha que sempre respondi com mais educação do que estou usando pra escrever esse post.<br /><br />Então vou colocar o que realmente penso sobre isso.&nbsp;Em primeiro lugar, você não deve fazer essa pergunta&nbsp;"Como entrar para o time Firebird?". A primeira coisa é aprender a usar o Google e se surgir alguma dúvida que não tenha uma resposta, aí sim pergunte sobre ela.<br /><br />É normal que você tenha dificuldade pra "se inserir" no projeto. Eu comecei a acompanhar o desenvolvimento do Firebird em dezembro de 2003 e meu primeiro commit foi em setembro de 2004, apesar de estar trabalhando ativamente desde junho ou julho. O Claudio Valderrama costumava dizer que eu era o único que tinha aprendido o código em algumas semanas, mas como podem ver foi alguns meses :), sem falar que até hoje eu não gosto nem de ver certos subsistemas (hello PAG, CCH, SDW...).<br /><br />Outra coisa são suas habilidades.&nbsp;Não é normal que você não tenha no mínimo bons conhecimentos sobre C++, que é a linguagem usada no desenvolvimento do Firebird. Eu posso te afirmar com 98% de certeza que você não vai encontrar em um projeto open-source pessoas com vontade de te ajudar com coisas básicas.<br /><br />Digamos que você já esteja pensando que não quer isso (como todos os anteriores), mas tenha alguma dúvida ainda, então continuo minhas sugestões para que você não consiga :).&nbsp;Não leia todos os posts das listas de discussões. Também não leia e tente entender todas as alterações feitas no código, que são enviadas pra lista firebird-checkins. Acho que foi aqui que falhei, pois desde aquele dezembro de 2003 não deixei de ler nenhuma das milhares de mensagens. E tenho certeza que todos os outros desenvolvedores ativos fizeram e fazem o mesmo.<br /><br />Se você também se ofendeu com esse post (caso tenha sido um dos que fez aquela pergunta), é melhor não perder seu tempo e desistir logo. Quem acompanha as listas firebird-devel e firebird-architect (e a firebird-admins, mas essa é fechada), sabe do que estou falando. As vezes (pra não dizer, muitas vezes) as discussões partem pro lado pessoal, e isso é a pior parte de fazer parte do projeto. Isso não é uma exclusividade do Firebird. Comparando com o Linux, por exemplo, é só procurar alguma mensagem do Linus Torvals na lkml e ver como a coisa geralmente funciona.
 	  </div>
   </div>
 </article>
@@ -94,12 +78,12 @@
     <ul class="pager blog-pager">
       
       <li class="previous">
-        <a href="/2009/07/12/network-latency-influence-on-firebird.html" data-toggle="tooltip" data-placement="top" title="Influence of network latency in the Firebird wire protocol">← Previous Post</a>
+        <a href="/2011/08/20/beautiful-fonts-in-ubuntu.html" data-toggle="tooltip" data-placement="top" title="Beautiful fonts in Ubuntu">&larr; Previous Post</a>
       </li>
       
       
       <li class="next">
-        <a href="/2009/08/08/ddl-execution-architecture-in-firebird_4841.html" data-toggle="tooltip" data-placement="top" title="DDL execution architecture in Firebird - why we need to move on">Next Post →</a>
+        <a href="/2012/04/26/dsqlblr-compilers-internals.html" data-toggle="tooltip" data-placement="top" title="DSQL/BLR compilers internals">Next Post &rarr;</a>
       </li>
       
     </ul>
@@ -123,8 +107,7 @@
 	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 	    })();
 	</script>
-	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-</noscript>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
 
 
@@ -193,7 +176,7 @@
         </ul>
         <p class="copyright text-muted">
       Adriano dos Santos Fernandes
-       • 
+      &nbsp;&bull;&nbsp;
       2016
       
       

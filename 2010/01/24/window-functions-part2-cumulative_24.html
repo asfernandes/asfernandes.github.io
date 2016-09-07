@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Window Functions (part2) - cumulative aggregates</title>
+  <meta name="description" content="Continuing with the window functions support for Firebird 3, I have now added another OVER&nbsp;sub-clause: ORDER BY. The&nbsp;ORDER BY&nbsp;sub-clause can b...">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://asfernandes.github.io/2010/01/24/window-functions-part2-cumulative_24.html">
+  <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://asfernandes.github.io">asfernandes' blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        <li>
+      <a href="/contact">Contact</a>
+    </li>
+    
+      </ul>
+    </div>
+
+  
+  <div class="avatar-container">
+    <div class="avatar-img-border">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
+    </a>
+    </div>
+  </div>
+  
+
+  </div>
+</nav>
+    <div role="main" class="container main-content">
+        <header class="header-post">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h1>Window Functions (part2) - cumulative aggregates</h1>
+        
+        <span class="post-meta">Posted on January 24, 2010</span>
+      </div>
+     </div>
+  </div>
+</header>
+
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    Continuing with the <a id="hwz5" href="http://asfernandes.blogspot.com/2010/01/window-functions_19.html" title="window function support for Firebird 3">window functions support for Firebird 3</a>, I have now added another <font class="Apple-style-span" face="'Courier New'">OVER</font>&nbsp;sub-clause: <font class="Apple-style-span" face="'Courier New'">ORDER BY</font>. The&nbsp;<font class="Apple-style-span" face="'Courier New'">ORDER BY</font>&nbsp;sub-clause can be used with or without partitions, and it makes aggregate functions return the partial aggregations as the records are being processed.<div><br></div><div>Considering our employee table has this data:</div><div><br></div><div><div><table id="aa_l" cellpadding="3" cellspacing="0" border="1" class="" bordercolor="#000000"><tbody><tr><td width="50%" style="text-align: right;">id</td><td width="50%" style="text-align: right;">salary</td></tr><tr><td width="50%" style="text-align: right;">1</td><td width="50%" style="text-align: right;">10.00</td></tr><tr><td width="50%" style="text-align: right;">2</td><td width="50%" style="text-align: right;">12.00</td></tr><tr><td width="50%" style="text-align: right;">3</td><td width="50%" style="text-align: right;">8.00</td></tr><tr><td width="50%" style="text-align: right;">4</td><td width="50%" style="text-align: right;">9.00</td></tr><tr><td width="50%" style="text-align: right;">5</td><td width="50%" style="text-align: right;">10.00</td></tr></tbody></table></div></div><div><br></div>And we run this query:<div><br><span style="font-family: 'Courier New'">select<br></span><span style="font-family: 'Courier New'">&nbsp;&nbsp; &nbsp;id, salary, sum(salary) over (order by salary) cum_salary<br></span><span style="font-family: 'Courier New'">&nbsp;&nbsp;from employee</span><br><div><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;order by salary;</font></div><div><br></div>The result set produced will be:<div><br><div><div><table id="nav." cellpadding="3" cellspacing="0" border="1" class="" bordercolor="#000000"><tbody><tr><td width="33.333333333333336%" style="text-align: right;">id</td><td width="33.333333333333336%" style="text-align: right;">salary</td><td width="33.333333333333336%" style="text-align: right;">cum_salary</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">3</td><td width="33.333333333333336%" style="text-align: right;">8.00</td><td width="33.333333333333336%" style="text-align: right;">8.00</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">4</td><td width="33.333333333333336%" style="text-align: right;">9.00</td><td width="33.333333333333336%" style="text-align: right;">17.00</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">1</td><td width="33.333333333333336%" style="text-align: right;">10.00</td><td width="33.333333333333336%" style="text-align: right;">37.00</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">5</td><td width="33.333333333333336%" style="text-align: right;">10.00</td><td width="33.333333333333336%" style="text-align: right;">37.00</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">2</td><td width="33.333333333333336%" style="text-align: right;">12.00</td><td width="33.333333333333336%" style="text-align: right;">49.00</td></tr></tbody></table></div></div><div><br></div>So cum_salary returns the partial/accumulated aggregation (of the <font class="Apple-style-span" face="'Courier New'">SUM</font> function). You may found strange the 37.00 repeated for the ids 1 and 5, but that is how it should work. The <font class="Apple-style-span" face="'Courier New'">ORDER BY</font> keys are grouped together and the aggregation is computed once (but summing the two 10.00).<div><br></div><div>You can use multiple windows with different orders, and <font class="Apple-style-span" face="'Courier New'">ORDER BY</font> parts like <font class="Apple-style-span" face="'Courier New'">DESC</font>,<font class="Apple-style-span" face="'Courier New'"> NULLS LAST</font>, etc. Here is a weird example:</div><br><span style="font-family: 'Courier New'"><div></div>select</span><br><span style="font-family: 'Courier New'">&nbsp;&nbsp; &nbsp;id, salary,</span><br><span style="font-family: 'Courier New'">&nbsp;&nbsp; &nbsp;sum(salary) over (order by salary) cum_salary,</span><br><span style="font-family: 'Courier New'">&nbsp;&nbsp; &nbsp;sum(salary) over (order by salary desc) cum_salary_desc</span><br><span style="font-family: 'Courier New'">&nbsp;&nbsp;from employee</span><br><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;order by salary;</font></div><div><br><font size="2">The result set produced will be:</font></div><div><font size="2"><br></font><div><div><div><div><table id="c33t" cellpadding="3" cellspacing="0" border="1" class="" bordercolor="#000000"><tbody><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">id</font></td><td width="25%" style="text-align: right;"><font size="2">salary</font></td><td width="25%" style="text-align: right;"><font size="2">cum_salary</font></td><td width="25%" style="text-align: right;"><font size="2">cum_salary_desc</font></td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">3</font></td><td width="25%" style="text-align: right;"><font size="2">8.00</font></td><td width="25%" style="text-align: right;"><font size="2">8.00</font></td><td width="25%" style="text-align: right;">49.00</td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">4</font></td><td width="25%" style="text-align: right;"><font size="2">9.00</font></td><td width="25%" style="text-align: right;"><font size="2">17.00</font></td><td width="25%" style="text-align: right;">41.00</td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">1</font></td><td width="25%" style="text-align: right;"><font size="2">10.00</font></td><td width="25%" style="text-align: right;"><font size="2">37.00</font></td><td width="25%" style="text-align: right;">32.00</td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">5</font></td><td width="25%" style="text-align: right;"><font size="2">10.00</font></td><td width="25%" style="text-align: right;"><font size="2">37.00</font></td><td width="25%" style="text-align: right;">32.00</td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">2</font></td><td width="25%" style="text-align: right;"><font size="2">12.00</font></td><td width="25%" style="text-align: right;"><font size="3"><font size="2">49.00</font><br></font></td><td width="25%" style="text-align: right;">12.00</td></tr></tbody></table></div></div></div><div><br></div><div>With a partition&nbsp;<font class="Apple-style-span" face="'Courier New'">ORDER BY</font> works the same way, but at each partition boundary the aggregation is reset.</div></div><br><div>All aggregation functions are usable with <font class="Apple-style-span" face="'Courier New'">ORDER BY</font>, except the <font class="Apple-style-span" face="'Courier New'">LIST</font> function. As <font class="Apple-style-span" face="'Courier New'">LIST</font> returns blob, it would be slow to return multiple blobs (one for each order group), trick to implement, and I don't see an usage scenario for it.</div></div></div><br>
+	  </div>
+  </div>
+</article>
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <ul class="pager blog-pager">
+      
+      <li class="previous">
+        <a href="/2010/01/19/window-functions_19.html" data-toggle="tooltip" data-placement="top" title="Window Functions">&larr; Previous Post</a>
+      </li>
+      
+      
+      <li class="next">
+        <a href="/2010/02/13/firebird-history-in-9-minutes-video.html" data-toggle="tooltip" data-placement="top" title="Firebird History in 9 minutes video">Next Post &rarr;</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
+
+    </div>
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/asfernandes" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://twitter.com/adrianosf" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="mailto:adrianosf@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://linkedin.com/in/adrianosf" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+      
+      <li>
+      <a href="/feed.xml" title="RSS">
+        <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+      </li>   
+               
+        </ul>
+        <p class="copyright text-muted">
+      Adriano dos Santos Fernandes
+      &nbsp;&bull;&nbsp;
+      2016
+      
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+    
+  </body>
+</html>

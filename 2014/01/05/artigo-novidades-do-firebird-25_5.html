@@ -5,15 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</title>
-  <meta name="description" content="Na Nota Técnica 2014/002 da Nota Fiscal Eletrônica, o governo brasileiro do PT, por falta do que fazer com o intuito de evoluir o sistema, substituiu o web s...">
+  <title>Artigo "Novidades do Firebird 2.5": Character Sets e Collates</title>
+  <meta name="description" content="No Firebird, diferentes tabelas ou até mesmo diferentes colunas de uma mesma tabela podem usar diferentes character sets e collates. Isto permite uma grande ...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://asfernandes.github.io/2015/01/22/corrigindo-schemas-do-web-service.html">
+  <link rel="canonical" href="http://asfernandes.github.io/2014/01/05/artigo-novidades-do-firebird-25_5.html">
   <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
 </head>
 
@@ -57,9 +57,9 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <div class="post-heading">
-        <h1>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</h1>
+        <h1>Artigo "Novidades do Firebird 2.5": Character Sets e Collates</h1>
         
-        <span class="post-meta">Posted on January 22, 2015</span>
+        <span class="post-meta">Posted on January 5, 2014</span>
       </div>
      </div>
   </div>
@@ -68,28 +68,7 @@
 <article>
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    <p>Na <a href="http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=2Z%20kcHOdpHs=">Nota Técnica 2014/002</a> da Nota Fiscal Eletrônica, o governo <del>brasileiro</del> do PT, <del>por falta do que fazer</del> com o intuito de evoluir o sistema, substituiu o web service de consulta de NF-e emitidas por terceiros pelo web service de distribuição de documentos fiscais.</p>
-
-<p>Definiram que a partir de 06/10/2014 o novo web service já estaria funcionando no ambiente de produção, enquanto o antigo seria desativado em 02/02/2015. Estava tentando há duas semanas usar o novo web service e ele ainda não funcionava. Hoje consegui.</p>
-
-<p>O web service retornou resposta, mas é claro, resposta errada que não é validada pelo próprio <a href="http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=cI%202zLXpcts=">schema</a> distribuído por eles. Como uso Java com JAXB, após desativar a validação da resposta, o conteúdo do arquivo não estava sendo “desserializado” corretamente.</p>
-
-<p>Eles criaram uma tag DocZip que armazena um XML compactado com GZIP no formato BASE-64 e declararam o conteúdo da tag como se tivesse um documento XML. É óbvio que algo em BASE-64 não é um XML válido.</p>
-
-<p>Como o governo incompetente não testa o que faz, tive que corrigir o schema e estou disponibilizando para que outros também não percam tempo. Mesmo sem saber escrever schemas XML, cheguei <a href="http://stackoverflow.com/questions/376582/xml-schema-element-with-attributes-containing-only-text">nessa dúvida</a> que me ajudou a fazer a correção.</p>
-
-<p><a href="http://pastebin.com/bNRspBSd">Link para o arquivo retDistDFeInt_v1.00.xsd corrigido</a></p>
-
-<p><a href="http://pastebin.com/8c1RSCKZ">Link para o diff/patch contra o arquivo XSD original</a></p>
-
-<p>Edit:</p>
-
-<p>Se tem uma coisa pior que incompetência que acontece com muita frequência na Receita Federal do PT ultimamente é a sacanagem. Após escrever esse artigo, mandei a mesma informação através do Fale Conosco, e antes mesmo de obter resposta (geralmente é um robô que responde algo sem sentido), desconfiei de uma coisa e fui verificar.</p>
-
-<p>A Receita Federal, na tentativa de esconder seus erros, costuma lançar correções de arquivos e disponibilizá-los com o mesmo número de versão. E não é que aconteceu exatamente isso agora?</p>
-
-<p>Tenho o arquivo PL_NFeDistDFe_100.zip com data de 07/01/2015 que tinha o problema. O arquivo presente <a href="http://www.nfe.fazenda.gov.br/portal/listaConteudo.aspx?tipoConteudo=/fwLvLUSmU8=">nesta página</a> nesse momento tem o mesmo nome e diz que foi atualizado em 19/09/2014, porém ele já está corrigido!</p>
-
+	    No Firebird, diferentes tabelas ou até mesmo diferentes colunas de uma mesma tabela podem usar diferentes character sets e collates. Isto permite uma grande flexibilidade mas pode causar problemas caso o desenvolvedor ou DBA não se atente às necessidades da aplicação. Por isso, um banco de dados pode ter um character set default, que é automaticamente usado quando não é especificado um character set durante a definição de uma coluna de tipo string. Algo semelhante não existia para collates, sendo que o collate default de cada character set é o modo de comparação binária dos bytes que compõem uma string.<br /><br /> Na nova versão foi introduzido o comando ALTER CHARACTER SET, permitindo a alteração do collate padrão de um character set. Além do comando ALTER CHARACTER SET, agora o collate padrão do character set padrão do banco pode ser definido no momento da criação do banco de dados. A <b>listagem 1</b> mostra a criação de um banco de dados usando o character set padrão WIN1252 e definindo seu collate padrão para WIN_PTBR. Em seguida o collate padrão do character set UTF8 é alterado para UNICODE_CI_AI.<br /><br /><span style="vertical-align: baseline;"></span><br /><b>Listagem 1</b>. Exemplos de alteração de collate padrão.<br /><br /><div><div><span style="font-family: Courier New, Courier, monospace;">CREATE DATABASE 'TEST.FDB'<br />&nbsp; DEFAULT CHARACTER SET WIN1252<br />&nbsp; COLLATION WIN_PTBR;<br /><br />ALTER CHARACTER SET UTF8<br />&nbsp; SET DEFAULT COLLATION UNICODE_CI_AI;</span><br /><br /><span style="vertical-align: baseline;"></span><br />A <b>listagem 2</b> mostra o banco operando com o character set default WIN1252 e o collate WIN_PTBR (case-insensitive).<br /><br /><b>Listagem 2</b>. Comparação de strings usando o collate WIN_PTBR.<br /><br /><span style="font-family: Courier New, Courier, monospace;">CREATE TABLE PESSOAS (NOME VARCHAR(20));<br /><br />INSERT INTO PESSOAS VALUES ('Fulano');<br />INSERT INTO PESSOAS VALUES ('Beltrano');<br /><br />-- Localiza Fulano (= FULANO)<br />SELECT * FROM PESSOAS WHERE NOME = 'FULANO';</span><br /><br /> Outra necessidade comumente encontrada em aplicações é a gravação de códigos alfanuméricos. Até o Firebird 2.1 a ordenação de campos do tipo string era sempre feita no modo de comparação de texto. Isto quer dizer que um código “A10” é listado antes de “A2” caso ordenado por esta coluna. A <b>listagem 3</b> mostra um exemplo desta situação.<br /><br /><b>Listagem 3</b>. Ordenação de códigos alfanuméricos usando o collate UNICODE.<br /><span style="font-family: Courier New, Courier, monospace;"><br /></span></div><span style="font-family: Courier New, Courier, monospace;">CREATE TABLE DOCUMENTOS (<br />&nbsp; CODIGO VARCHAR(10) CHARACTER SET UTF8 COLLATE UNICODE<br />);<br /><br />INSERT INTO DOCUMENTOS VALUES ('A1');</span><div><span style="font-family: Courier New, Courier, monospace;">INSERT INTO DOCUMENTOS VALUES ('A2');<br />INSERT INTO DOCUMENTOS VALUES ('A10');<br />INSERT INTO DOCUMENTOS VALUES ('A11');<br />INSERT INTO DOCUMENTOS VALUES ('A100');<br />INSERT INTO DOCUMENTOS VALUES ('B1');<br />INSERT INTO DOCUMENTOS VALUES ('B10');<br /><br />-- Resultado: A1, A10, A100, A11, A2, B1, B10<br />SELECT CODIGO FROM DOCUMENTOS ORDER BY CODIGO;</span><br /><br /><br /> O Firebird 2.5 permite que collates sejam configuráveis, e uma das opções do collate UNICODE permite que números sejam ordenados por ordem numérica. A <b>listagem 4</b> mostra a criação do collate UNICODE_NUM com o uso da opção NUMERIC-SORT e a ordenação usando este collate.</div><div><br /><b>Listagem 4</b>. Ordenação usando a opção NUMERIC-SORT do collate UNICODE.<br /><div><br /><span style="font-family: Courier New, Courier, monospace;">CREATE COLLATION UNICODE_NUM FOR UTF8 FROM UNICODE 'NUMERIC-SORT=1';<br /><br />CREATE TABLE DOCUMENTOS2 (<br />&nbsp; CODIGO VARCHAR(10) CHARACTER SET UTF8 COLLATE UNICODE_NUM<br />);<br /><br />INSERT INTO DOCUMENTOS2 SELECT * FROM DOCUMENTOS;<br /><br />-- Resultado: A1, A2, A10, A11, A100, B1, B10<br />SELECT CODIGO FROM DOCUMENTOS2 ORDER BY CODIGO;</span><br /><br /><br /> Outra novidade da versão 2.5 é o collate UNICODE_CI_AI (para o character set UTF8), variação do collate UNICODE pré-configurado para desconsiderar diferenças de acentos e maiúsculas/minúsculas. O collate UNICODE_CI_AI funciona de maneira similar ao WIN_PTBR e PT_BR, mas aceita o conjunto completo de caracteres Unicode.</div></div></div>
 	  </div>
   </div>
 </article>
@@ -99,12 +78,12 @@
     <ul class="pager blog-pager">
       
       <li class="previous">
-        <a href="/2014/12/01/artigo-novidades-do-firebird-25.html" data-toggle="tooltip" data-placement="top" title="Artigo "Novidades do Firebird 2.5": Linguagem PSQL">&larr; Previous Post</a>
+        <a href="/2014/01/02/artigo-novidades-do-firebird-25.html" data-toggle="tooltip" data-placement="top" title="Artigo "Novidades do Firebird 2.5": A arquitetura SuperClassic">&larr; Previous Post</a>
       </li>
       
       
       <li class="next">
-        <a href="/2015/02/11/javascript-x-java-closures-e-lambdas.html" data-toggle="tooltip" data-placement="top" title="JavaScript x Java - closures e lambdas">Next Post &rarr;</a>
+        <a href="/2014/01/12/artigo-novidades-do-firebird-25_12.html" data-toggle="tooltip" data-placement="top" title="Artigo "Novidades do Firebird 2.5": Comandos DDL">Next Post &rarr;</a>
       </li>
       
     </ul>

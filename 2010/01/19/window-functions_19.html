@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Window Functions</title>
+  <meta name="description" content="By the SQL specification, window functions are a kind of aggregation, but which does not “filter” the result set of a query. The aggregated data is mixed wit...">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://asfernandes.github.io/2010/01/19/window-functions_19.html">
+  <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://asfernandes.github.io">asfernandes' blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        <li>
+      <a href="/contact">Contact</a>
+    </li>
+    
+      </ul>
+    </div>
+
+  
+  <div class="avatar-container">
+    <div class="avatar-img-border">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
+    </a>
+    </div>
+  </div>
+  
+
+  </div>
+</nav>
+    <div role="main" class="container main-content">
+        <header class="header-post">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h1>Window Functions</h1>
+        
+        <span class="post-meta">Posted on January 19, 2010</span>
+      </div>
+     </div>
+  </div>
+</header>
+
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    <p></p><div><font size="2">By the SQL specification, <i>window functions</i> are a kind of aggregation, but which does not “filter” the result set of a query. The aggregated data is mixed with the query result set. That sort of functions are used with the <font class="Apple-style-span" face="'Courier New'">OVER</font> clause. Users of Oracle also knows window functions as analytical functions.</font></div><div><font size="2"><br></font></div><div><font size="2">We have promissed very basic support for window functions in Firebird 3, which was the <font class="Apple-style-span" face="'Courier New'">OVER ()</font> clause using the current aggregate functions. With the <font class="Apple-style-span" face="'Courier New'">OVER ()</font> clause, one can mix with the query result set the aggregated data over the entire result set. Let me explain with an example.</font></div><div><font size="2"><br></font></div><div><font size="2">We have a table EMPLOYEE with columns ID, NAME and SALARY, and want to show each employee with his respective salary and the percentage of his salary over the payroll. With a “normal” query, we would do:</font></div><div><font size="2"><br></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">select</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;id,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;name,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary / (select sum(salary) from employee) percentage</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;from employee;</font></font></div><div><font size="2"><br></font></div><div><font size="2">We need to repeat ourselves and wait so much to see the results. We can also make it hopefully faster using a cross join, but still the whole employee table will need to be read more than one time. Change the table by a complex view or add various “windows” and we'll have a performance problem for sure.</font></div><div><font size="2"><br></font></div><div><font size="2">The same query could be specified in much more elegant and faster way using a window function. Here is it how:</font></div><div><font size="2"><br></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">select</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;id,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;name,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary / sum(salary) over () percentage</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;from employee;</font></font></div><div><font size="2"><br></font></div><div><font size="2">Here, <font class="Apple-style-span" face="'Courier New'">sum(salary) over ()</font> is computed with the sum of all SALARY from the query (the employee table). This is what the <font class="Apple-style-span" face="'Courier New'">OVER ()</font> clause does.</font></div><div><font size="2"><br></font></div><div><font size="2">But the <font class="Apple-style-span" face="'Courier New'">OVER</font> clause is not just that, and now I've added another of its subclauses to Firebird. It's the <font class="Apple-style-span" face="'Courier New'">PARTITION</font> subclause.</font></div><div><font size="2"><br></font></div><div><font size="2">A partition is a way to make the <font class="Apple-style-span" face="'Courier New'">OVER</font> aggregation based on a GROUP. Its syntax is:</font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;</font><font class="Apple-style-span" face="'Courier New'">&lt;window function&gt;([&lt;expr&gt;]) OVER (PARTITION BY &lt;expr&gt; [, &lt;expr&gt; ...])</font></font></div><div><font size="2"><br></font></div><div><font size="2">So now since the aggregation is done over a group, it could produce more than one row. So the result set generated by a partition is joined with the main query using the same expression list of the partition.</font></div><div><font size="2"><br></font></div><div><font size="2">For a example, lets add to our employee table a ROLE column. Now we want the same information, but instead of see the percentage of the employee salary over all employees, we want to see that value based on the employees occuping the same role. Here is how that query could be written:</font></div><div><font size="2"><br></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">select</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;id,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;name,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;role,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary / sum(salary) over (partition by role)</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;from employee;</font></font></div><div><font size="2"><br></font></div><div><font size="2">With the current implementation, the query (without the window functions) is executed one time and cached. Extra aggregation is done on this cached data. Partitions are joined by the new hash join algorithmn, and the main window (<font class="Apple-style-span" face="'Courier New'">OVER</font> without a partition) is joined through a cross join with the main query.</font></div><div><font size="2"><br></font></div><div><font size="2">There is much more about window functions, but this subset seems to cover some major use cases of them.</font></div><br>
+	  </div>
+  </div>
+</article>
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <ul class="pager blog-pager">
+      
+      <li class="previous">
+        <a href="/2009/12/10/integracao-da-jvm-ao-firebird.html" data-toggle="tooltip" data-placement="top" title="Integração da JVM ao Firebird">&larr; Previous Post</a>
+      </li>
+      
+      
+      <li class="next">
+        <a href="/2010/01/24/window-functions-part2-cumulative_24.html" data-toggle="tooltip" data-placement="top" title="Window Functions (part2) - cumulative aggregates">Next Post &rarr;</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
+
+    </div>
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/asfernandes" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://twitter.com/adrianosf" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="mailto:adrianosf@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://linkedin.com/in/adrianosf" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+      
+      <li>
+      <a href="/feed.xml" title="RSS">
+        <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+      </li>   
+               
+        </ul>
+        <p class="copyright text-muted">
+      Adriano dos Santos Fernandes
+      &nbsp;&bull;&nbsp;
+      2016
+      
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+    
+  </body>
+</html>

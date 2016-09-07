@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>CVSNT client is slow</title>
-  <meta name="description" content="For years I was using CVSNT client to work with Firebird and any other CVS repository. I started to use it because I needed a client capable of handling the ...">
+  <title>DSQL/BLR compilers internals</title>
+  <meta name="description" content="This post is some raw notes and is not very understandable by people who never worked with this code. In fact, the old implementation was so ugly that it was...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic%7COpen+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://asfernandes.github.io/2009/08/02/cvsnt-client-is-slow.html">
+  <link rel="canonical" href="http://asfernandes.github.io/2012/04/26/dsqlblr-compilers-internals.html">
   <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
 </head>
 
@@ -44,8 +43,8 @@
   
   <div class="avatar-container">
     <div class="avatar-img-border">
-      <a href="http://asfernandes.github.io%20">
-        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
     </a>
     </div>
   </div>
@@ -58,9 +57,9 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <div class="post-heading">
-        <h1>CVSNT client is slow</h1>
+        <h1>DSQL/BLR compilers internals</h1>
         
-        <span class="post-meta">Posted on August 2, 2009</span>
+        <span class="post-meta">Posted on April 26, 2012</span>
       </div>
      </div>
   </div>
@@ -69,22 +68,7 @@
 <article>
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    <p>For years I was using CVSNT client to work with Firebird and any other CVS repository. I started to use it because I needed a client capable of handling the “sserver” protocol method, which the “standard” CVS can’t.</p>
-
-<p>A first thing I’ve noted has that it most times refetches completely (or just crashes trying) Firebird ChangeLog file during updates because some “corruption” (supposedly because it has more than 2MB). But that was OK with me, I just press Ctrl+Break and continue working.</p>
-
-<p>By some reason, I had to use Cygwin’s CVS to checkout whole firebird2 tree. It was <strong>much faster</strong>. So I switched to non-NT client and anything is much faster with it.</p>
-
-<p>I’ve just started a merge of HEAD in my branch now. A lot of conflicts to resolve, most of them related to cleanups and formating changes. Unfortunately, it can’t make this faster. <img class="emoji" title=":smiley:" alt=":smiley:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f603.png" height="20" width="20" align="absmiddle"></p>
-
-<p>BTW1, to open all conflicted files in gedit, I’m using:</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">grep -RlZ <span class="s2">"&lt;&lt;&lt;&lt;&lt;&lt;&lt;"</span> builds/ src/ |xargs -0 gedit</code></pre></figure>
-
-<p>BTW2, CVS is dead. Who cares?</p>
-
-<p>BTW3, GIT seems excellent, but is somewhat difficult to grasp.</p>
-
+	    This post is some raw notes and is not very understandable by people who never worked with this code. In fact, the old implementation was so ugly that it was not simple even for me (who is constantly working in this area) to achieve this result. It needed many tries and reverts, but IMNSHO ended very well. Also, this was a large work that took many time, and I'm just writing some records here.<br /><br />Back in 2006, just after being invited to take DSQL work, I started to think what would we need to do to improve the compilers (DSQL and BLR) internals. My look started at src/dsql/pass1.cpp and src/jrd/cmp.cpp. Till then, even the addition of a simple function was a nightmare. This dialog happened by Nickolay Samofatov and myself in September-2004:<br /><br />Adriano: I added the "Lower" function. I don't knew that it is so difficult.&nbsp;"Length" will be added using blr too?<br /><br />Nickolay:&nbsp;why difficult? <br /><br />Nickolay:&nbsp;just fix 15 files or so :-) <br /><br />So I spent some years fixing "15 files or so" to add each feature and became very bored. In v2.5, to implement ALTER CHARACTER SET and AUTONOMOUS TRANSACTIONS statements, I added a "compatibility layer" to implement statements in an more OO-way. I described the DDL work in <a href="http://asfernandes.blogspot.com.br/2009/08/ddl-execution-architecture-in-firebird_4841.html">this post</a>. <br /><br />As I had&nbsp;promised&nbsp;in that post, it allowed to implement subroutines, as well packages. <br /><br />Within the v3.0 development cycle started, it was clear that not only statements was needing this layer, but expressions too. Expressions are much more "interesting" than statements. There are many types of expressions, all of them were mangled in the (now removed!) ubiquitous&nbsp;dsql_nod/jrd_nod structures and algorithms. These types are record sources, values, booleans, aggregate values, windowed values and lists. <br /><br />The compatibility expression layer allowed to implement window functions (more <a href="http://asfernandes.blogspot.com.br/2010/01/window-functions_19.html">here</a>, <a href="http://asfernandes.blogspot.com.br/2010/01/window-functions-part2-cumulative_24.html">here</a>&nbsp;and <a href="http://asfernandes.blogspot.com.br/2010/02/window-functions-part3-new-functions.html">here</a>), but at the same time it create more ugly code in the (internal) interfaces. <br /><br />The complete removal of jrd_nod was easy and done a lot of time ago. But dsql_nod remained. It was a lot of code needing a complete refactor (rewrite), which now is finally done. <br /><br />This is the Node classes hierarchy. Except lists, each of them has its inherited classes (omitted here). <br /><br />Node<br />--- DdlNode<br />--- DmlNode<br />------ StmtNode<br />------ ExprNode<br />--------- BoolExprNode<br />--------- ValueExprNode<br />------------ AggNode<br />--------------- WinFuncNode<br />--------- RecordSourceNode<br />--------- ListExprNode<br />------------ ValueListExprNode<br />------------ RecSourceListExprNode<br /><br />As I said, much time was spent on this, but without it many other features were not possible (or viable).<br /><br />It's easy to say now that the old code was a crap (and that is what it was, really!), but many things are involved here (like C vs C++, bison vs btyacc). The main thing is that this rework was now possible, so it was done.
 	  </div>
   </div>
 </article>
@@ -94,12 +78,12 @@
     <ul class="pager blog-pager">
       
       <li class="previous">
-        <a href="/2009/07/12/network-latency-influence-on-firebird.html" data-toggle="tooltip" data-placement="top" title="Influence of network latency in the Firebird wire protocol">← Previous Post</a>
+        <a href="/2011/10/22/como-se-tornar-ou-nao-um-firebird.html" data-toggle="tooltip" data-placement="top" title="Como se tornar (ou não) um "Firebird Developer"">&larr; Previous Post</a>
       </li>
       
       
       <li class="next">
-        <a href="/2009/08/08/ddl-execution-architecture-in-firebird_4841.html" data-toggle="tooltip" data-placement="top" title="DDL execution architecture in Firebird - why we need to move on">Next Post →</a>
+        <a href="/2013/12/18/artigo-novidades-do-firebird-25_18.html" data-toggle="tooltip" data-placement="top" title="Artigo "Novidades do Firebird 2.5"">Next Post &rarr;</a>
       </li>
       
     </ul>
@@ -123,8 +107,7 @@
 	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 	    })();
 	</script>
-	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-</noscript>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
 
 
@@ -193,7 +176,7 @@
         </ul>
         <p class="copyright text-muted">
       Adriano dos Santos Fernandes
-       • 
+      &nbsp;&bull;&nbsp;
       2016
       
       
