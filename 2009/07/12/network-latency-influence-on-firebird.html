@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Influence of network latency in the Firebird wire protocol</title>
+  <meta name="description" content="People often talk that Firebird performs badly in networks with high latency. I did some tests to see how the new protocol has been improved compared to the ...">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://asfernandes.github.io/2009/07/12/network-latency-influence-on-firebird.html">
+  <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://asfernandes.github.io">asfernandes' blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        <li>
+      <a href="/">Home</a>
+    </li>
+    
+      </ul>
+    </div>
+
+  
+  <div class="avatar-container">
+    <div class="avatar-img-border">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
+    </a>
+    </div>
+  </div>
+  
+
+  </div>
+</nav>
+    <div role="main" class="container main-content">
+        <header class="header-post">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h1>Influence of network latency in the Firebird wire protocol</h1>
+        
+        <span class="post-meta">Posted on July 12, 2009</span>
+      </div>
+     </div>
+  </div>
+</header>
+
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    <p>People often talk that Firebird performs badly in networks with high latency. I did some tests to see how the new protocol has been improved compared to the old one, and to see how it could be improved even more. My tests only cares about <strong>latency</strong>, and not about bandwidth.</p>
+
+<p>It simulate network latency in Linux using <a href="http://www.linuxfoundation.org/en/Net:Netem">Netem</a>. With the <code class="highlighter-rouge">tc</code> utility, we can add a delay for outbound traffic. Since I did it for <em>lo</em> interface, it happens that it works for in/out traffic. I set delay to 100ms (that is more or less a value I found doing it in the internet with my horrible Telefonica <del>speed</del>y connection), using this command:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>sudo tc qdisc add dev lo root handle 1:0 netem delay 100ms</code></pre></figure>
+
+<p>And here is the result of a <code class="highlighter-rouge">ping</code>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>ping localhost
+PING localhost <span class="o">(</span>127.0.0.1<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
+64 bytes from localhost <span class="o">(</span>127.0.0.1<span class="o">)</span>: <span class="nv">icmp_seq</span><span class="o">=</span>1 <span class="nv">ttl</span><span class="o">=</span>64 <span class="nb">time</span><span class="o">=</span>200 ms
+64 bytes from localhost <span class="o">(</span>127.0.0.1<span class="o">)</span>: <span class="nv">icmp_seq</span><span class="o">=</span>2 <span class="nv">ttl</span><span class="o">=</span>64 <span class="nb">time</span><span class="o">=</span>200 ms
+64 bytes from localhost <span class="o">(</span>127.0.0.1<span class="o">)</span>: <span class="nv">icmp_seq</span><span class="o">=</span>3 <span class="nv">ttl</span><span class="o">=</span>64 <span class="nb">time</span><span class="o">=</span>200 ms
+64 bytes from localhost <span class="o">(</span>127.0.0.1<span class="o">)</span>: <span class="nv">icmp_seq</span><span class="o">=</span>4 <span class="nv">ttl</span><span class="o">=</span>64 <span class="nb">time</span><span class="o">=</span>200 ms</code></pre></figure>
+
+<p>To later remove the delay, the command is:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>sudo tc qdisc del dev lo root</code></pre></figure>
+
+<p>The test uses <a href="http://code.google.com/p/cppsys/source/browse/#svn/trunk/src/CppSys/Database/Firebird">Firebird library</a> present on (my till unknown) <a href="http://code.google.com/p/cppsys">CppSys</a> project (more on CppSys in a future post). The CppSys database library has interfaces and semantics based on JDBC. The relevant test code is here:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">println</span><span class="p">(</span><span class="s">"Connecting to the database"</span><span class="p">);</span>
+<span class="n">AutoPtr</span><span class="o">&lt;</span><span class="n">FbDatabase</span><span class="o">&gt;</span> <span class="n">database</span><span class="p">(</span><span class="n">client</span><span class="o">-&gt;</span><span class="n">openDatabase</span><span class="p">(</span>
+    <span class="n">String</span><span class="p">(</span><span class="s">"firebird:"</span><span class="p">)</span> <span class="o">+</span> <span class="n">databaseName</span><span class="p">));</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">"Starting the transaction"</span><span class="p">);</span>
+<span class="n">AutoPtr</span><span class="o">&lt;</span><span class="n">FbTransaction</span><span class="o">&gt;</span> <span class="n">transaction</span><span class="p">(</span><span class="n">database</span><span class="o">-&gt;</span><span class="n">startTransaction</span><span class="p">(</span>
+    <span class="n">TransactionIsolation</span><span class="o">::</span><span class="n">SNAPSHOT</span><span class="p">));</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">"Preparing stmt1"</span><span class="p">);</span>
+<span class="n">AutoPtr</span><span class="o">&lt;</span><span class="n">FbPreparedStatement</span><span class="o">&gt;</span> <span class="n">stmt1</span><span class="p">(</span><span class="n">database</span><span class="o">-&gt;</span><span class="n">prepareStatement</span><span class="p">(</span>
+    <span class="n">transaction</span><span class="p">,</span>
+    <span class="s">"select rdb$relation_name from rdb$relations"</span>
+    <span class="s">"    where rdb$system_flag = 1"</span>
+    <span class="s">"    order by rdb$relation_name"</span><span class="p">));</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">"Preparing stmt2"</span><span class="p">);</span>
+<span class="n">AutoPtr</span><span class="o">&lt;</span><span class="n">FbPreparedStatement</span><span class="o">&gt;</span> <span class="n">stmt2</span><span class="p">(</span><span class="n">database</span><span class="o">-&gt;</span><span class="n">prepareStatement</span><span class="p">(</span>
+    <span class="n">transaction</span><span class="p">,</span>
+    <span class="s">"select rdb$field_name from rdb$relation_fields"</span>
+    <span class="s">"    where rdb$relation_name = ?"</span>
+    <span class="s">"    order by rdb$field_name"</span><span class="p">));</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">"Preparing stmt3"</span><span class="p">);</span>
+<span class="n">AutoPtr</span><span class="o">&lt;</span><span class="n">FbPreparedStatement</span><span class="o">&gt;</span> <span class="n">stmt3</span><span class="p">(</span><span class="n">database</span><span class="o">-&gt;</span><span class="n">prepareStatement</span><span class="p">(</span>
+    <span class="n">transaction</span><span class="p">,</span>
+    <span class="s">"select rdb$trigger_name from rdb$triggers"</span>
+    <span class="s">"    where rdb$relation_name = ?"</span>
+    <span class="s">"    order by rdb$trigger_name"</span><span class="p">));</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">"Executing stmt1"</span><span class="p">);</span>
+<span class="n">AutoPtr</span><span class="o">&lt;</span><span class="n">FbResultSet</span><span class="o">&gt;</span> <span class="n">rs1</span><span class="p">(</span><span class="n">stmt1</span><span class="o">-&gt;</span><span class="n">executeQuery</span><span class="p">());</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">"Starting fetch rs1"</span><span class="p">);</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="n">rs1</span><span class="o">-&gt;</span><span class="n">fetch</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">"rs1: %s"</span><span class="p">,</span> <span class="n">rs1</span><span class="o">-&gt;</span><span class="n">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">getPtr</span><span class="p">());</span>
+
+    <span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">Executing stmt2"</span><span class="p">);</span>
+    <span class="n">stmt2</span><span class="o">-&gt;</span><span class="n">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rs1</span><span class="o">-&gt;</span><span class="n">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">AutoPtr</span><span class="o">&lt;</span><span class="n">FbResultSet</span><span class="o">&gt;</span> <span class="n">rs2</span><span class="p">(</span><span class="n">stmt2</span><span class="o">-&gt;</span><span class="n">executeQuery</span><span class="p">());</span>
+
+    <span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">Executing stmt3"</span><span class="p">);</span>
+    <span class="n">stmt3</span><span class="o">-&gt;</span><span class="n">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rs1</span><span class="o">-&gt;</span><span class="n">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">AutoPtr</span><span class="o">&lt;</span><span class="n">FbResultSet</span><span class="o">&gt;</span> <span class="n">rs3</span><span class="p">(</span><span class="n">stmt3</span><span class="o">-&gt;</span><span class="n">executeQuery</span><span class="p">());</span>
+
+    <span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">Starting fetch rs2"</span><span class="p">);</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">rs2</span><span class="o">-&gt;</span><span class="n">fetch</span><span class="p">())</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">rs2: %s"</span><span class="p">,</span> <span class="n">rs2</span><span class="o">-&gt;</span><span class="n">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">getPtr</span><span class="p">());</span>
+
+    <span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">Starting fetch rs3"</span><span class="p">);</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">rs3</span><span class="o">-&gt;</span><span class="n">fetch</span><span class="p">())</span>
+        <span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">rs3: %s"</span><span class="p">,</span> <span class="n">rs3</span><span class="o">-&gt;</span><span class="n">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">getPtr</span><span class="p">());</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The <em>println</em> function buffers the text and prints it in its next run, with the current time (in minus) milliseconds the time when the text was buffered. Here is its code:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">static</span> <span class="kt">void</span> <span class="nf">println</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">format</span><span class="p">,</span> <span class="p">...)</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="kt">char</span> <span class="n">lineBuffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+    <span class="k">static</span> <span class="n">int64</span> <span class="n">lastTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">timeb</span> <span class="n">tb</span><span class="p">;</span>
+    <span class="n">ftime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tb</span><span class="p">);</span>
+
+    <span class="n">int64</span> <span class="n">thisTime</span> <span class="o">=</span> <span class="n">int64</span><span class="p">(</span><span class="n">tb</span><span class="p">.</span><span class="n">time</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">+</span> <span class="n">tb</span><span class="p">.</span><span class="n">millitm</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">lastTime</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">lastTime</span> <span class="o">=</span> <span class="n">thisTime</span><span class="p">;</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%06d: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="n">thisTime</span> <span class="o">-</span> <span class="n">lastTime</span><span class="p">),</span>
+            <span class="n">lineBuffer</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">va_list</span> <span class="n">va</span><span class="p">;</span>
+    <span class="n">va_start</span><span class="p">(</span><span class="n">va</span><span class="p">,</span> <span class="n">format</span><span class="p">);</span>
+
+    <span class="n">vsprintf</span><span class="p">(</span><span class="n">lineBuffer</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">va</span><span class="p">);</span>
+
+    <span class="n">va_end</span><span class="p">(</span><span class="n">va</span><span class="p">);</span>
+
+    <span class="n">lastTime</span> <span class="o">=</span> <span class="n">thisTime</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>As you see, the test does what every client/server database developer must knows that he/she shouldn’t do: a main query with nested queries for each record. If you ever run <code class="highlighter-rouge">isql</code> over the internet, you had see it performs very slow, and that is the reason. <code class="highlighter-rouge">isql</code> does just that. It does that because it’s written using embedded SQL with <code class="highlighter-rouge">gpre</code> and sometimes this is needed to access new columns that may not be presented on a database of an older ODS. And due to embedded SQL nature, “details” of where and when to prepare statements are just ignored.</p>
+
+<p>So far, here is the results.</p>
+
+<p>Result for the <strong>old protocol</strong>, with 2.0 client and 2.5 server:</p>
+
+<figure class="highlight"><pre><code class="language-txt" data-lang="txt">000665: Connecting to the database
+000201: Starting the transaction
+001234: Preparing stmt1
+001204: Preparing stmt2
+001204: Preparing stmt3
+000200: Executing stmt1
+000202: Starting fetch rs1
+000000: rs1: MON$ATTACHMENTS
+000200:     Executing stmt2
+000201:     Executing stmt3
+000201:     Starting fetch rs2
+000000:     rs2: MON$ATTACHMENT_ID
+000000:     rs2: MON$ATTACHMENT_NAME
+000000:     rs2: MON$CHARACTER_SET_ID
+000001:     rs2: MON$GARBAGE_COLLECTION
+000000:     rs2: MON$REMOTE_ADDRESS
+000000:     rs2: MON$REMOTE_PID
+000000:     rs2: MON$REMOTE_PROCESS
+000001:     rs2: MON$REMOTE_PROTOCOL
+000000:     rs2: MON$ROLE
+000000:     rs2: MON$SERVER_PID
+000000:     rs2: MON$STATE
+000001:     rs2: MON$STAT_ID
+000000:     rs2: MON$TIMESTAMP
+000000:     rs2: MON$USER
+000601:     Starting fetch rs3
+000000: rs1: MON$CALL_STACK
+000200:     Executing stmt2
+000201:     Executing stmt3
+000201:     Starting fetch rs2
+000000:     rs2: MON$CALLER_ID
+000000:     rs2: MON$CALL_ID
+000000:     rs2: MON$OBJECT_NAME
+000000:     rs2: MON$OBJECT_TYPE
+000000:     rs2: MON$SOURCE_COLUMN
+000000:     rs2: MON$SOURCE_LINE
+000000:     rs2: MON$STATEMENT_ID
+000001:     rs2: MON$STAT_ID
+000000:     rs2: MON$TIMESTAMP
+000601:     Starting fetch rs3
+&lt;...&gt;
+000000: rs1: RDB$CHECK_CONSTRAINTS
+000200:     Executing stmt2
+000200:     Executing stmt3
+000200:     Starting fetch rs2
+000001:     rs2: RDB$CONSTRAINT_NAME
+000000:     rs2: RDB$TRIGGER_NAME
+000200:     Starting fetch rs3
+000000:     rs3: RDB$TRIGGER_14
+000000:     rs3: RDB$TRIGGER_15
+000001:     rs3: RDB$TRIGGER_16
+000400:     rs3: RDB$TRIGGER_35
+000000: rs1: RDB$COLLATIONS
+&lt;...&gt;</code></pre></figure>
+
+<p>Result for the <strong>new protocol</strong>, with 2.5 client and 2.5 server:</p>
+
+<figure class="highlight"><pre><code class="language-txt" data-lang="txt">000670: Connecting to the database
+000200: Starting the transaction
+000229: Preparing stmt1
+000203: Preparing stmt2
+000203: Preparing stmt3
+000000: Executing stmt1
+000202: Starting fetch rs1
+000000: rs1: MON$ATTACHMENTS
+000000:     Executing stmt2
+000000:     Executing stmt3
+000202:     Starting fetch rs2
+000000:     rs2: MON$ATTACHMENT_ID
+000000:     rs2: MON$ATTACHMENT_NAME
+000000:     rs2: MON$CHARACTER_SET_ID
+000000:     rs2: MON$GARBAGE_COLLECTION
+000000:     rs2: MON$REMOTE_ADDRESS
+000000:     rs2: MON$REMOTE_PID
+000000:     rs2: MON$REMOTE_PROCESS
+000000:     rs2: MON$REMOTE_PROTOCOL
+000000:     rs2: MON$ROLE
+000000:     rs2: MON$SERVER_PID
+000000:     rs2: MON$STATE
+000000:     rs2: MON$STAT_ID
+000000:     rs2: MON$TIMESTAMP
+000000:     rs2: MON$USER
+000200:     Starting fetch rs3
+000000: rs1: MON$CALL_STACK
+000001:     Executing stmt2
+000000:     Executing stmt3
+000200:     Starting fetch rs2
+000000:     rs2: MON$CALLER_ID
+000000:     rs2: MON$CALL_ID
+000000:     rs2: MON$OBJECT_NAME
+000001:     rs2: MON$OBJECT_TYPE
+000000:     rs2: MON$SOURCE_COLUMN
+000000:     rs2: MON$SOURCE_LINE
+000000:     rs2: MON$STATEMENT_ID
+000000:     rs2: MON$STAT_ID
+000000:     rs2: MON$TIMESTAMP
+000200:     Starting fetch rs3
+&lt;...&gt;
+000000: rs1: RDB$CHECK_CONSTRAINTS
+000000:     Executing stmt2
+000000:     Executing stmt3
+000201:     Starting fetch rs2
+000000:     rs2: RDB$CONSTRAINT_NAME
+000000:     rs2: RDB$TRIGGER_NAME
+000200:     Starting fetch rs3
+000000:     rs3: RDB$TRIGGER_14
+000000:     rs3: RDB$TRIGGER_15
+000000:     rs3: RDB$TRIGGER_16
+000000:     rs3: RDB$TRIGGER_35
+000000: rs1: RDB$COLLATIONS
+&lt;...&gt;</code></pre></figure>
+
+<p>FWIW, I did tested the old protocol on real network with similar latency too. The result was very resemblant.</p>
+
+<p>The total times are:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Old protocol</td>
+      <td>55.5s</td>
+    </tr>
+    <tr>
+      <td>New Protocol</td>
+      <td>18.5s</td>
+    </tr>
+    <tr>
+      <td>New Protocol minus round-trip times of rs3</td>
+      <td>10.1s</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>So we may see that:</p>
+<ol>
+  <li>The old protocol is a crap.</li>
+  <li>The new protocol does a good job removing some “unnecessary” round-trips.</li>
+  <li>It may be improved.</li>
+</ol>
+
+<p>The first interesting problem is the series of statement preparations. The preparation of a statement may result in an error, so it necessary involves a round-trip so we can get the status from the server. But does it <strong>really needs</strong> it? Using Oracle JDBC driver, a prepareStatement with a wrong statement does not throw an exception. It’s deferred. In fact, this is a contract, and a change in a contract would require some way for the client applications to enable or disable it.</p>
+
+<p>The second interesting thing is that executing a statement that needs fetch does not involves a round-trip. Does it happens too when selecting from a SP? Won’t this be a contract change as well, since selectable SPs could write to the database? I didn’t did further tests… Anyway, that’s what allows the optimizations I talk below.</p>
+
+<p>Then we start the fetches. The first fetch for rs1 necessarily involves a round-trip and buffers some records in the client. Subsequents fetches are resolved locally.</p>
+
+<p>The third interesting thing is about the nested queries. Since queries are executed, a round-trip would be inevitable, but it does one for each query. A more intelligent approach would be to fetch rs3 too when asked to fetch rs2, since it’s already executed. In this test, it would run ~8s faster. And a much more intelligent approach would do it in the background (and transmitting asynchronous), without putting some overhead on the rs2 call.</p>
+
+<p>With a super intelligent server/client/protocol, the client and the server may cache prepared statements, and the server may asynchronous send statements invalidations to the client. Then, preparation of statements would have no round-trip (when already prepared one time), being sure that the statement is not wrong.</p>
+
+<p>So what you may do now?</p>
+<ol>
+  <li>Do not talk with the server in this poor (and common) way. Use selectable SPs to run multiple queries.</li>
+  <li>Do not prepare/close/prepare your common statements. Cache them in your application.</li>
+</ol>
+
+
+	  </div>
+  </div>
+</article>
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <ul class="pager blog-pager">
+      
+      
+      <li class="next">
+        <a href="/2014/01/02/artigo-novidades-do-firebird-25.html" data-toggle="tooltip" data-placement="top" title="Artigo "Novidades do Firebird 2.5": A arquitetura SuperClassic">Next Post &rarr;</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
+
+    </div>
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/asfernandes" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://twitter.com/adrianosf" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="mailto:adrianosf@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://linkedin.com/in/adrianosf" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+           
+        </ul>
+        <p class="copyright text-muted">
+      Adriano dos Santos Fernandes
+      &nbsp;&bull;&nbsp;
+      2016
+      
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+    
+  </body>
+</html>

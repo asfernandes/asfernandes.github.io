@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>JavaScript x Java - closures e lambdas</title>
+  <meta name="description" content="Em geral as linguagens de programação são bem parecidas e por esse motivo acho fácil aprender novas linguagens. E o que dizer então quando uma se chama Java ...">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://asfernandes.github.io/2015/02/11/javascript-x-java-closures-e-lambdas.html">
+  <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://asfernandes.github.io">asfernandes' blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        <li>
+      <a href="/">Home</a>
+    </li>
+    
+      </ul>
+    </div>
+
+  
+  <div class="avatar-container">
+    <div class="avatar-img-border">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
+    </a>
+    </div>
+  </div>
+  
+
+  </div>
+</nav>
+    <div role="main" class="container main-content">
+        <header class="header-post">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h1>JavaScript x Java - closures e lambdas</h1>
+        
+        <span class="post-meta">Posted on February 11, 2015</span>
+      </div>
+     </div>
+  </div>
+</header>
+
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    <p>Em geral as linguagens de programação são bem parecidas e por esse motivo acho fácil aprender novas linguagens. E o que dizer então quando uma se chama Java e a outra JavaScript? :)</p>
+
+<p>Ultimamente tenho programado bastante em JavaScript. Apesar de não conhecer ainda todos os detalhes da linguagem, tenho me virado bem, porém, hoje perdi um certo tempo programando em JavaScript como se estivesse programando em Java.</p>
+
+<p>Simplificação do código em JavaScript:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ar</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+    
+    <span class="nx">ar</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">n</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="o">++</span><span class="nx">i</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">ar</span><span class="p">[</span><span class="mi">0</span><span class="p">]());</span>   <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">ar</span><span class="p">[</span><span class="mi">1</span><span class="p">]());</span>   <span class="c1">// 1</span></code></pre></figure>
+
+<p>Neste trecho de código acima, esperava que imprimisse as linhas 0 e 1, como no código abaixo equivalente em Java, porém imprime 1 e 1.</p>
+
+<p>Código em Java (8) supostamente equivalente:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">ar</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+
+    <span class="n">ar</span><span class="o">.</span><span class="na">add</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">n</span><span class="o">);</span>
+    <span class="o">++</span><span class="n">i</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ar</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">get</span><span class="o">());</span> <span class="c1">// 0</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ar</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">get</span><span class="o">());</span> <span class="c1">// 1</span></code></pre></figure>
+
+<p>Enquanto que o código Java carrega o valor de “n” (“closure” - entre aspas porque no Java isso não é bem uma closure) para a expressão lambda com o valor de cada iteração do while, o código JavaScript carrega apenas uma variável “n”, que é alterada em cada iteração. Isso acontece porque as regras de escopo de variáveis do JavaScript são totalmente diferentes de Java.</p>
+
+<p>O código JavaScript abaixo que é equivalente ao código Java e retorna 0 e 1:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ar</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ar</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">n</span><span class="p">;</span>
+        <span class="p">})</span>
+    <span class="p">})(</span><span class="nx">i</span><span class="p">);</span>
+
+    <span class="o">++</span><span class="nx">i</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">ar</span><span class="p">[</span><span class="mi">0</span><span class="p">]());</span> <span class="c1">// 0</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">ar</span><span class="p">[</span><span class="mi">1</span><span class="p">]());</span> <span class="c1">// 1</span></code></pre></figure>
+
+<p>Passando “i” para o parâmetro “n” da função anônima, criamos um novo escopo.</p>
+
+	  </div>
+  </div>
+</article>
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <ul class="pager blog-pager">
+      
+      <li class="previous">
+        <a href="/2015/01/22/corrigindo-schemas-do-web-service.html" data-toggle="tooltip" data-placement="top" title="Corrigindo schemas do Web Service Distribuição de DF-e da NF-e">&larr; Previous Post</a>
+      </li>
+      
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
+
+    </div>
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/asfernandes" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://twitter.com/adrianosf" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="mailto:adrianosf@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://linkedin.com/in/adrianosf" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+           
+        </ul>
+        <p class="copyright text-muted">
+      Adriano dos Santos Fernandes
+      &nbsp;&bull;&nbsp;
+      2016
+      
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+    
+  </body>
+</html>

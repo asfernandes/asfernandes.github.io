@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</title>
+  <meta name="description" content="Na Nota Técnica 2014/002 da Nota Fiscal Eletrônica, o governo brasileiro do PT, por falta do que fazer com o intuito de evoluir o sistema, substituiu o web s...">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://asfernandes.github.io/2015/01/22/corrigindo-schemas-do-web-service.html">
+  <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://asfernandes.github.io">asfernandes' blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        <li>
+      <a href="/">Home</a>
+    </li>
+    
+      </ul>
+    </div>
+
+  
+  <div class="avatar-container">
+    <div class="avatar-img-border">
+      <a href="http://asfernandes.github.io ">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
+    </a>
+    </div>
+  </div>
+  
+
+  </div>
+</nav>
+    <div role="main" class="container main-content">
+        <header class="header-post">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h1>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</h1>
+        
+        <span class="post-meta">Posted on January 22, 2015</span>
+      </div>
+     </div>
+  </div>
+</header>
+
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    <p>Na <a href="https://www.google.com.br/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0CB8QFjAA&amp;url=http%3A%2F%2Fwww.nfe.fazenda.gov.br%2Fportal%2FexibirArquivo.aspx%3Fconteudo%3D2Z%2520kcHOdpHs%3D&amp;ei=Qf7AVMahIYXiggTzvIGQCA&amp;usg=AFQjCNGQhPOg75_Yz9ef4mHmrvye8Fip2g&amp;sig2=JfGl0mLlOas2WnKKyzkl-g&amp;bvm=bv.83829542,d.eXY">Nota Técnica 2014/002</a> da Nota Fiscal Eletrônica, o governo <del>brasileiro</del> do PT, <del>por falta do que fazer</del> com o intuito de evoluir o sistema, substituiu o web service de consulta de NF-e emitidas por terceiros pelo web service de distribuição de documentos fiscais.</p>
+
+<p>Definiram que a partir de 06/10/2014 o novo web service já estaria funcionando no ambiente de produção, enquanto o antigo seria desativado em 02/02/2015. Estava tentando há duas semanas usar o novo web service e ele ainda não funcionava. Hoje consegui.</p>
+
+<p>O web service retornou resposta, mas é claro, resposta errada que não é validada pelo próprio <a href="http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=cI%202zLXpcts=">schema</a> distribuído por eles. Como uso Java com JAXB, após desativar a validação da resposta, o conteúdo do arquivo não estava sendo “desserializado” corretamente.</p>
+
+<p>Eles criaram uma tag DocZip que armazena um XML compactado com GZIP no formato BASE-64 e declararam o conteúdo da tag como se tivesse um documento XML. É óbvio que algo em BASE-64 não é um XML válido.</p>
+
+<p>Como o governo incompetente não testa o que faz, tive que corrigir o schema e estou disponibilizando para que outros também não percam tempo. Mesmo sem saber escrever schemas XML, cheguei <a href="http://stackoverflow.com/questions/376582/xml-schema-element-with-attributes-containing-only-text">nessa dúvida</a> que me ajudou a fazer a correção.</p>
+
+<p><a href="http://pastebin.com/bNRspBSd">Link para o arquivo retDistDFeInt_v1.00.xsd corrigido</a></p>
+
+<p><a href="http://pastebin.com/8c1RSCKZ">Link para o diff/patch contra o arquivo XSD original</a></p>
+
+<p>Edit:</p>
+
+<p>Se tem uma coisa pior que incompetência que acontece com muita frequência na Receita Federal do PT ultimamente é a sacanagem. Após escrever esse artigo, mandei a mesma informação através do Fale Conosco, e antes mesmo de obter resposta (geralmente é um robô que responde algo sem sentido), desconfiei de uma coisa e fui verificar.</p>
+
+<p>A Receita Federal, na tentativa de esconder seus erros, costuma lançar correções de arquivos e disponibilizá-los com o mesmo número de versão. E não é que aconteceu exatamente isso agora?</p>
+
+<p>Tenho o arquivo PL_NFeDistDFe_100.zip com data de 07/01/2015 que tinha o problema. O arquivo presente <a href="http://www.nfe.fazenda.gov.br/portal/listaConteudo.aspx?tipoConteudo=/fwLvLUSmU8=">nesta página</a> nesse momento tem o mesmo nome e diz que foi atualizado em 19/09/2014, porém ele já está corrigido!</p>
+
+	  </div>
+  </div>
+</article>
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <ul class="pager blog-pager">
+      
+      <li class="previous">
+        <a href="/2014/11/18/c-argument-dependent-name-lookup.html" data-toggle="tooltip" data-placement="top" title="C++: Argument-dependent name lookup">&larr; Previous Post</a>
+      </li>
+      
+      
+      <li class="next">
+        <a href="/2015/02/11/javascript-x-java-closures-e-lambdas.html" data-toggle="tooltip" data-placement="top" title="JavaScript x Java - closures e lambdas">Next Post &rarr;</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
+
+    </div>
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/asfernandes" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://twitter.com/adrianosf" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="mailto:adrianosf@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://linkedin.com/in/adrianosf" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+           
+        </ul>
+        <p class="copyright text-muted">
+      Adriano dos Santos Fernandes
+      &nbsp;&bull;&nbsp;
+      2016
+      
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+    
+  </body>
+</html>

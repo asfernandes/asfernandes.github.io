@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>asfernandes' blog</title>
+    <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
+    <link>http://asfernandes.github.io/</link>
+    <atom:link href="http://asfernandes.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 07 Sep 2016 11:30:18 -0300</pubDate>
+    <lastBuildDate>Wed, 07 Sep 2016 11:30:18 -0300</lastBuildDate>
+    <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>JavaScript x Java - closures e lambdas</title>
+        <description>&lt;p&gt;Em geral as linguagens de programação são bem parecidas e por esse motivo acho fácil aprender novas linguagens. E o que dizer então quando uma se chama Java e a outra JavaScript? :)&lt;/p&gt;
+
+&lt;p&gt;Ultimamente tenho programado bastante em JavaScript. Apesar de não conhecer ainda todos os detalhes da linguagem, tenho me virado bem, porém, hoje perdi um certo tempo programando em JavaScript como se estivesse programando em Java.&lt;/p&gt;
+
+&lt;p&gt;Simplificação do código em JavaScript:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]());&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]());&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Neste trecho de código acima, esperava que imprimisse as linhas 0 e 1, como no código abaixo equivalente em Java, porém imprime 1 e 1.&lt;/p&gt;
+
+&lt;p&gt;Código em Java (8) supostamente equivalente:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Supplier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 0&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Enquanto que o código Java carrega o valor de “n” (“closure” - entre aspas porque no Java isso não é bem uma closure) para a expressão lambda com o valor de cada iteração do while, o código JavaScript carrega apenas uma variável “n”, que é alterada em cada iteração. Isso acontece porque as regras de escopo de variáveis do JavaScript são totalmente diferentes de Java.&lt;/p&gt;
+
+&lt;p&gt;O código JavaScript abaixo que é equivalente ao código Java e retorna 0 e 1:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 0&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Passando “i” para o parâmetro “n” da função anônima, criamos um novo escopo.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 11 Feb 2015 21:41:00 -0200</pubDate>
+        <link>http://asfernandes.github.io/2015/02/11/javascript-x-java-closures-e-lambdas.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2015/02/11/javascript-x-java-closures-e-lambdas.html</guid>
+        
+        <category>javascript</category>
+        
+        <category>developer</category>
+        
+        <category>java</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</title>
+        <description>&lt;p&gt;Na &lt;a href=&quot;https://www.google.com.br/url?sa=t&amp;amp;rct=j&amp;amp;q=&amp;amp;esrc=s&amp;amp;source=web&amp;amp;cd=1&amp;amp;cad=rja&amp;amp;uact=8&amp;amp;ved=0CB8QFjAA&amp;amp;url=http%3A%2F%2Fwww.nfe.fazenda.gov.br%2Fportal%2FexibirArquivo.aspx%3Fconteudo%3D2Z%2520kcHOdpHs%3D&amp;amp;ei=Qf7AVMahIYXiggTzvIGQCA&amp;amp;usg=AFQjCNGQhPOg75_Yz9ef4mHmrvye8Fip2g&amp;amp;sig2=JfGl0mLlOas2WnKKyzkl-g&amp;amp;bvm=bv.83829542,d.eXY&quot;&gt;Nota Técnica 2014/002&lt;/a&gt; da Nota Fiscal Eletrônica, o governo &lt;del&gt;brasileiro&lt;/del&gt; do PT, &lt;del&gt;por falta do que fazer&lt;/del&gt; com o intuito de evoluir o sistema, substituiu o web service de consulta de NF-e emitidas por terceiros pelo web service de distribuição de documentos fiscais.&lt;/p&gt;
+
+&lt;p&gt;Definiram que a partir de 06/10/2014 o novo web service já estaria funcionando no ambiente de produção, enquanto o antigo seria desativado em 02/02/2015. Estava tentando há duas semanas usar o novo web service e ele ainda não funcionava. Hoje consegui.&lt;/p&gt;
+
+&lt;p&gt;O web service retornou resposta, mas é claro, resposta errada que não é validada pelo próprio &lt;a href=&quot;http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=cI%202zLXpcts=&quot;&gt;schema&lt;/a&gt; distribuído por eles. Como uso Java com JAXB, após desativar a validação da resposta, o conteúdo do arquivo não estava sendo “desserializado” corretamente.&lt;/p&gt;
+
+&lt;p&gt;Eles criaram uma tag DocZip que armazena um XML compactado com GZIP no formato BASE-64 e declararam o conteúdo da tag como se tivesse um documento XML. É óbvio que algo em BASE-64 não é um XML válido.&lt;/p&gt;
+
+&lt;p&gt;Como o governo incompetente não testa o que faz, tive que corrigir o schema e estou disponibilizando para que outros também não percam tempo. Mesmo sem saber escrever schemas XML, cheguei &lt;a href=&quot;http://stackoverflow.com/questions/376582/xml-schema-element-with-attributes-containing-only-text&quot;&gt;nessa dúvida&lt;/a&gt; que me ajudou a fazer a correção.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://pastebin.com/bNRspBSd&quot;&gt;Link para o arquivo retDistDFeInt_v1.00.xsd corrigido&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://pastebin.com/8c1RSCKZ&quot;&gt;Link para o diff/patch contra o arquivo XSD original&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Edit:&lt;/p&gt;
+
+&lt;p&gt;Se tem uma coisa pior que incompetência que acontece com muita frequência na Receita Federal do PT ultimamente é a sacanagem. Após escrever esse artigo, mandei a mesma informação através do Fale Conosco, e antes mesmo de obter resposta (geralmente é um robô que responde algo sem sentido), desconfiei de uma coisa e fui verificar.&lt;/p&gt;
+
+&lt;p&gt;A Receita Federal, na tentativa de esconder seus erros, costuma lançar correções de arquivos e disponibilizá-los com o mesmo número de versão. E não é que aconteceu exatamente isso agora?&lt;/p&gt;
+
+&lt;p&gt;Tenho o arquivo PL_NFeDistDFe_100.zip com data de 07/01/2015 que tinha o problema. O arquivo presente &lt;a href=&quot;http://www.nfe.fazenda.gov.br/portal/listaConteudo.aspx?tipoConteudo=/fwLvLUSmU8=&quot;&gt;nesta página&lt;/a&gt; nesse momento tem o mesmo nome e diz que foi atualizado em 19/09/2014, porém ele já está corrigido!&lt;/p&gt;
+</description>
+        <pubDate>Thu, 22 Jan 2015 13:22:00 -0200</pubDate>
+        <link>http://asfernandes.github.io/2015/01/22/corrigindo-schemas-do-web-service.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2015/01/22/corrigindo-schemas-do-web-service.html</guid>
+        
+        <category>nf-e</category>
+        
+        <category>java</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>C++: Argument-dependent name lookup</title>
+        <description>&lt;p&gt;Sometimes C++ still surprises me. Consider this code:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ns1&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;C1&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ns1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;If you think it’s wrong and causes a compiler error, you’re wrong.&lt;/p&gt;
+
+&lt;p&gt;The function “f1” is not in the scope of “main”, but its argument has a type of the same namespace, causing the function to be located.&lt;/p&gt;
+
+&lt;p&gt;This rule is called Argument-dependent name lookup (or Koenig lookup) and it is also very necessary in relation to operators.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 18 Nov 2014 23:25:00 -0200</pubDate>
+        <link>http://asfernandes.github.io/2014/11/18/c-argument-dependent-name-lookup.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2014/11/18/c-argument-dependent-name-lookup.html</guid>
+        
+        <category>c++</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Artigo &quot;Novidades do Firebird 2.5&quot;: A arquitetura SuperClassic</title>
+        <description>&lt;p&gt;Desde sua primeira versão, o Firebird foi disponibilizado em dois modos de operação (chamados de arquiteturas) diferentes, a SuperServer e a Classic. Na SuperServer as conexões aos bancos de dados são gerenciadas com múltiplas threads em um único processo do SO, enquanto que na Classic é aberto um processo para cada conexão realizada.&lt;/p&gt;
+
+&lt;p&gt;A vantagem da arquitetura SuperServer é que diversas conexões a um mesmo banco de dados são gerenciadas com apenas um cache de dados e metadados. Sua desvantagem é que, internamente, a execução de queries é feita de maneira cooperativa, isto é, em determinados pontos uma query paralisa sua própria execução e passa o controle para que outra query continue executando, não aproveitando adequadamente os recursos de máquinas com mais de um processador ou núcleo. Nota: O time de desenvolvedores do Firebird trabalha para remover completamente esta limitação na versão 3, e a SuperClassic é o primeiro passo em busca desse objetivo. Outra desvantagem da SuperServer é que apenas um processo pode abrir cada banco de dados. Isto causava uma limitação em aplicativos que usavam a biblioteca Embedded, como veremos mais adiante.&lt;/p&gt;
+
+&lt;p&gt;Na arquitetura Classic cada processo pode executar queries paralelamente, de forma preemptiva, porém cada um possui seu exclusivo cache. Para manter a integridade, o Firebird precisa realizar comunicação inter-processo através de seu lock manager. Essa comunicação causa uma perda de desempenho em relação à SuperServer. Nesta arquitetura também existia a possibilidade de trabalhar com diversas conexões em apenas um processo, porém com a mesma limitação presente na SuperServer, onde as queries de um mesmo processo rodavam de maneira cooperativa. Além disso, esta possibilidade existia apenas com a versão Embedded para Linux, pois rodando no modo servidor a criação de novos processos era sempre feita automaticamente a cada conexão.&lt;/p&gt;
+
+&lt;p&gt;O novo modo SuperClassic é uma mistura das duas arquiteturas preexistentes. Um processo SuperClassic pode gerenciar diversas conexões usando threads, como no SuperServer. Mas, diferentemente do SuperServer, cada conexão possui seu cache exclusivo, como no Classic. Como o cache não é compartilhado, as queries podem rodar de maneira preemptiva, melhorando o desempenho em máquinas multiprocessadas.&lt;/p&gt;
+
+&lt;p&gt;A arquitetura SuperServer também teve uma melhoria. Até a versão 2.1 as queries eram sincronizadas por servidor, e na versão 2.5 são sincronizadas por banco de dados. Isto significa que um servidor 2.5 gerenciando conexões a vários bancos de dados aproveitará os recursos de hardware de forma mais satisfatória.&lt;/p&gt;
+
+&lt;p&gt;Além de SuperServer e Classic, o Firebird também é disponibilizado como uma biblioteca: a versão Embedded. Até a versão 2.1 a biblioteca Embedded trabalhava no modo SuperServer no ambiente Windows e no modo Classic em outros SOs. Na versão 2.5 a biblioteca Embedded usa o modo SuperClassic em todos os SOs. Como o SuperClassic é o Classic melhorado, tornou-se possível o acesso simultâneo a um banco de dados por diversos aplicativos usando a biblioteca Embedded, removendo esta limitação que existia em ambientes Windows. Nota: o compartilhamento de um banco de dados em vários processos Classic (ou Embedded) é permitido apenas quando todos os processos sejam da mesma arquitetura, 32 ou 64 bits. Com a mudança de arquitetura da versão Embedded, o desenvolvedor precisa verificar se o desempenho de seu aplicativo foi influenciado negativamente, pois a configuração padrão de buffers dos bancos de dados são diferentes nas duas arquiteturas. Esta configuração pode ser ajustada alterando-se o valor do parâmetro DefaultDbCachePages no arquivo firebird.conf ou com o comando &lt;code class=&quot;highlighter-rouge&quot;&gt;gfix -buffers&lt;/code&gt; em cada banco de dados.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 02 Jan 2014 11:34:00 -0200</pubDate>
+        <link>http://asfernandes.github.io/2014/01/02/artigo-novidades-do-firebird-25.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2014/01/02/artigo-novidades-do-firebird-25.html</guid>
+        
+        <category>artigo</category>
+        
+        <category>firebird</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Influence of network latency in the Firebird wire protocol</title>
+        <description>&lt;p&gt;People often talk that Firebird performs badly in networks with high latency. I did some tests to see how the new protocol has been improved compared to the old one, and to see how it could be improved even more. My tests only cares about &lt;strong&gt;latency&lt;/strong&gt;, and not about bandwidth.&lt;/p&gt;
+
+&lt;p&gt;It simulate network latency in Linux using &lt;a href=&quot;http://www.linuxfoundation.org/en/Net:Netem&quot;&gt;Netem&lt;/a&gt;. With the &lt;code class=&quot;highlighter-rouge&quot;&gt;tc&lt;/code&gt; utility, we can add a delay for outbound traffic. Since I did it for &lt;em&gt;lo&lt;/em&gt; interface, it happens that it works for in/out traffic. I set delay to 100ms (that is more or less a value I found doing it in the internet with my horrible Telefonica &lt;del&gt;speed&lt;/del&gt;y connection), using this command:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo tc qdisc add dev lo root handle 1:0 netem delay 100ms&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And here is the result of a &lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;ping localhost
+PING localhost &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;127.0.0.1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 56&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;84&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; bytes of data.
+64 bytes from localhost &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;127.0.0.1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: &lt;span class=&quot;nv&quot;&gt;icmp_seq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1 &lt;span class=&quot;nv&quot;&gt;ttl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;64 &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;200 ms
+64 bytes from localhost &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;127.0.0.1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: &lt;span class=&quot;nv&quot;&gt;icmp_seq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2 &lt;span class=&quot;nv&quot;&gt;ttl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;64 &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;200 ms
+64 bytes from localhost &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;127.0.0.1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: &lt;span class=&quot;nv&quot;&gt;icmp_seq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;3 &lt;span class=&quot;nv&quot;&gt;ttl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;64 &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;200 ms
+64 bytes from localhost &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;127.0.0.1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: &lt;span class=&quot;nv&quot;&gt;icmp_seq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;4 &lt;span class=&quot;nv&quot;&gt;ttl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;64 &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;200 ms&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;To later remove the delay, the command is:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;sudo tc qdisc del dev lo root&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The test uses &lt;a href=&quot;http://code.google.com/p/cppsys/source/browse/#svn/trunk/src/CppSys/Database/Firebird&quot;&gt;Firebird library&lt;/a&gt; present on (my till unknown) &lt;a href=&quot;http://code.google.com/p/cppsys&quot;&gt;CppSys&lt;/a&gt; project (more on CppSys in a future post). The CppSys database library has interfaces and semantics based on JDBC. The relevant test code is here:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Connecting to the database&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;AutoPtr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FbDatabase&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;openDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;firebird:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;databaseName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Starting the transaction&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;AutoPtr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FbTransaction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;startTransaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;TransactionIsolation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SNAPSHOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Preparing stmt1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;AutoPtr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FbPreparedStatement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stmt1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepareStatement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;select rdb$relation_name from rdb$relations&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;    where rdb$system_flag = 1&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;    order by rdb$relation_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Preparing stmt2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;AutoPtr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FbPreparedStatement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stmt2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepareStatement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;select rdb$field_name from rdb$relation_fields&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;    where rdb$relation_name = ?&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;    order by rdb$field_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Preparing stmt3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;AutoPtr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FbPreparedStatement&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stmt3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepareStatement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;select rdb$trigger_name from rdb$triggers&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;    where rdb$relation_name = ?&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;    order by rdb$trigger_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Executing stmt1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;AutoPtr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FbResultSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stmt1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executeQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Starting fetch rs1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rs1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;rs1: %s&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getPtr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Executing stmt2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;stmt2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;AutoPtr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FbResultSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stmt2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executeQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Executing stmt3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;stmt3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;AutoPtr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FbResultSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stmt3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;executeQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Starting fetch rs2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rs2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;rs2: %s&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getPtr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Starting fetch rs3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rs3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;rs3: %s&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rs3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getPtr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The &lt;em&gt;println&lt;/em&gt; function buffers the text and prints it in its next run, with the current time (in minus) milliseconds the time when the text was buffered. Here is its code:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lineBuffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int64&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;timeb&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ftime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;int64&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thisTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;millitm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;lastTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thisTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%06d: %s&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thisTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;lineBuffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;va_list&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;va&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;va_start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;va&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;vsprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lineBuffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;va&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;va_end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;va&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;lastTime&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thisTime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;As you see, the test does what every client/server database developer must knows that he/she shouldn’t do: a main query with nested queries for each record. If you ever run &lt;code class=&quot;highlighter-rouge&quot;&gt;isql&lt;/code&gt; over the internet, you had see it performs very slow, and that is the reason. &lt;code class=&quot;highlighter-rouge&quot;&gt;isql&lt;/code&gt; does just that. It does that because it’s written using embedded SQL with &lt;code class=&quot;highlighter-rouge&quot;&gt;gpre&lt;/code&gt; and sometimes this is needed to access new columns that may not be presented on a database of an older ODS. And due to embedded SQL nature, “details” of where and when to prepare statements are just ignored.&lt;/p&gt;
+
+&lt;p&gt;So far, here is the results.&lt;/p&gt;
+
+&lt;p&gt;Result for the &lt;strong&gt;old protocol&lt;/strong&gt;, with 2.0 client and 2.5 server:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;000665: Connecting to the database
+000201: Starting the transaction
+001234: Preparing stmt1
+001204: Preparing stmt2
+001204: Preparing stmt3
+000200: Executing stmt1
+000202: Starting fetch rs1
+000000: rs1: MON$ATTACHMENTS
+000200:     Executing stmt2
+000201:     Executing stmt3
+000201:     Starting fetch rs2
+000000:     rs2: MON$ATTACHMENT_ID
+000000:     rs2: MON$ATTACHMENT_NAME
+000000:     rs2: MON$CHARACTER_SET_ID
+000001:     rs2: MON$GARBAGE_COLLECTION
+000000:     rs2: MON$REMOTE_ADDRESS
+000000:     rs2: MON$REMOTE_PID
+000000:     rs2: MON$REMOTE_PROCESS
+000001:     rs2: MON$REMOTE_PROTOCOL
+000000:     rs2: MON$ROLE
+000000:     rs2: MON$SERVER_PID
+000000:     rs2: MON$STATE
+000001:     rs2: MON$STAT_ID
+000000:     rs2: MON$TIMESTAMP
+000000:     rs2: MON$USER
+000601:     Starting fetch rs3
+000000: rs1: MON$CALL_STACK
+000200:     Executing stmt2
+000201:     Executing stmt3
+000201:     Starting fetch rs2
+000000:     rs2: MON$CALLER_ID
+000000:     rs2: MON$CALL_ID
+000000:     rs2: MON$OBJECT_NAME
+000000:     rs2: MON$OBJECT_TYPE
+000000:     rs2: MON$SOURCE_COLUMN
+000000:     rs2: MON$SOURCE_LINE
+000000:     rs2: MON$STATEMENT_ID
+000001:     rs2: MON$STAT_ID
+000000:     rs2: MON$TIMESTAMP
+000601:     Starting fetch rs3
+&amp;lt;...&amp;gt;
+000000: rs1: RDB$CHECK_CONSTRAINTS
+000200:     Executing stmt2
+000200:     Executing stmt3
+000200:     Starting fetch rs2
+000001:     rs2: RDB$CONSTRAINT_NAME
+000000:     rs2: RDB$TRIGGER_NAME
+000200:     Starting fetch rs3
+000000:     rs3: RDB$TRIGGER_14
+000000:     rs3: RDB$TRIGGER_15
+000001:     rs3: RDB$TRIGGER_16
+000400:     rs3: RDB$TRIGGER_35
+000000: rs1: RDB$COLLATIONS
+&amp;lt;...&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Result for the &lt;strong&gt;new protocol&lt;/strong&gt;, with 2.5 client and 2.5 server:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;000670: Connecting to the database
+000200: Starting the transaction
+000229: Preparing stmt1
+000203: Preparing stmt2
+000203: Preparing stmt3
+000000: Executing stmt1
+000202: Starting fetch rs1
+000000: rs1: MON$ATTACHMENTS
+000000:     Executing stmt2
+000000:     Executing stmt3
+000202:     Starting fetch rs2
+000000:     rs2: MON$ATTACHMENT_ID
+000000:     rs2: MON$ATTACHMENT_NAME
+000000:     rs2: MON$CHARACTER_SET_ID
+000000:     rs2: MON$GARBAGE_COLLECTION
+000000:     rs2: MON$REMOTE_ADDRESS
+000000:     rs2: MON$REMOTE_PID
+000000:     rs2: MON$REMOTE_PROCESS
+000000:     rs2: MON$REMOTE_PROTOCOL
+000000:     rs2: MON$ROLE
+000000:     rs2: MON$SERVER_PID
+000000:     rs2: MON$STATE
+000000:     rs2: MON$STAT_ID
+000000:     rs2: MON$TIMESTAMP
+000000:     rs2: MON$USER
+000200:     Starting fetch rs3
+000000: rs1: MON$CALL_STACK
+000001:     Executing stmt2
+000000:     Executing stmt3
+000200:     Starting fetch rs2
+000000:     rs2: MON$CALLER_ID
+000000:     rs2: MON$CALL_ID
+000000:     rs2: MON$OBJECT_NAME
+000001:     rs2: MON$OBJECT_TYPE
+000000:     rs2: MON$SOURCE_COLUMN
+000000:     rs2: MON$SOURCE_LINE
+000000:     rs2: MON$STATEMENT_ID
+000000:     rs2: MON$STAT_ID
+000000:     rs2: MON$TIMESTAMP
+000200:     Starting fetch rs3
+&amp;lt;...&amp;gt;
+000000: rs1: RDB$CHECK_CONSTRAINTS
+000000:     Executing stmt2
+000000:     Executing stmt3
+000201:     Starting fetch rs2
+000000:     rs2: RDB$CONSTRAINT_NAME
+000000:     rs2: RDB$TRIGGER_NAME
+000200:     Starting fetch rs3
+000000:     rs3: RDB$TRIGGER_14
+000000:     rs3: RDB$TRIGGER_15
+000000:     rs3: RDB$TRIGGER_16
+000000:     rs3: RDB$TRIGGER_35
+000000: rs1: RDB$COLLATIONS
+&amp;lt;...&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;FWIW, I did tested the old protocol on real network with similar latency too. The result was very resemblant.&lt;/p&gt;
+
+&lt;p&gt;The total times are:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Old protocol&lt;/td&gt;
+      &lt;td&gt;55.5s&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New Protocol&lt;/td&gt;
+      &lt;td&gt;18.5s&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;New Protocol minus round-trip times of rs3&lt;/td&gt;
+      &lt;td&gt;10.1s&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;So we may see that:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;The old protocol is a crap.&lt;/li&gt;
+  &lt;li&gt;The new protocol does a good job removing some “unnecessary” round-trips.&lt;/li&gt;
+  &lt;li&gt;It may be improved.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The first interesting problem is the series of statement preparations. The preparation of a statement may result in an error, so it necessary involves a round-trip so we can get the status from the server. But does it &lt;strong&gt;really needs&lt;/strong&gt; it? Using Oracle JDBC driver, a prepareStatement with a wrong statement does not throw an exception. It’s deferred. In fact, this is a contract, and a change in a contract would require some way for the client applications to enable or disable it.&lt;/p&gt;
+
+&lt;p&gt;The second interesting thing is that executing a statement that needs fetch does not involves a round-trip. Does it happens too when selecting from a SP? Won’t this be a contract change as well, since selectable SPs could write to the database? I didn’t did further tests… Anyway, that’s what allows the optimizations I talk below.&lt;/p&gt;
+
+&lt;p&gt;Then we start the fetches. The first fetch for rs1 necessarily involves a round-trip and buffers some records in the client. Subsequents fetches are resolved locally.&lt;/p&gt;
+
+&lt;p&gt;The third interesting thing is about the nested queries. Since queries are executed, a round-trip would be inevitable, but it does one for each query. A more intelligent approach would be to fetch rs3 too when asked to fetch rs2, since it’s already executed. In this test, it would run ~8s faster. And a much more intelligent approach would do it in the background (and transmitting asynchronous), without putting some overhead on the rs2 call.&lt;/p&gt;
+
+&lt;p&gt;With a super intelligent server/client/protocol, the client and the server may cache prepared statements, and the server may asynchronous send statements invalidations to the client. Then, preparation of statements would have no round-trip (when already prepared one time), being sure that the statement is not wrong.&lt;/p&gt;
+
+&lt;p&gt;So what you may do now?&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Do not talk with the server in this poor (and common) way. Use selectable SPs to run multiple queries.&lt;/li&gt;
+  &lt;li&gt;Do not prepare/close/prepare your common statements. Cache them in your application.&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Sun, 12 Jul 2009 23:25:00 -0300</pubDate>
+        <link>http://asfernandes.github.io/2009/07/12/network-latency-influence-on-firebird.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2009/07/12/network-latency-influence-on-firebird.html</guid>
+        
+        <category>firebird</category>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
