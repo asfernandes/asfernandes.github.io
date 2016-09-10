@@ -96,6 +96,7 @@
 <p><a name="listagem15">Listagem 15</a>: Usando subqueries como expressões PSQL.</p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">TERM</span> <span class="o">!</span><span class="p">;</span>
+
 <span class="k">EXECUTE</span> <span class="n">BLOCK</span> <span class="k">RETURNS</span> <span class="p">(</span><span class="n">COD</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="k">AS</span>
 <span class="k">BEGIN</span>
   <span class="n">IF</span> <span class="p">((</span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">DOCUMENTOS</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="k">THEN</span>
@@ -104,11 +105,12 @@
      <span class="n">SUSPEND</span><span class="p">;</span>
   <span class="k">END</span>
 <span class="k">END</span><span class="o">!</span>
+
 <span class="k">SET</span> <span class="n">TERM</span> <span class="p">;</span><span class="o">!</span></code></pre></figure>
 
 <p>Na <a href="#listagem15">listagem 15</a> o parâmetro de retorno COD foi definido com o tipo <code class="highlighter-rouge">VARCHAR(10)</code> e recebe um valor lido da coluna CODIGO da tabela DOCUMENTOS. Uma alteração do tipo desta coluna poderia deixar este bloco de código inconsistente ou inválido. No Firebird 2.1 foi adicionado o suporte ao uso de domains em PSQL. Neste caso, o desenvolvedor precisaria criar um domínio e usá-lo na definição da tabela e na definição do parâmetro de retorno do <code class="highlighter-rouge">EXECUTE BLOCK</code> para ter um código consistente. Dependendo da situação, a criação de domínios para todas as colunas pode se tornar uma tarefa extremamente burocrática. Pensando nisso, o Firebird 2.5 adiciona a cláusula <code class="highlighter-rouge">TYPE OF COLUMN</code>. Com essa cláusula é possível declarar parâmetros e variáveis ou fazer casts usando o tipo definido de uma coluna. Ao alterar o tipo da coluna, a alteração se reflete automaticamente em todas as stored procedures e triggers que façam uso de seu tipo. A <a href="#listagem16">listagem 16</a> mostra o mesmo código da <a href="#listagem15">listagem 15</a> mas usando <code class="highlighter-rouge">TYPE OF COLUMN</code> para o parâmetro COD.</p>
 
-<p><a name="listagem16">Listagem 16</a>: Usando a cláusula TYPE OF COLUMN.</p>
+<p><a name="listagem16">Listagem 16</a>: Usando a cláusula <code class="highlighter-rouge">TYPE OF COLUMN</code>.</p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">EXECUTE</span> <span class="n">BLOCK</span> <span class="k">RETURNS</span> <span class="p">(</span><span class="n">COD</span> <span class="k">TYPE</span> <span class="k">OF</span> <span class="k">COLUMN</span> <span class="n">DOCUMENTOS</span><span class="p">.</span><span class="n">CODIGO</span><span class="p">)</span> <span class="k">AS</span>
 <span class="k">BEGIN</span>
@@ -121,11 +123,14 @@
 
 <p>No Firebird 2.1 foram acrescentados os triggers de eventos de banco de dados, como o evento ON CONNECT. Uma das funcionalidades que podiam ser feitas com este tipo de trigger era a rejeição de uma conexão, permitindo que os desenvolvedores implementassem um sistema de segurança dentro do banco de dados. Para rejeitar uma conexão é necessário lançar uma exceção dentro do trigger. Nota: este tipo de segurança não impede que o usuário SYSDBA tenha acesso ao banco, pois os administradores podem desativar os triggers de banco de dados conectando-se usando a opção -nodbtriggers do ISQL. O problema é que alguns desenvolvedores gostariam de gravar uma entrada em uma tabela de log registrando o evento, mas a exceção causava o rollback da criação deste registro. Esta e outras situações (como comunicação com outros sistemas através de UDFs) agora podem se beneficiar de um novo comando, o <code class="highlighter-rouge">IN AUTONOMOUS TRANSACTION</code>. Assim como um <code class="highlighter-rouge">IF</code> ou <code class="highlighter-rouge">WHILE</code>, este comando aceita um subcomando (ou vários, com o uso de BEGIN END). No início da execução do <code class="highlighter-rouge">IN AUTONOMOUS TRANSACTION</code> é aberta uma nova transação e o subcomando é executado dentro desta transação. Caso o subcomando execute por completo, é feito um <code class="highlighter-rouge">COMMIT</code> na transação criada. Caso ocorra uma exceção, é feito um rollback. A <a href="#listagem17">listagem 17</a> apresenta um trigger ON CONNECT que aceita apenas conexões dos usuários SYSDBA e ADMIN e grava o nome dos outros usuários que tiverem a conexão rejeitada. Note que a exceção usada para rejeitar a conexão é lançada fora do bloco <code class="highlighter-rouge">IN AUTONOMOUS TRANSACTION</code>, que já havia terminado e, consequentemente, inserido o registro e finalizado a transação com <code class="highlighter-rouge">COMMIT</code>.</p>
 
-<p><a name="listagem17">Listagem 17</a>: Usando o comando IN AUTONOMOUS TRANSACTION.</p>
+<p><a name="listagem17">Listagem 17</a>: Usando o comando <code class="highlighter-rouge">IN AUTONOMOUS TRANSACTION</code>.</p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">CONN_LOG</span> <span class="p">(</span><span class="n">USUARIO</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">128</span><span class="p">),</span> <span class="k">DATA</span> <span class="k">TIMESTAMP</span><span class="p">);</span>
+
 <span class="k">CREATE</span> <span class="n">EXCEPTION</span> <span class="n">E_CONN</span> <span class="s1">'Acesso negado.'</span><span class="p">;</span>
+
 <span class="k">SET</span> <span class="n">TERM</span> <span class="o">!</span><span class="p">;</span>
+
 <span class="k">CREATE</span> <span class="k">TRIGGER</span> <span class="n">T_CONN</span> <span class="k">ON</span> <span class="k">CONNECT</span> <span class="k">AS</span>
 <span class="k">BEGIN</span>
   <span class="n">IF</span> <span class="p">(</span><span class="k">CURRENT_USER</span> <span class="o">&lt;&gt;</span> <span class="s1">'SYSDBA'</span> <span class="k">AND</span> <span class="k">CURRENT_USER</span> <span class="o">&lt;&gt;</span> <span class="s1">'ADMIN'</span><span class="p">)</span> <span class="k">THEN</span>
@@ -139,6 +144,7 @@
      <span class="n">EXCEPTION</span> <span class="n">E_CONN</span><span class="p">;</span>
   <span class="k">END</span>
 <span class="k">END</span><span class="o">!</span>
+
 <span class="k">SET</span> <span class="n">TERM</span> <span class="p">;</span><span class="o">!</span></code></pre></figure>
 
 <p>O comando <code class="highlighter-rouge">EXECUTE STATEMENT</code> ganha algumas novidades importantes na versão 2.5. Uma delas é uma das funcionalidades mais pedidas pelos usuários: ler e atualizar dados em outros bancos de dados. Através da cláusula ON EXTERNAL DATA SOURCE é possível especificar o banco de dados em que o comando executará. É permitido também que o desenvolvedor especifique o nome, senha e role do usuário para fazer a conexão, e o funcionamento da transação iniciada para rodar o comando no banco de dados externo. Com WITH COMMON TRANSACTION (opção default), a transação da conexão externa é agrupada à transação interna atual e o comando <code class="highlighter-rouge">COMMIT</code> ou <code class="highlighter-rouge">ROLLBACK</code> executado na transação atual é propagado às transações externas. Com WITH AUTONOMOUS TRANSACTION o funcionamento se torna similar as transações autônomas, sendo feito o <code class="highlighter-rouge">COMMIT</code> ou <code class="highlighter-rouge">ROLLBACK</code> logo após a execução sucedida ou não do comando externo. A <a href="#listagem18">listagem 18</a> mostra o uso deste comando para ler e gravar dados em outro banco de dados.</p>
@@ -146,6 +152,7 @@
 <p><a name="listagem18">Listagem 18</a>: Executando comandos em outros bancos de dados com <code class="highlighter-rouge">EXECUTE STATEMENT</code>.</p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">TERM</span> <span class="o">!</span><span class="p">;</span>
+
 <span class="k">EXECUTE</span> <span class="n">BLOCK</span> <span class="k">RETURNS</span> <span class="p">(</span><span class="n">NOME</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span> <span class="k">AS</span>
   <span class="k">DECLARE</span> <span class="n">BANCO</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span> <span class="o">=</span> <span class="s1">'localhost:/db/pessoas.fdb'</span><span class="p">;</span>
   <span class="k">DECLARE</span> <span class="n">USUARIO</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">=</span> <span class="s1">'SYSDBA'</span><span class="p">;</span>
@@ -167,6 +174,7 @@
     <span class="k">AS</span> <span class="k">USER</span> <span class="n">USUARIO</span> <span class="n">PASSWORD</span> <span class="n">SENHA</span>
     <span class="k">WITH</span> <span class="n">AUTONOMOUS</span> <span class="n">TRANSACTION</span><span class="p">;</span>
 <span class="k">END</span><span class="o">!</span>
+
 <span class="k">SET</span> <span class="n">TERM</span> <span class="p">;</span><span class="o">!</span></code></pre></figure>
 
 <p>A <a href="#listagem18">listagem 18</a> mostra como era feita a criação de strings de SQL dinâmico, usando concatenação de strings. A criação de comandos com concatenação é insegura, pois um usuário mal-intencionado pode gerar comandos não previstos pelo desenvolvedor, causando o ataque conhecido como injeção de SQL <a href="#nota1">[1]</a>. No novo <code class="highlighter-rouge">EXECUTE STATEMENT</code> é possível passar parâmetros de duas formas diferentes. A <a href="#listagem19">listagem 19</a> mostra o uso de parâmetros anônimos, com o símbolo de interrogação.</p>
@@ -174,6 +182,7 @@
 <p><a name="listagem19">Listagem 19</a>: Usando <code class="highlighter-rouge">EXECUTE STATEMENT</code> com parâmetros anônimos.</p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">TERM</span> <span class="o">!</span><span class="p">;</span>
+
 <span class="k">EXECUTE</span> <span class="n">BLOCK</span> <span class="k">AS</span>
   <span class="k">DECLARE</span> <span class="n">NOME</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">=</span> <span class="s1">'Sicrano'</span><span class="p">;</span>
   <span class="k">DECLARE</span> <span class="n">DATA_NASCIMENTO</span> <span class="n">DATE</span> <span class="o">=</span> <span class="n">DATE</span> <span class="s1">'2000-01-01'</span><span class="p">;</span>
@@ -182,6 +191,7 @@
     <span class="p">(</span><span class="s1">'INSERT INTO PESSOAS (NOME, DATA_NASCIMENTO) VALUES (?, ?)'</span><span class="p">)</span>
     <span class="p">(</span><span class="n">NOME</span><span class="p">,</span> <span class="n">DATA_NASCIMENTO</span><span class="p">);</span>
 <span class="k">END</span><span class="o">!</span>
+
 <span class="k">SET</span> <span class="n">TERM</span> <span class="p">;</span><span class="o">!</span></code></pre></figure>
 
 <p>Além da passagem de parâmetros anônimos, o comando <code class="highlighter-rouge">EXECUTE STATEMENT</code> agora suporta o uso de parâmetros nomeados. As vantagens dos parâmetros nomeados são que o desenvolvedor não precisa se preocupar com a ordem e também pode usar um mesmo parâmetro mais de uma vez sem a necessidade de criação de variáveis. O uso dos parâmetros dentro da string é similar a passagem de parâmetros feita com o símbolo dois-pontos em bibliotecas Delphi, como expliquei na parte referente à construção <code class="highlighter-rouge">? IS NULL</code>. Os valores são associados aos nomes dos parâmetros usando-se o operador <code class="highlighter-rouge">:=</code> (dois pontos, igual). A <a href="#listagem20">listagem 20</a> mostra o uso de parâmetros nomeados.</p>
@@ -189,6 +199,7 @@
 <p><a name="listagem20">Listagem 20</a>: Usando <code class="highlighter-rouge">EXECUTE STATEMENT</code> com parâmetros nomeados.</p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">TERM</span> <span class="o">!</span><span class="p">;</span>
+
 <span class="k">EXECUTE</span> <span class="n">BLOCK</span> <span class="k">AS</span>
   <span class="k">DECLARE</span> <span class="n">NOME</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">=</span> <span class="s1">'Sicrano'</span><span class="p">;</span>
   <span class="k">DECLARE</span> <span class="n">DATA_NASCIMENTO</span> <span class="n">DATE</span> <span class="o">=</span> <span class="n">DATE</span> <span class="s1">'2000-01-01'</span><span class="p">;</span>
@@ -198,6 +209,7 @@
         VALUES (:P_NOME, :P_DATA_NASCIMENTO)'</span><span class="p">)</span>
     <span class="p">(</span><span class="n">P_DATA_NASCIMENTO</span> <span class="p">:</span><span class="o">=</span> <span class="n">DATA_NASCIMENTO</span><span class="p">,</span> <span class="n">P_NOME</span> <span class="p">:</span><span class="o">=</span> <span class="n">NOME</span><span class="p">);</span>
 <span class="k">END</span><span class="o">!</span>
+
 <span class="k">SET</span> <span class="n">TERM</span> <span class="p">;</span><span class="o">!</span></code></pre></figure>
 
 <h4 id="nota">Nota</h4>
