@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>asfernandes' blog</title>
-  <meta name="description" content="Adriano dos Santos Fernandes on Software development, Firebird and others things">
+  <title>Funny Firebird operators</title>
+  <meta name="description" content="Here is a table with Firebird operators you probably don’t know that exist:">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/bootstrap-social.css">
-  <link rel="canonical" href="http://asfernandes.github.io/page7/">
+  <link rel="canonical" href="http://asfernandes.github.io/2016/09/23/funny-firebird-operators.html">
   <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="http://asfernandes.github.io/feed.xml">
 
   
@@ -66,198 +66,170 @@
 </nav>
 
     <div role="main" class="container main-content">
-        
-<header class="header-page">
+        <header class="header-post">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	  <div class="page-heading">
-	    <h1>asfernandes' blog</h1>
-	    
-	    <hr class="small">
-	    <span class="page-subheading">Adriano dos Santos Fernandes on Software development, Firebird and others things</span>
-	    
-	  </div>
-    </div>
+      <div class="post-heading">
+        <h1>Funny Firebird operators</h1>
+        
+        <span class="post-meta">Posted on September 23, 2016 in
+        
+          
+          
+          <a href="/tag/firebird" class="blog-tags">firebird</a>
+        
+        </span>
+      </div>
+     </div>
   </div>
 </header>
 
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    <p>Here is a table with Firebird operators you probably don’t know that exist:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Funny</th>
+      <th>Standard equivalent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">x !&lt; y</code></td>
+      <td><code class="highlighter-rouge">not (x &lt; y)</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">x ^&lt; y</code></td>
+      <td><code class="highlighter-rouge">not (x &lt; y)</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">x ~&lt; y</code></td>
+      <td><code class="highlighter-rouge">not (x &lt; y)</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">x !&gt; y</code></td>
+      <td><code class="highlighter-rouge">not (x &gt; y)</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">x ^&gt; y</code></td>
+      <td><code class="highlighter-rouge">not (x &lt; y)</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">x ~&gt; y</code></td>
+      <td><code class="highlighter-rouge">not (x &lt; y)</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">x != y</code></td>
+      <td><code class="highlighter-rouge">x &lt;&gt; y</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">x ^= y</code></td>
+      <td><code class="highlighter-rouge">x &lt;&gt; y</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">x ~= y</code></td>
+      <td><code class="highlighter-rouge">x &lt;&gt; y</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+	  </div>
+  </div>
+</article>
 
 <div class="row">
   <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-    <div class="posts-list">
+
+    
+      <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+
+  <!--- Share on Twitter -->
   
-  <article class="post-preview">
-    <a href="/2009/08/09/buggy-const.html">
-    <h2 class="post-title">The buggy const</h2>
-  
-      
+    <a href="https://twitter.com/intent/tweet?text=http://asfernandes.github.io/2016/09/23/funny-firebird-operators.html&via=adrianosf"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter"
+      data-ga-event=1 data-ga-category="share" data-ga-action="social-twitter" data-ga-label="/2016/09/23/funny-firebird-operators.html">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
     </a>
+  
 
-    <p class="post-meta">
-      Posted on August 9, 2009 in
-
-      
-        
-        
-        <a href="/tag/c" class="blog-tags">c++</a>,
-      
-        
-        
-        <a href="/tag/java" class="blog-tags">java</a>
-      
-    </p>
+  <!--- Share on Facebook -->
   
-    <div class="post-entry">
-      In C/C++, there are constants and pointer to constants. I’m talking here about constants (i.e., const int var1; int* const var2) and not pointer to constants (i.e., const int* var3). In 90% of cases that I see, usage of constants for local “variables” and parameters is “wrong”. People...
-    <a href="/2009/08/09/buggy-const.html" class="post-read-more">[Read&nbsp;More]</a>
-    </div>
-  
-   </article>
-  
-  <article class="post-preview">
-    <a href="/2009/08/08/ddl-execution-architecture-in-firebird_4841.html">
-    <h2 class="post-title">DDL execution architecture in Firebird - why we need to move on</h2>
-  
-      
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://asfernandes.github.io/2016/09/23/funny-firebird-operators.html"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook"
+      data-ga-event=1 data-ga-category="share" data-ga-action="social-facebook" data-ga-label="/2016/09/23/funny-firebird-operators.html">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
     </a>
+  
 
-    <p class="post-meta">
-      Posted on August 8, 2009 in
-
-      
-        
-        
-        <a href="/tag/firebird" class="blog-tags">firebird</a>
-      
-    </p>
+  <!--- Share on Google Plus -->
   
-    <div class="post-entry">
-      Here I'm going to explain how Firebird DDL commands works in the architecture, why it stops innovation and how it is supposed to work in Firebird 3.0. DDL in FB works more or less like DML, so first a briefly explanation of how DML works. When a DML command is...
-    <a href="/2009/08/08/ddl-execution-architecture-in-firebird_4841.html" class="post-read-more">[Read&nbsp;More]</a>
-    </div>
-  
-   </article>
-  
-  <article class="post-preview">
-    <a href="/2009/08/02/cvsnt-client-is-slow.html">
-    <h2 class="post-title">CVSNT client is slow</h2>
-  
-      
+    <a href="https://plus.google.com/share?url=http://asfernandes.github.io/2016/09/23/funny-firebird-operators.html"
+      class="btn btn-social-icon btn-google" title="Share on Google+"
+      data-ga-event=1 data-ga-category="share" data-ga-action="social-google" data-ga-label="/2016/09/23/funny-firebird-operators.html">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
     </a>
+  
 
-    <p class="post-meta">
-      Posted on August 2, 2009 in
-
-      
-        
-        
-        <a href="/tag/firebird" class="blog-tags">firebird</a>
-      
-    </p>
+  <!--- Share on LinkedIn -->
   
-    <div class="post-entry">
-      For years I was using CVSNT client to work with Firebird and any other CVS repository. I started to use it because I needed a client capable of handling the “sserver” protocol method, which the “standard” CVS can’t. A first thing I’ve noted has that it most times refetches completely...
-    <a href="/2009/08/02/cvsnt-client-is-slow.html" class="post-read-more">[Read&nbsp;More]</a>
-    </div>
-  
-   </article>
-  
-  <article class="post-preview">
-    <a href="/2009/07/12/network-latency-influence-on-firebird.html">
-    <h2 class="post-title">Influence of network latency in the Firebird wire protocol</h2>
-  
-      
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://asfernandes.github.io/2016/09/23/funny-firebird-operators.html"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn"
+      data-ga-event=1 data-ga-category="share" data-ga-action="social-linkedin" data-ga-label="/2016/09/23/funny-firebird-operators.html">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
     </a>
+  
 
-    <p class="post-meta">
-      Posted on July 12, 2009 in
+</section>
 
+
+
+    
+
+    <ul class="pager blog-pager">
       
-        
-        
-        <a href="/tag/firebird" class="blog-tags">firebird</a>
+      <li class="previous">
+        <a href="/2016/09/07/blogging-with-jekyll-and-github.html" data-toggle="tooltip" data-placement="top" title="Blogging with Jekyll and Github">&larr; Previous Post</a>
+      </li>
       
-    </p>
-  
-    <div class="post-entry">
-      People often talk that Firebird performs badly in networks with high latency. I did some tests to see how the new protocol has been improved compared to the old one, and to see how it could be improved even more. My tests only cares about latency, and not about bandwidth....
-    <a href="/2009/07/12/network-latency-influence-on-firebird.html" class="post-read-more">[Read&nbsp;More]</a>
-    </div>
-  
-   </article>
-  
-</div>
-
-
-<ul class="pager main-pager">
-  
-  <li class="previous">
-    <a href="/page6">&larr; Newer Posts</a>
-  </li>
-  
-  
-</ul>
-
-
-<hr />
-
-<div class="post-entry">
-
-Posts by tags:
-
-
-
-
-
-
-
-
-  
-  
-  <a href="/tag/" class="blog-tags"></a>
-
-  
-  
-  <a href="/tag/artigo" class="blog-tags">artigo</a>,
-
-  
-  
-  <a href="/tag/c" class="blog-tags">c++</a>,
-
-  
-  
-  <a href="/tag/developer" class="blog-tags">developer</a>,
-
-  
-  
-  <a href="/tag/firebird" class="blog-tags">firebird</a>,
-
-  
-  
-  <a href="/tag/java" class="blog-tags">java</a>,
-
-  
-  
-  <a href="/tag/javascript" class="blog-tags">javascript</a>,
-
-  
-  
-  <a href="/tag/linux" class="blog-tags">linux</a>,
-
-  
-  
-  <a href="/tag/nf-e" class="blog-tags">nf-e</a>,
-
-  
-  
-  <a href="/tag/others" class="blog-tags">others</a>
-
-
-</div>
-
-	
+      
+    </ul>
   </div>
 </div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
 
     </div>
     <footer>

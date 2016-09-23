@@ -5,9 +5,71 @@
     <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
     <link>http://asfernandes.github.io/</link>
     <atom:link href="http://asfernandes.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 08 Sep 2016 22:09:24 -0300</pubDate>
-    <lastBuildDate>Thu, 08 Sep 2016 22:09:24 -0300</lastBuildDate>
+    <pubDate>Fri, 23 Sep 2016 16:21:01 -0300</pubDate>
+    <lastBuildDate>Fri, 23 Sep 2016 16:21:01 -0300</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Funny Firebird operators</title>
+        <description>&lt;p&gt;Here is a table with Firebird operators you probably don’t know that exist:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Funny&lt;/th&gt;
+      &lt;th&gt;Standard equivalent&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x !&amp;lt; y&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;lt; y)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ^&amp;lt; y&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;lt; y)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ~&amp;lt; y&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;lt; y)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x !&amp;gt; y&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;gt; y)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ^&amp;gt; y&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;lt; y)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ~&amp;gt; y&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;lt; y)&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x != y&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x &amp;lt;&amp;gt; y&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ^= y&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x &amp;lt;&amp;gt; y&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ~= y&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x &amp;lt;&amp;gt; y&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 23 Sep 2016 00:00:00 -0300</pubDate>
+        <link>http://asfernandes.github.io/2016/09/23/funny-firebird-operators.html</link>
+        <guid isPermaLink="true">http://asfernandes.github.io/2016/09/23/funny-firebird-operators.html</guid>
+        
+        <category>firebird</category>
+        
+        
+      </item>
     
       <item>
         <title>Blogging with Jekyll and Github</title>
@@ -149,6 +211,7 @@
 &lt;p&gt;&lt;a name=&quot;listagem15&quot;&gt;Listagem 15&lt;/a&gt;: Usando subqueries como expressões PSQL.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;RETURNS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;COD&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;IF&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;COUNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DOCUMENTOS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;THEN&lt;/span&gt;
@@ -157,11 +220,12 @@
      &lt;span class=&quot;n&quot;&gt;SUSPEND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Na &lt;a href=&quot;#listagem15&quot;&gt;listagem 15&lt;/a&gt; o parâmetro de retorno COD foi definido com o tipo &lt;code class=&quot;highlighter-rouge&quot;&gt;VARCHAR(10)&lt;/code&gt; e recebe um valor lido da coluna CODIGO da tabela DOCUMENTOS. Uma alteração do tipo desta coluna poderia deixar este bloco de código inconsistente ou inválido. No Firebird 2.1 foi adicionado o suporte ao uso de domains em PSQL. Neste caso, o desenvolvedor precisaria criar um domínio e usá-lo na definição da tabela e na definição do parâmetro de retorno do &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE BLOCK&lt;/code&gt; para ter um código consistente. Dependendo da situação, a criação de domínios para todas as colunas pode se tornar uma tarefa extremamente burocrática. Pensando nisso, o Firebird 2.5 adiciona a cláusula &lt;code class=&quot;highlighter-rouge&quot;&gt;TYPE OF COLUMN&lt;/code&gt;. Com essa cláusula é possível declarar parâmetros e variáveis ou fazer casts usando o tipo definido de uma coluna. Ao alterar o tipo da coluna, a alteração se reflete automaticamente em todas as stored procedures e triggers que façam uso de seu tipo. A &lt;a href=&quot;#listagem16&quot;&gt;listagem 16&lt;/a&gt; mostra o mesmo código da &lt;a href=&quot;#listagem15&quot;&gt;listagem 15&lt;/a&gt; mas usando &lt;code class=&quot;highlighter-rouge&quot;&gt;TYPE OF COLUMN&lt;/code&gt; para o parâmetro COD.&lt;/p&gt;
 
-&lt;p&gt;&lt;a name=&quot;listagem16&quot;&gt;Listagem 16&lt;/a&gt;: Usando a cláusula TYPE OF COLUMN.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&quot;listagem16&quot;&gt;Listagem 16&lt;/a&gt;: Usando a cláusula &lt;code class=&quot;highlighter-rouge&quot;&gt;TYPE OF COLUMN&lt;/code&gt;.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;RETURNS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;COD&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TYPE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;OF&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;COLUMN&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DOCUMENTOS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CODIGO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
@@ -174,11 +238,14 @@
 
 &lt;p&gt;No Firebird 2.1 foram acrescentados os triggers de eventos de banco de dados, como o evento ON CONNECT. Uma das funcionalidades que podiam ser feitas com este tipo de trigger era a rejeição de uma conexão, permitindo que os desenvolvedores implementassem um sistema de segurança dentro do banco de dados. Para rejeitar uma conexão é necessário lançar uma exceção dentro do trigger. Nota: este tipo de segurança não impede que o usuário SYSDBA tenha acesso ao banco, pois os administradores podem desativar os triggers de banco de dados conectando-se usando a opção -nodbtriggers do ISQL. O problema é que alguns desenvolvedores gostariam de gravar uma entrada em uma tabela de log registrando o evento, mas a exceção causava o rollback da criação deste registro. Esta e outras situações (como comunicação com outros sistemas através de UDFs) agora podem se beneficiar de um novo comando, o &lt;code class=&quot;highlighter-rouge&quot;&gt;IN AUTONOMOUS TRANSACTION&lt;/code&gt;. Assim como um &lt;code class=&quot;highlighter-rouge&quot;&gt;IF&lt;/code&gt; ou &lt;code class=&quot;highlighter-rouge&quot;&gt;WHILE&lt;/code&gt;, este comando aceita um subcomando (ou vários, com o uso de BEGIN END). No início da execução do &lt;code class=&quot;highlighter-rouge&quot;&gt;IN AUTONOMOUS TRANSACTION&lt;/code&gt; é aberta uma nova transação e o subcomando é executado dentro desta transação. Caso o subcomando execute por completo, é feito um &lt;code class=&quot;highlighter-rouge&quot;&gt;COMMIT&lt;/code&gt; na transação criada. Caso ocorra uma exceção, é feito um rollback. A &lt;a href=&quot;#listagem17&quot;&gt;listagem 17&lt;/a&gt; apresenta um trigger ON CONNECT que aceita apenas conexões dos usuários SYSDBA e ADMIN e grava o nome dos outros usuários que tiverem a conexão rejeitada. Note que a exceção usada para rejeitar a conexão é lançada fora do bloco &lt;code class=&quot;highlighter-rouge&quot;&gt;IN AUTONOMOUS TRANSACTION&lt;/code&gt;, que já havia terminado e, consequentemente, inserido o registro e finalizado a transação com &lt;code class=&quot;highlighter-rouge&quot;&gt;COMMIT&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;a name=&quot;listagem17&quot;&gt;Listagem 17&lt;/a&gt;: Usando o comando IN AUTONOMOUS TRANSACTION.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&quot;listagem17&quot;&gt;Listagem 17&lt;/a&gt;: Usando o comando &lt;code class=&quot;highlighter-rouge&quot;&gt;IN AUTONOMOUS TRANSACTION&lt;/code&gt;.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CONN_LOG&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;USUARIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;DATA&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EXCEPTION&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E_CONN&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Acesso negado.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TRIGGER&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T_CONN&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ON&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;CONNECT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;IF&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;CURRENT_USER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'SYSDBA'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;CURRENT_USER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ADMIN'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;THEN&lt;/span&gt;
@@ -192,6 +259,7 @@
      &lt;span class=&quot;n&quot;&gt;EXCEPTION&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E_CONN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;O comando &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; ganha algumas novidades importantes na versão 2.5. Uma delas é uma das funcionalidades mais pedidas pelos usuários: ler e atualizar dados em outros bancos de dados. Através da cláusula ON EXTERNAL DATA SOURCE é possível especificar o banco de dados em que o comando executará. É permitido também que o desenvolvedor especifique o nome, senha e role do usuário para fazer a conexão, e o funcionamento da transação iniciada para rodar o comando no banco de dados externo. Com WITH COMMON TRANSACTION (opção default), a transação da conexão externa é agrupada à transação interna atual e o comando &lt;code class=&quot;highlighter-rouge&quot;&gt;COMMIT&lt;/code&gt; ou &lt;code class=&quot;highlighter-rouge&quot;&gt;ROLLBACK&lt;/code&gt; executado na transação atual é propagado às transações externas. Com WITH AUTONOMOUS TRANSACTION o funcionamento se torna similar as transações autônomas, sendo feito o &lt;code class=&quot;highlighter-rouge&quot;&gt;COMMIT&lt;/code&gt; ou &lt;code class=&quot;highlighter-rouge&quot;&gt;ROLLBACK&lt;/code&gt; logo após a execução sucedida ou não do comando externo. A &lt;a href=&quot;#listagem18&quot;&gt;listagem 18&lt;/a&gt; mostra o uso deste comando para ler e gravar dados em outro banco de dados.&lt;/p&gt;
@@ -199,6 +267,7 @@
 &lt;p&gt;&lt;a name=&quot;listagem18&quot;&gt;Listagem 18&lt;/a&gt;: Executando comandos em outros bancos de dados com &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt;.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;RETURNS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BANCO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'localhost:/db/pessoas.fdb'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;USUARIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'SYSDBA'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -220,6 +289,7 @@
     &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;USER&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;USUARIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PASSWORD&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SENHA&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;WITH&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AUTONOMOUS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TRANSACTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;A &lt;a href=&quot;#listagem18&quot;&gt;listagem 18&lt;/a&gt; mostra como era feita a criação de strings de SQL dinâmico, usando concatenação de strings. A criação de comandos com concatenação é insegura, pois um usuário mal-intencionado pode gerar comandos não previstos pelo desenvolvedor, causando o ataque conhecido como injeção de SQL &lt;a href=&quot;#nota1&quot;&gt;[1]&lt;/a&gt;. No novo &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; é possível passar parâmetros de duas formas diferentes. A &lt;a href=&quot;#listagem19&quot;&gt;listagem 19&lt;/a&gt; mostra o uso de parâmetros anônimos, com o símbolo de interrogação.&lt;/p&gt;
@@ -227,6 +297,7 @@
 &lt;p&gt;&lt;a name=&quot;listagem19&quot;&gt;Listagem 19&lt;/a&gt;: Usando &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; com parâmetros anônimos.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Sicrano'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATA_NASCIMENTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'2000-01-01'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -235,6 +306,7 @@
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'INSERT INTO PESSOAS (NOME, DATA_NASCIMENTO) VALUES (?, ?)'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATA_NASCIMENTO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Além da passagem de parâmetros anônimos, o comando &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; agora suporta o uso de parâmetros nomeados. As vantagens dos parâmetros nomeados são que o desenvolvedor não precisa se preocupar com a ordem e também pode usar um mesmo parâmetro mais de uma vez sem a necessidade de criação de variáveis. O uso dos parâmetros dentro da string é similar a passagem de parâmetros feita com o símbolo dois-pontos em bibliotecas Delphi, como expliquei na parte referente à construção &lt;code class=&quot;highlighter-rouge&quot;&gt;? IS NULL&lt;/code&gt;. Os valores são associados aos nomes dos parâmetros usando-se o operador &lt;code class=&quot;highlighter-rouge&quot;&gt;:=&lt;/code&gt; (dois pontos, igual). A &lt;a href=&quot;#listagem20&quot;&gt;listagem 20&lt;/a&gt; mostra o uso de parâmetros nomeados.&lt;/p&gt;
@@ -242,6 +314,7 @@
 &lt;p&gt;&lt;a name=&quot;listagem20&quot;&gt;Listagem 20&lt;/a&gt;: Usando &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; com parâmetros nomeados.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Sicrano'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATA_NASCIMENTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'2000-01-01'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -251,6 +324,7 @@
         VALUES (:P_NOME, :P_DATA_NASCIMENTO)'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P_DATA_NASCIMENTO&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATA_NASCIMENTO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P_NOME&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+
 &lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;nota&quot;&gt;Nota&lt;/h4&gt;
@@ -366,20 +440,6 @@
         <pubDate>Thu, 02 Jan 2014 11:34:00 -0200</pubDate>
         <link>http://asfernandes.github.io/2014/01/02/artigo-novidades-do-firebird-25.html</link>
         <guid isPermaLink="true">http://asfernandes.github.io/2014/01/02/artigo-novidades-do-firebird-25.html</guid>
-        
-        <category>artigo</category>
-        
-        <category>firebird</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Artigo &quot;Novidades do Firebird 2.5&quot;: Migrando de versões anteriores</title>
-        <description>Conforme citado na &lt;a href=&quot;http://asfernandes.blogspot.com.br/2013/12/artigo-novidades-do-firebird-25.html&quot;&gt;introdução&lt;/a&gt;, a compatibilidade é levada a sério no Firebird. Infelizmente, porém,  às vezes é preciso fazer mudanças que causam certas dificuldades de migração. Antes da versão 2.1 o Firebird tinha importantes bugs referentes a implementação de character sets multibyte herdados do InterBase. Um destes character sets é o UNICODE_FSS, que é usado pelas tabelas de sistema RDB$. O Firebird não convertia, do character set cliente para o UNICODE_FSS, nomes, strings e código fonte de objetos durante a execução de comandos DDL e simplesmente gravava os dados, que do ponto de vista do UNICODE_FSS eram inválidos. A partir da versão 2.1 esta conversão passou a ser feita, embora ainda fosse possível a criação de objetos inválidos usando o character set NONE. Para corrigir os objetos gravados de forma incorreta, foi disponibilizado um script que deveria ser rodado após o restore na versão 2.1.&lt;br /&gt;&lt;br /&gt;A partir da versão 2.5 o Firebird passou a recusar dados e metadados inválidos com o character set UNICODE_FSS. Isto significaria que qualquer banco de dados de versões anteriores que tivesse problemas de character set não poderia ser restaurado na nova versão. Diante dessa situação, foram acrescentadas duas opções ao gbak, para serem usadas durante o processo de restauração e corrigir este tipo de problema.&lt;br /&gt;&lt;br /&gt;A opção -FIX_FSS_METADATA seguida do nome de um character set é usada para informar em que character set foram criados os objetos de banco de dados presentes no backup. Durante a restauração os metadados são convertidos deste character set para o UNICODE_FSS e gravados corretamente.&lt;br /&gt;&lt;br /&gt;A outra opção, -FIX_FSS_DATA seguida do nome de um character set, deve ser usada apenas em bancos de dados que tenham tabelas de usuários criadas usando o character set UNICODE_FSS. Esta opção realiza a conversão dos dados da mesma forma que -FIX_FSS_METADATA realiza a conversão dos metadados.&lt;br /&gt;&lt;br /&gt;O uso destas opções só é necessário caso o banco possua metadados e dados com caracteres fora do padrão ASCII, como caracteres acentuados, por exemplo. É recomendado que se tente inicialmente fazer a restauração sem usar estas opções. Se o processo falhar por estes problemas, será mostrada uma mensagem de erro recomendando o uso. Para usar o character set correto nestas opções, o usuário precisa ter um conhecimento mínimo sobre character sets (ou páginas de códigos de caracteres) e dos sistemas operacionais usados pelas aplicações cliente. Por exemplo, aplicações que executavam comandos DDL pelo Windows (configurado para Português/Brasil) devem usar WIN1252. Já no Linux a maioria das distribuições atuais trabalha com UTF-8, que é compatível com UNICODE_FSS e não deveria causar problemas.&lt;br /&gt;&lt;br /&gt;Estas opções podem não resolver os problemas caso o banco de dados tenha dados ou metadados gravados de forma incorreta usando diferentes character sets. Neste caso será necessário corrigir os problemas com o auxílio dos scripts de migração usando a versão 2.1.&lt;br /&gt;&lt;br /&gt;Após a migração do banco de dados, o desenvolvedor precisa se certificar que seus aplicativos conectam-se ao banco usando o client character set correto. O uso do character set NONE (padrão) ou de um character set incorreto podem causar erros de “malformed string” e “transliteration exception”.</description>
-        <pubDate>Sun, 22 Dec 2013 20:49:00 -0200</pubDate>
-        <link>http://asfernandes.github.io/2013/12/22/artigo-novidades-do-firebird-25_22.html</link>
-        <guid isPermaLink="true">http://asfernandes.github.io/2013/12/22/artigo-novidades-do-firebird-25_22.html</guid>
         
         <category>artigo</category>
         
