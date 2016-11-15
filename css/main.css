@@ -415,3 +415,10 @@ table tr td :last-child {
 #social-share-section {
   margin-bottom: 30px;
 }
+
+/* asfernandes */
+
+pre code
+{
+	white-space: pre;
+}
