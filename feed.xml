@@ -5,9 +5,79 @@
     <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
     <link>https://asfernandes.github.io/</link>
     <atom:link href="https://asfernandes.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 02 Nov 2016 23:58:39 -0200</pubDate>
-    <lastBuildDate>Wed, 02 Nov 2016 23:58:39 -0200</lastBuildDate>
+    <pubDate>Tue, 07 Feb 2017 21:33:12 -0200</pubDate>
+    <lastBuildDate>Tue, 07 Feb 2017 21:33:12 -0200</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Pausable observable with KnockoutJS</title>
+        <description>&lt;p&gt;Sometimes when working with &lt;a href=&quot;http://knockoutjs.com&quot;&gt;Knockout&lt;/a&gt; you may be in a situation when you want to update a set of observables without delivering notifications to they subscribers (explicitly or by computed observables) as soon each observable is changed. This happens especially when you’re using the &lt;a href=&quot;http://knockoutjs.com/documentation/plugins-mapping.html&quot;&gt;mapping plugin&lt;/a&gt; or something similar.&lt;/p&gt;
+
+&lt;p&gt;However, it’s not easy to achieve this with builtin knockout functions nor it’s very intuitive to do it right.&lt;/p&gt;
+
+&lt;p&gt;So I created a function and an extender that make it. Full code is here and I put this &lt;a href=&quot;https://jsfiddle.net/e8tsnxpa&quot;&gt;jsfiddle&lt;/a&gt; to see the use case.&lt;/p&gt;
+
+&lt;p&gt;Note that when “Just map” is clicked it logs a weird thing. When “Map with pause” is clicked the notification happens after all observables are changed.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pausableObservable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pending&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushNotification&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;pending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;subscribe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;newValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;newValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pendingCache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;pending&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+
+            &lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arrayForEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pendingCache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+            &lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arrayForEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pendingCache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notifySubscribers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extenders&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pausable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pausable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;oldNotifySubscribers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notifySubscribers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;pushed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notifySubscribers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pausable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;peek&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;pausable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushNotification&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;oldNotifySubscribers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+</description>
+        <pubDate>Tue, 29 Nov 2016 00:00:00 -0200</pubDate>
+        <link>https://asfernandes.github.io/2016/11/29/pausable-observable-knockoutjs.html</link>
+        <guid isPermaLink="true">https://asfernandes.github.io/2016/11/29/pausable-observable-knockoutjs.html</guid>
+        
+        <category>knockout</category>
+        
+        <category>javascript</category>
+        
+        
+      </item>
     
       <item>
         <title>Node.js Firebird API</title>
@@ -472,20 +542,6 @@
         <pubDate>Sun, 12 Jan 2014 21:52:00 -0200</pubDate>
         <link>https://asfernandes.github.io/2014/01/12/artigo-novidades-do-firebird-25_12.html</link>
         <guid isPermaLink="true">https://asfernandes.github.io/2014/01/12/artigo-novidades-do-firebird-25_12.html</guid>
-        
-        <category>artigo</category>
-        
-        <category>firebird</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Artigo &quot;Novidades do Firebird 2.5&quot;: Character Sets e Collates</title>
-        <description>No Firebird, diferentes tabelas ou até mesmo diferentes colunas de uma mesma tabela podem usar diferentes character sets e collates. Isto permite uma grande flexibilidade mas pode causar problemas caso o desenvolvedor ou DBA não se atente às necessidades da aplicação. Por isso, um banco de dados pode ter um character set default, que é automaticamente usado quando não é especificado um character set durante a definição de uma coluna de tipo string. Algo semelhante não existia para collates, sendo que o collate default de cada character set é o modo de comparação binária dos bytes que compõem uma string.&lt;br /&gt;&lt;br /&gt; Na nova versão foi introduzido o comando ALTER CHARACTER SET, permitindo a alteração do collate padrão de um character set. Além do comando ALTER CHARACTER SET, agora o collate padrão do character set padrão do banco pode ser definido no momento da criação do banco de dados. A &lt;b&gt;listagem 1&lt;/b&gt; mostra a criação de um banco de dados usando o character set padrão WIN1252 e definindo seu collate padrão para WIN_PTBR. Em seguida o collate padrão do character set UTF8 é alterado para UNICODE_CI_AI.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot;vertical-align: baseline;&quot;&gt;&lt;/span&gt;&lt;br /&gt;&lt;b&gt;Listagem 1&lt;/b&gt;. Exemplos de alteração de collate padrão.&lt;br /&gt;&lt;br /&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;font-family: Courier New, Courier, monospace;&quot;&gt;CREATE DATABASE 'TEST.FDB'&lt;br /&gt;&amp;nbsp; DEFAULT CHARACTER SET WIN1252&lt;br /&gt;&amp;nbsp; COLLATION WIN_PTBR;&lt;br /&gt;&lt;br /&gt;ALTER CHARACTER SET UTF8&lt;br /&gt;&amp;nbsp; SET DEFAULT COLLATION UNICODE_CI_AI;&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot;vertical-align: baseline;&quot;&gt;&lt;/span&gt;&lt;br /&gt;A &lt;b&gt;listagem 2&lt;/b&gt; mostra o banco operando com o character set default WIN1252 e o collate WIN_PTBR (case-insensitive).&lt;br /&gt;&lt;br /&gt;&lt;b&gt;Listagem 2&lt;/b&gt;. Comparação de strings usando o collate WIN_PTBR.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot;font-family: Courier New, Courier, monospace;&quot;&gt;CREATE TABLE PESSOAS (NOME VARCHAR(20));&lt;br /&gt;&lt;br /&gt;INSERT INTO PESSOAS VALUES ('Fulano');&lt;br /&gt;INSERT INTO PESSOAS VALUES ('Beltrano');&lt;br /&gt;&lt;br /&gt;-- Localiza Fulano (= FULANO)&lt;br /&gt;SELECT * FROM PESSOAS WHERE NOME = 'FULANO';&lt;/span&gt;&lt;br /&gt;&lt;br /&gt; Outra necessidade comumente encontrada em aplicações é a gravação de códigos alfanuméricos. Até o Firebird 2.1 a ordenação de campos do tipo string era sempre feita no modo de comparação de texto. Isto quer dizer que um código “A10” é listado antes de “A2” caso ordenado por esta coluna. A &lt;b&gt;listagem 3&lt;/b&gt; mostra um exemplo desta situação.&lt;br /&gt;&lt;br /&gt;&lt;b&gt;Listagem 3&lt;/b&gt;. Ordenação de códigos alfanuméricos usando o collate UNICODE.&lt;br /&gt;&lt;span style=&quot;font-family: Courier New, Courier, monospace;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: Courier New, Courier, monospace;&quot;&gt;CREATE TABLE DOCUMENTOS (&lt;br /&gt;&amp;nbsp; CODIGO VARCHAR(10) CHARACTER SET UTF8 COLLATE UNICODE&lt;br /&gt;);&lt;br /&gt;&lt;br /&gt;INSERT INTO DOCUMENTOS VALUES ('A1');&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-family: Courier New, Courier, monospace;&quot;&gt;INSERT INTO DOCUMENTOS VALUES ('A2');&lt;br /&gt;INSERT INTO DOCUMENTOS VALUES ('A10');&lt;br /&gt;INSERT INTO DOCUMENTOS VALUES ('A11');&lt;br /&gt;INSERT INTO DOCUMENTOS VALUES ('A100');&lt;br /&gt;INSERT INTO DOCUMENTOS VALUES ('B1');&lt;br /&gt;INSERT INTO DOCUMENTOS VALUES ('B10');&lt;br /&gt;&lt;br /&gt;-- Resultado: A1, A10, A100, A11, A2, B1, B10&lt;br /&gt;SELECT CODIGO FROM DOCUMENTOS ORDER BY CODIGO;&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt; O Firebird 2.5 permite que collates sejam configuráveis, e uma das opções do collate UNICODE permite que números sejam ordenados por ordem numérica. A &lt;b&gt;listagem 4&lt;/b&gt; mostra a criação do collate UNICODE_NUM com o uso da opção NUMERIC-SORT e a ordenação usando este collate.&lt;/div&gt;&lt;div&gt;&lt;br /&gt;&lt;b&gt;Listagem 4&lt;/b&gt;. Ordenação usando a opção NUMERIC-SORT do collate UNICODE.&lt;br /&gt;&lt;div&gt;&lt;br /&gt;&lt;span style=&quot;font-family: Courier New, Courier, monospace;&quot;&gt;CREATE COLLATION UNICODE_NUM FOR UTF8 FROM UNICODE 'NUMERIC-SORT=1';&lt;br /&gt;&lt;br /&gt;CREATE TABLE DOCUMENTOS2 (&lt;br /&gt;&amp;nbsp; CODIGO VARCHAR(10) CHARACTER SET UTF8 COLLATE UNICODE_NUM&lt;br /&gt;);&lt;br /&gt;&lt;br /&gt;INSERT INTO DOCUMENTOS2 SELECT * FROM DOCUMENTOS;&lt;br /&gt;&lt;br /&gt;-- Resultado: A1, A2, A10, A11, A100, B1, B10&lt;br /&gt;SELECT CODIGO FROM DOCUMENTOS2 ORDER BY CODIGO;&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt; Outra novidade da versão 2.5 é o collate UNICODE_CI_AI (para o character set UTF8), variação do collate UNICODE pré-configurado para desconsiderar diferenças de acentos e maiúsculas/minúsculas. O collate UNICODE_CI_AI funciona de maneira similar ao WIN_PTBR e PT_BR, mas aceita o conjunto completo de caracteres Unicode.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
-        <pubDate>Sun, 05 Jan 2014 21:00:00 -0200</pubDate>
-        <link>https://asfernandes.github.io/2014/01/05/artigo-novidades-do-firebird-25_5.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2014/01/05/artigo-novidades-do-firebird-25_5.html</guid>
         
         <category>artigo</category>
         
