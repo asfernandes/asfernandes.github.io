@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Node.js Firebird Drivers</title>
+  <meta name="description" content="I’m pleased to announce the initial release of my Firebird drivers projects for Node.js.">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/bootstrap-social.css">
+  <link rel="canonical" href="https://asfernandes.github.io/2017/03/29/node-firebird-drivers.html">
+  <link rel="alternate" type="application/rss+xml" title="asfernandes' blog" href="https://asfernandes.github.io/feed.xml">
+
+  
+
+  
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-7263221-3', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<!-- End Google Analytics -->
+
+
+</head>
+
+
+	<!-- Start of StatCounter Code for Default Guide -->
+	<script type="text/javascript">
+	var sc_project=11098306;
+	var sc_invisible=1;
+	var sc_security="a73f5966";
+	var scJsHost = (("https:" == document.location.protocol) ?
+	"https://secure." : "http://www.");
+	document.write("<sc"+"ript type='text/javascript' src='" +
+	scJsHost+
+	"statcounter.com/counter/counter.js'></"+"script>");
+	</script>
+	<noscript><div class="statcounter"><a title="shopify stats"
+	href="http://statcounter.com/shopify/" target="_blank"><img
+	class="statcounter"
+	src="//c.statcounter.com/11098306/0/a73f5966/1/"
+	alt="shopify stats"></a></div></noscript>
+	<!-- End of StatCounter Code for Default Guide -->
+
+
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://asfernandes.github.io">asfernandes' blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        <li>
+          <a href="/contact">contact</a>
+        </li>
+      
+
+      
+        <li>
+          <a href="/search" class="nav-search-link" title="Search">
+            <span class="fa fa-search nav-search-icon"></span>
+            <span class="nav-search-text"></span>
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+
+  
+  <div class="avatar-container">
+    <div class="avatar-img-border">
+      <a href="https://asfernandes.github.io">
+        <img class="avatar-img" src="/img/avatar-icon.png" alt="asfernandes' blog"/>
+    </a>
+    </div>
+  </div>
+  
+
+  </div>
+</nav>
+
+    <div role="main" class="container main-content">
+        <header class="header-post">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="post-heading">
+        <h1>Node.js Firebird Drivers</h1>
+        
+        <span class="post-meta">Posted on March 29, 2017 in
+        
+          
+          
+          <a href="/tag/firebird" class="blog-tags">firebird</a>,
+        
+          
+          
+          <a href="/tag/nodejs" class="blog-tags">nodejs</a>,
+        
+          
+          
+          <a href="/tag/javascript" class="blog-tags">javascript</a>,
+        
+          
+          
+          <a href="/tag/typescript" class="blog-tags">typescript</a>
+        
+        </span>
+      </div>
+     </div>
+  </div>
+</header>
+
+<article>
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+	    <p>I’m pleased to announce the initial release of my Firebird drivers projects for Node.js.</p>
+
+<ul>
+  <li>You said projects?</li>
+  <li>Yes!</li>
+</ul>
+
+<p>The work is split in three projects, as described below.</p>
+
+<h1 id="node-firebird-driver-native">node-firebird-driver-native</h1>
+
+<p>Firebird high-level native client for Node.js / TypeScript (<a href="https://github.com/asfernandes/node-firebird-driver-native">github</a> /
+<a href="https://www.npmjs.com/package/node-firebird-driver-native">npm</a>)</p>
+
+<p>This is the more interesting project for now. It allows to use Firebird (via Firebird v3+ client library) with a good high-level API.</p>
+
+<p>Example usage:</p>
+
+<figure class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">createNativeClient</span><span class="p">,</span> <span class="nx">getDefaultLibraryFilename</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'node-firebird-driver-native'</span><span class="p">;</span>
+
+
+<span class="k">async</span> <span class="kd">function</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">createNativeClient</span><span class="p">(</span><span class="nx">getDefaultLibraryFilename</span><span class="p">());</span>
+
+    <span class="c1">// Without 'server:', it will use Firebird embedded.</span>
+    <span class="kd">const</span> <span class="nx">attachment</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">createDatabase</span><span class="p">(</span><span class="s1">'server:/tmp/new-db.fdb'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">username</span><span class="p">:</span> <span class="s1">'sysdba'</span><span class="p">,</span>
+        <span class="na">password</span><span class="p">:</span> <span class="s1">'masterkey'</span>
+    <span class="p">});</span>
+    <span class="kd">const</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">attachment</span><span class="p">.</span><span class="nx">startTransaction</span><span class="p">();</span>
+
+    <span class="k">await</span> <span class="nx">attachment</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="nx">transaction</span><span class="p">,</span>
+        <span class="s1">'create table t1 (n integer, d date)'</span><span class="p">);</span>
+    <span class="k">await</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">commitRetaining</span><span class="p">();</span>
+
+    <span class="kd">const</span> <span class="nx">statement1</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">attachment</span><span class="p">.</span><span class="nx">prepare</span><span class="p">(</span><span class="nx">transaction</span><span class="p">,</span>
+        <span class="s1">'insert into t1 values (?, ?)'</span><span class="p">);</span>
+    <span class="k">await</span> <span class="nx">statement1</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="nx">transaction</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()]);</span>
+    <span class="k">await</span> <span class="nx">statement1</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="nx">transaction</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()]);</span>
+    <span class="k">await</span> <span class="nx">statement1</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="nx">transaction</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()]);</span>
+    <span class="k">await</span> <span class="nx">statement1</span><span class="p">.</span><span class="nx">dispose</span><span class="p">();</span>
+
+    <span class="kd">const</span> <span class="nx">resultSet</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">attachment</span><span class="p">.</span><span class="nx">executeQuery</span><span class="p">(</span><span class="nx">transaction</span><span class="p">,</span>
+        <span class="s1">'select n, d from t1 where n &lt;= ?'</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="kd">const</span> <span class="nx">rows</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">resultSet</span><span class="p">.</span><span class="nx">fetch</span><span class="p">();</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">columns</span> <span class="nx">of</span> <span class="nx">rows</span><span class="p">)</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'n: '</span> <span class="o">+</span> <span class="nx">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">', d: '</span> <span class="o">+</span> <span class="nx">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+
+    <span class="k">await</span> <span class="nx">resultSet</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+
+    <span class="k">await</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">commit</span><span class="p">();</span>
+    <span class="k">await</span> <span class="nx">attachment</span><span class="p">.</span><span class="nx">dropDatabase</span><span class="p">();</span>
+
+    <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">dispose</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">test</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Finish...'</span><span class="p">));</span></code></pre></figure>
+
+<p>More examples can be found <a href="https://github.com/asfernandes/node-firebird-driver-native/blob/master/src/test/test.ts">here</a>.</p>
+
+<h1 id="node-firebird-driver">node-firebird-driver</h1>
+
+<p>Firebird client interfaces for Node.js / TypeScript (<a href="https://github.com/asfernandes/node-firebird-driver">github</a> /
+<a href="https://www.npmjs.com/package/node-firebird-driver">npm</a>)</p>
+
+<p>This project currently has only TypeScript interfaces for a Firebird client. In the future it may have common code for any Firebird client,
+like connection pools and utility functions.</p>
+
+<p><code class="highlighter-rouge">node-firebird-driver-native</code> implements the interfaces from this project. In the future, we may have another socket-based project also
+implementing these interfaces, so all drivers will be type-compatible.</p>
+
+<h1 id="node-firebird-native-api">node-firebird-native-api</h1>
+
+<p>Firebird low-level API for Node.js / TypeScript (<a href="https://github.com/asfernandes/node-firebird-native-api">github</a> /
+<a href="https://www.npmjs.com/package/node-firebird-native-api">npm</a>)</p>
+
+<p>This project converts Firebird cloop interfaces to TypeScript and NAN bindings to access the native fbclient code. It’s a dependency project
+for <code class="highlighter-rouge">node-firebird-driver-native</code>.</p>
+
+<p>It’s currently not complete and you should use it directly only if you know what are you doing.</p>
+
+<h1 id="disclaimer">Disclaimer</h1>
+
+<p>All the projects are currently in ALPHA version, so changes are expected without caring about semver breaks.</p>
+
+	  </div>
+  </div>
+</article>
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+    
+      <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+
+  <!--- Share on Twitter -->
+  
+    <a href="https://twitter.com/intent/tweet?text=https://asfernandes.github.io/2017/03/29/node-firebird-drivers.html&via=adrianosf"
+      class="btn btn-social-icon btn-twitter" title="Share on Twitter"
+      data-ga-event=1 data-ga-category="share" data-ga-action="social-twitter" data-ga-label="/2017/03/29/node-firebird-drivers.html">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+    </a>
+  
+
+  <!--- Share on Facebook -->
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://asfernandes.github.io/2017/03/29/node-firebird-drivers.html"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook"
+      data-ga-event=1 data-ga-category="share" data-ga-action="social-facebook" data-ga-label="/2017/03/29/node-firebird-drivers.html">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+    </a>
+  
+
+  <!--- Share on Google Plus -->
+  
+    <a href="https://plus.google.com/share?url=https://asfernandes.github.io/2017/03/29/node-firebird-drivers.html"
+      class="btn btn-social-icon btn-google" title="Share on Google+"
+      data-ga-event=1 data-ga-category="share" data-ga-action="social-google" data-ga-label="/2017/03/29/node-firebird-drivers.html">
+      <span class="fa fa-fw fa-google-plus" aria-hidden="true"></span>
+    </a>
+  
+
+  <!--- Share on LinkedIn -->
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://asfernandes.github.io/2017/03/29/node-firebird-drivers.html"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn"
+      data-ga-event=1 data-ga-category="share" data-ga-action="social-linkedin" data-ga-label="/2017/03/29/node-firebird-drivers.html">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+    </a>
+  
+
+</section>
+
+
+
+    
+
+    <ul class="pager blog-pager">
+      
+      <li class="previous">
+        <a href="/2016/11/29/pausable-observable-knockoutjs.html" data-toggle="tooltip" data-placement="top" title="Pausable observable with KnockoutJS">&larr; Previous Post</a>
+      </li>
+      
+      
+    </ul>
+  </div>
+</div>
+
+
+<div class="row disqus-comments">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+	    var disqus_shortname = 'asfernandes-blog';
+	    // ensure that pages with query string get the same discussion
+            var url_parts = window.location.href.split("?");
+            var disqus_url = url_parts[0];	    
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+  </div>
+</div>
+
+
+    </div>
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          <li>
+            <a href="https://github.com/asfernandes" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://twitter.com/adrianosf" title="Twitter">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="mailto:adrianosf@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://linkedin.com/in/adrianosf" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+      
+      
+      <li>
+      <a href="/feed.xml" title="RSS">
+        <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+      </li>   
+               
+        </ul>
+        <p class="copyright text-muted">
+      Adriano dos Santos Fernandes
+      &nbsp;&bull;&nbsp;
+      2017
+      
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+    
+
+
+
+
+
+
+
+    
+  </body>
+</html>
