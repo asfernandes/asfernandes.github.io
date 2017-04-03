@@ -5,13 +5,13 @@
     <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
     <link>https://asfernandes.github.io/</link>
     <atom:link href="https://asfernandes.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 02 Apr 2017 22:14:51 -0300</pubDate>
-    <lastBuildDate>Sun, 02 Apr 2017 22:14:51 -0300</lastBuildDate>
+    <pubDate>Sun, 02 Apr 2017 22:21:49 -0300</pubDate>
+    <lastBuildDate>Sun, 02 Apr 2017 22:21:49 -0300</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
         <title>Node.js Firebird Drivers now works in Windows</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/asfernandes/node-firebird-native-api&quot;&gt;node-firebird-api&lt;/a&gt; and
+        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/asfernandes/node-firebird-native-api&quot;&gt;node-firebird-native-api&lt;/a&gt; and
 &lt;a href=&quot;https://github.com/asfernandes/node-firebird-driver-native&quot;&gt;node-firebird-driver-native&lt;/a&gt; were updated with Windows support.&lt;/p&gt;
 
 &lt;p&gt;They also have a fix for a crash when unloading.&lt;/p&gt;
