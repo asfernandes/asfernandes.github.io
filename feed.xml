@@ -5,9 +5,46 @@
     <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
     <link>https://asfernandes.github.io/</link>
     <atom:link href="https://asfernandes.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 02 Jul 2017 22:09:08 -0300</pubDate>
-    <lastBuildDate>Sun, 02 Jul 2017 22:09:08 -0300</lastBuildDate>
+    <pubDate>Sun, 06 Aug 2017 22:07:58 -0300</pubDate>
+    <lastBuildDate>Sun, 06 Aug 2017 22:07:58 -0300</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>A game with React Native</title>
+        <description>&lt;p&gt;A have written &lt;a href=&quot;https://play.google.com/store/apps/details?id=asfernandes.senha2&quot;&gt;a game&lt;/a&gt; (Senha - Mastermind) with React Native and
+TypeScript and deployed it in the &lt;a href=&quot;https://play.google.com/store/apps/details?id=asfernandes.senha2&quot;&gt;Google Play store&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The game is translated to Portuguese and English. It’s the first mobile app I’ve made and I liked the result (final app, code and
+development process). It’s surely much more fun to write than with Java / Android Studio (and Swift / Xcode).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/2017-08-06-a-game-with-react-native-android.png&quot; alt=&quot;Senha - Mastermind for Android&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In each match a secret is randomly chosen and you need to guess the colors in the right sequence.&lt;/p&gt;
+
+&lt;p&gt;After each try are shown hints of how near you are. Black pins means the count of colors in the right position. White pins means the count of correct colors but in wrong positions.&lt;/p&gt;
+
+&lt;p&gt;You need to put the four colors in the correct positions to win.&lt;/p&gt;
+
+&lt;p&gt;I liked to play the physical version of this game when I was a child :smiley:.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/2017-08-06-a-game-with-react-native-senha-grow.jpg&quot; alt=&quot;Senha - Grow&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 06 Aug 2017 00:00:00 -0300</pubDate>
+        <link>https://asfernandes.github.io/2017/08/06/a-game-with-react-native.html</link>
+        <guid isPermaLink="true">https://asfernandes.github.io/2017/08/06/a-game-with-react-native.html</guid>
+        
+        <category>react-native</category>
+        
+        <category>typescript</category>
+        
+        <category>android</category>
+        
+        <category>react</category>
+        
+        <category>javascript</category>
+        
+        
+      </item>
     
       <item>
         <title>Node.js Firebird Drivers now works in Windows</title>
@@ -602,45 +639,6 @@ for &lt;code class=&quot;highlighter-rouge&quot;&gt;node-firebird-driver-native&
         <category>artigo</category>
         
         <category>firebird</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>C++: Argument-dependent name lookup</title>
-        <description>&lt;p&gt;Sometimes C++ still surprises me. Consider this code:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ns1&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;C1&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ns1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If you think it’s wrong and causes a compiler error, you’re wrong.&lt;/p&gt;
-
-&lt;p&gt;The function “f1” is not in the scope of “main”, but its argument has a type of the same namespace, causing the function to be located.&lt;/p&gt;
-
-&lt;p&gt;This rule is called Argument-dependent name lookup (or Koenig lookup) and it is also very necessary in relation to operators.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 18 Nov 2014 23:25:00 -0200</pubDate>
-        <link>https://asfernandes.github.io/2014/11/18/c-argument-dependent-name-lookup.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2014/11/18/c-argument-dependent-name-lookup.html</guid>
-        
-        <category>c++</category>
         
         
       </item>
