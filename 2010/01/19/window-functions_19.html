@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Window Functions</title>
-  <meta name="description" content="By the SQL specification, window functions are a kind of aggregation, but which does not “filter” the result set of a query. The aggregated data is mixed wit...">
+  <meta name="description" content="By the SQL specification, window functions are a kind of aggregation, but which does not “filter” the result set of a query.The aggregated data is mixed with...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -122,7 +122,75 @@
 <article>
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    <p></p><div><font size="2">By the SQL specification, <i>window functions</i> are a kind of aggregation, but which does not “filter” the result set of a query. The aggregated data is mixed with the query result set. That sort of functions are used with the <font class="Apple-style-span" face="'Courier New'">OVER</font> clause. Users of Oracle also knows window functions as analytical functions.</font></div><div><font size="2"><br></font></div><div><font size="2">We have promissed very basic support for window functions in Firebird 3, which was the <font class="Apple-style-span" face="'Courier New'">OVER ()</font> clause using the current aggregate functions. With the <font class="Apple-style-span" face="'Courier New'">OVER ()</font> clause, one can mix with the query result set the aggregated data over the entire result set. Let me explain with an example.</font></div><div><font size="2"><br></font></div><div><font size="2">We have a table EMPLOYEE with columns ID, NAME and SALARY, and want to show each employee with his respective salary and the percentage of his salary over the payroll. With a “normal” query, we would do:</font></div><div><font size="2"><br></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">select</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;id,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;name,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary / (select sum(salary) from employee) percentage</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;from employee;</font></font></div><div><font size="2"><br></font></div><div><font size="2">We need to repeat ourselves and wait so much to see the results. We can also make it hopefully faster using a cross join, but still the whole employee table will need to be read more than one time. Change the table by a complex view or add various “windows” and we'll have a performance problem for sure.</font></div><div><font size="2"><br></font></div><div><font size="2">The same query could be specified in much more elegant and faster way using a window function. Here is it how:</font></div><div><font size="2"><br></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">select</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;id,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;name,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary / sum(salary) over () percentage</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;from employee;</font></font></div><div><font size="2"><br></font></div><div><font size="2">Here, <font class="Apple-style-span" face="'Courier New'">sum(salary) over ()</font> is computed with the sum of all SALARY from the query (the employee table). This is what the <font class="Apple-style-span" face="'Courier New'">OVER ()</font> clause does.</font></div><div><font size="2"><br></font></div><div><font size="2">But the <font class="Apple-style-span" face="'Courier New'">OVER</font> clause is not just that, and now I've added another of its subclauses to Firebird. It's the <font class="Apple-style-span" face="'Courier New'">PARTITION</font> subclause.</font></div><div><font size="2"><br></font></div><div><font size="2">A partition is a way to make the <font class="Apple-style-span" face="'Courier New'">OVER</font> aggregation based on a GROUP. Its syntax is:</font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;</font><font class="Apple-style-span" face="'Courier New'">&lt;window function&gt;([&lt;expr&gt;]) OVER (PARTITION BY &lt;expr&gt; [, &lt;expr&gt; ...])</font></font></div><div><font size="2"><br></font></div><div><font size="2">So now since the aggregation is done over a group, it could produce more than one row. So the result set generated by a partition is joined with the main query using the same expression list of the partition.</font></div><div><font size="2"><br></font></div><div><font size="2">For a example, lets add to our employee table a ROLE column. Now we want the same information, but instead of see the percentage of the employee salary over all employees, we want to see that value based on the employees occuping the same role. Here is how that query could be written:</font></div><div><font size="2"><br></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">select</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;id,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;name,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;role,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary,</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp; &nbsp;salary / sum(salary) over (partition by role)</font></font></div><div><font size="2"><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;from employee;</font></font></div><div><font size="2"><br></font></div><div><font size="2">With the current implementation, the query (without the window functions) is executed one time and cached. Extra aggregation is done on this cached data. Partitions are joined by the new hash join algorithmn, and the main window (<font class="Apple-style-span" face="'Courier New'">OVER</font> without a partition) is joined through a cross join with the main query.</font></div><div><font size="2"><br></font></div><div><font size="2">There is much more about window functions, but this subset seems to cover some major use cases of them.</font></div><br>
+	    <p>By the SQL specification, window functions are a kind of aggregation, but which does not “filter” the result set of a query.
+The aggregated data is mixed with the query result set. That sort of functions are used with the <code class="highlighter-rouge">OVER</code> clause. Users of Oracle also knows
+window functions as analytical functions.</p>
+
+<p>We have promissed very basic support for window functions in Firebird 3, which was the <code class="highlighter-rouge">OVER ()</code> clause using the current aggregate
+functions. With the <code class="highlighter-rouge">OVER ()</code> clause, one can mix with the query result set the aggregated data over the entire result set.
+Let me explain with an example.</p>
+
+<p>We have a table EMPLOYEE with columns ID, NAME and SALARY, and want to show each employee with his respective salary and the percentage of
+his salary over the payroll. With a “normal” query, we would do:</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">select</span>
+    <span class="n">id</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="n">salary</span><span class="p">,</span>
+    <span class="n">salary</span> <span class="o">/</span> <span class="p">(</span><span class="k">select</span> <span class="k">sum</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="k">from</span> <span class="n">employee</span><span class="p">)</span> <span class="n">percentage</span>
+  <span class="k">from</span> <span class="n">employee</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>We need to repeat ourselves and wait so much to see the results. We can also make it hopefully faster using a cross join, but still the
+whole employee table will need to be read more than one time. Change the table by a complex view or add various “windows” and we’ll have a
+performance problem for sure.</p>
+
+<p>The same query could be specified in much more elegant and faster way using a window function. Here is it how:</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">select</span>
+    <span class="n">id</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="n">salary</span><span class="p">,</span>
+    <span class="n">salary</span> <span class="o">/</span> <span class="k">sum</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">over</span> <span class="p">()</span> <span class="n">percentage</span>
+  <span class="k">from</span> <span class="n">employee</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>Here, <code class="highlighter-rouge">sum(salary) over ()</code> is computed with the sum of all SALARY from the query (the employee table). This is what the <code class="highlighter-rouge">OVER ()</code>
+clause does.</p>
+
+<p>But the <code class="highlighter-rouge">OVER</code> clause is not just that, and now I’ve added another of its subclauses to Firebird. It’s the <code class="highlighter-rouge">PARTITION</code> subclause.</p>
+
+<p>A partition is a way to make the <code class="highlighter-rouge">OVER</code> aggregation based on a GROUP. Its syntax is:</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">window</span> <span class="k">function</span><span class="o">&gt;</span><span class="p">([</span><span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span><span class="p">])</span> <span class="n">OVER</span> <span class="p">(</span><span class="n">PARTITION</span> <span class="k">BY</span> <span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span> <span class="p">[,</span> <span class="o">&lt;</span><span class="n">expr</span><span class="o">&gt;</span> <span class="p">...])</span>
+</code></pre>
+</div>
+
+<p>So now since the aggregation is done over a group, it could produce more than one row. So the result set generated by a partition is joined
+with the main query using the same expression list of the partition.</p>
+
+<p>For a example, lets add to our employee table a ROLE column. Now we want the same information, but instead of see the percentage of the
+employee salary over all employees, we want to see that value based on the employees occuping the same role. Here is how that query could
+be written:</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">select</span>
+    <span class="n">id</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="k">role</span><span class="p">,</span>
+    <span class="n">salary</span><span class="p">,</span>
+    <span class="n">salary</span> <span class="o">/</span> <span class="k">sum</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">over</span> <span class="p">(</span><span class="n">partition</span> <span class="k">by</span> <span class="k">role</span><span class="p">)</span>
+  <span class="k">from</span> <span class="n">employee</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>With the current implementation, the query (without the window functions) is executed one time and cached. Extra aggregation is done on
+this cached data. Partitions are joined by the new hash join algorithmn, and the main window (<code class="highlighter-rouge">OVER</code> without a partition) is joined through
+a cross join with the main query.</p>
+
+<p>There is much more about window functions, but this subset seems to cover some major use cases of them.</p>
+
 	  </div>
   </div>
 </article>

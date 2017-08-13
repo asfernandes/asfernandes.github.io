@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Window functions (part3) - new functions</title>
-  <meta name="description" content="In the&nbsp;first&nbsp;and the&nbsp;second&nbsp;part of window function series, I talked about the OVER clause, with/without partitions and with/without orde...">
+  <meta name="description" content="In the first and the second part of windowfunction series, I talked about the OVER clause, with/without partitions and with/without ordering. Till then, no n...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -122,7 +122,159 @@
 <article>
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    In the&nbsp;<a href="http://asfernandes.blogspot.com/2010/01/window-functions_19.html" id="odpv" title="first">first</a>&nbsp;and the&nbsp;<a href="http://asfernandes.blogspot.com/2010/01/window-functions-part2-cumulative_24.html" id="wif4" style="color:#551a8b" title="second">second</a>&nbsp;part of window function series, I talked about the <font face="&#39;Courier New&#39;">OVER</font> clause, with/without partitions and with/without ordering. Till then, no new function had been introduced, so it has about the already existing aggregate functions.<br><br><div>Now, new window-only functions has been introduced. I&#39;ll separate them in two groups: ranking and navigational. Both set of functions can be used with/without partition/ordering, but them does not make much sense without ordering.</div><br><div><b>Ranking functions (DENSE_RANK, RANK and ROW_NUMBER):</b>&nbsp;with these functions, one can create different type of incremental counters. Think about <font face="&#39;Courier New&#39;">SUM(1) OVER (ORDER BY SALARY)</font>, these functions does this type of thing, but all of them in different ways. Lets see an example query, also comparing with the SUM behavior.</div><br><div><font face="&#39;courier new&#39;">select<br></font><font face="&#39;courier new&#39;">&nbsp;&nbsp; &nbsp;id,</font></div><div><font face="&#39;courier new&#39;">&nbsp;&nbsp; &nbsp;salary,</font></div><div><font face="&#39;courier new&#39;"><font face="&#39;courier new&#39;"><font face="&#39;courier new&#39;">&nbsp;&nbsp; &nbsp;dense_rank() over (order by salary),<br></font><font face="&#39;courier new&#39;">&nbsp;&nbsp; &nbsp;rank() over (order by salary),<br></font>&nbsp;&nbsp; &nbsp;row_number() over (order by salary),<br></font>&nbsp;&nbsp; &nbsp;sum(1) over (order by salary)<br></font><font face="&#39;courier new&#39;">&nbsp;&nbsp;from employee</font><br><div><font face="&#39;Courier New&#39;">&nbsp;&nbsp;order by salary;</font></div><br></div>And the result set:<br><br><table border="1" bordercolor="#000000" cellpadding="3" cellspacing="0" id="ae:0"><tbody><tr style="text-align:left"><td style="text-align:right" width="16.666666666666668%"><font size="2">id</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">salary</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">dense_rank</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">rank</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">row_number</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">sum</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="16.666666666666668%"><font size="2">3</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">8.00</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">1</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">1</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">1</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">1</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="16.666666666666668%"><font size="2">4</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">9.00</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">2</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">2</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">2</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">2</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="16.666666666666668%"><font size="2">1</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">10.00</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">3</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">3</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">3</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">4</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="16.666666666666668%"><font size="2">5</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">10.00</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">3</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">3</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">4</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">4</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="16.666666666666668%"><font size="2">2</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">12.00</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">4</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">5</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">5</font></td><td style="text-align:right" width="16.666666666666668%"><font size="2">5</font></td></tr></tbody></table><br>As you see, the functions differs when repeated values are found in the order key (the salary of 10.00). With DENSE_RANK, no gaps are created and all repeated values receive the same counter. With RANK, the initial counter is used for all repeated values, but it make gaps so the next non-repeating value (the salary of 12.00) does not consider the previously repeated values as in different positions. With ROW_NUMBER, each line receives an incremental value. And SUM(1) is very like RANK, but the value is computed after all repeated values are summed, so the gap is before the repeated values.<br><br><div><b>Navigational functions (LAG and LEAD):</b>&nbsp;with these functions, an expression could get the value of a previously (LAG) or a posterior (LEAD) row of the query. Follow the demonstrating query.</div><br><div><div>select</div><div>&nbsp;&nbsp; &nbsp;id,</div><div>&nbsp;&nbsp; &nbsp;salary,</div><div>&nbsp;&nbsp; &nbsp;lag(salary) over (order by salary),</div><div>&nbsp;&nbsp; &nbsp;lead(salary) over (order by salary)</div><div>&nbsp;&nbsp;from employee</div><div>&nbsp;&nbsp;order by salary;</div><br>And the result set:</div><br><table border="1" bordercolor="#000000" cellpadding="3" cellspacing="0" id="l7bi"><tbody><tr style="text-align:left"><td style="text-align:right" width="25%"><font size="2">id</font></td><td style="text-align:right" width="25%"><font size="2">salary</font></td><td style="text-align:right" width="25%"><font size="2">lag</font></td><td style="text-align:right" width="25%"><font size="2">lead</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="25%"><font size="2">3</font></td><td style="text-align:right" width="25%"><font size="2">8.00</font></td><td style="text-align:right" width="25%"><font size="2">&lt;null&gt;</font></td><td style="text-align:right" width="25%"><font size="2">9.00</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="25%"><font size="2">4</font></td><td style="text-align:right" width="25%"><font size="2">9.00</font></td><td style="text-align:right" width="25%"><font size="2">8.00</font></td><td style="text-align:right" width="25%"><font size="2">10.00</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="25%"><font size="2">1</font></td><td style="text-align:right" width="25%"><font size="2">10.00</font></td><td style="text-align:right" width="25%"><font size="2">9.00</font></td><td style="text-align:right" width="25%"><font size="2">10.00</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="25%"><font size="2">5</font></td><td style="text-align:right" width="25%"><font size="2">10.00</font></td><td style="text-align:right" width="25%"><font size="2">10.00</font></td><td style="text-align:right" width="25%"><font size="2">12.00</font></td></tr><tr style="text-align:left"><td style="text-align:right" width="25%"><font size="2">2</font></td><td style="text-align:right" width="25%"><font size="2">12.00</font></td><td style="text-align:right" width="25%"><font size="2">10.00</font></td><td style="text-align:right" width="25%"><font size="2">&lt;null&gt;</font></td></tr></tbody></table><br>The functions have a second argument, that is implicitly 1, which means the number of previously/posterior rows will be queried. If this row does not exist, &lt;null&gt; is returned.<br><br><div>And of course, you can use these functions as expressions and compute, for example, the difference of an employee salary from the one greater and/or lesser.<br></div><br>
+	    <p>In the <a href="/2010/01/19/window-functions_19.html">first</a> and the <a href="/2010/01/24/window-functions-part2-cumulative_24.html">second</a> part of window
+function series, I talked about the <code class="highlighter-rouge">OVER</code> clause, with/without partitions and with/without ordering. Till then, no new function had been
+introduced, so it has about the already existing aggregate functions.</p>
+
+<p>Now, new window-only functions has been introduced. I’ll separate them in two groups: ranking and navigational. Both set of functions can
+be used with/without partition/ordering, but them does not make much sense without ordering.</p>
+
+<h3 id="ranking-functions-denserank-rank-and-rownumber">Ranking functions (DENSE_RANK, RANK and ROW_NUMBER)</h3>
+
+<p>With these functions, one can create different type of incremental counters. Think about <code class="highlighter-rouge">SUM(1) OVER (ORDER BY SALARY)</code>, these functions
+does this type of thing, but all of them in different ways. Lets see an example query, also comparing with the <code class="highlighter-rouge">SUM</code> behavior.</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">select</span>
+    <span class="n">id</span><span class="p">,</span>
+    <span class="n">salary</span><span class="p">,</span>
+    <span class="n">dense_rank</span><span class="p">()</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">),</span>
+    <span class="n">rank</span><span class="p">()</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">),</span>
+    <span class="n">row_number</span><span class="p">()</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">),</span>
+    <span class="k">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">)</span>
+  <span class="k">from</span> <span class="n">employee</span>
+  <span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>And the result set:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">id</th>
+      <th style="text-align: right">salary</th>
+      <th style="text-align: right">dense_rank</th>
+      <th style="text-align: right">rank</th>
+      <th style="text-align: right">row_number</th>
+      <th style="text-align: right">sum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">8.00</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">9.00</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">2</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">4</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">4</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">12.00</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">5</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As you see, the functions differs when repeated values are found in the order key (the salary of 10.00). With <code class="highlighter-rouge">DENSE_RANK</code>, no gaps are
+created and all repeated values receive the same counter. With <code class="highlighter-rouge">RANK</code>, the initial counter is used for all repeated values, but it make
+gaps so the next non-repeating value (the salary of 12.00) does not consider the previously repeated values as in different positions.
+With <code class="highlighter-rouge">ROW_NUMBER</code>, each line receives an incremental value. And <code class="highlighter-rouge">SUM(1)</code> is very like <code class="highlighter-rouge">RANK</code>, but the value is computed after all repeated
+values are summed, so the gap is before the repeated values.</p>
+
+<h3 id="navigational-functions-lag-and-lead">Navigational functions (LAG and LEAD)</h3>
+
+<p>With these functions, an expression could get the value of a previously (<code class="highlighter-rouge">LAG</code>) or a posterior (<code class="highlighter-rouge">LEAD</code>) row of the query. Follow the
+demonstrating query.</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">select</span>
+    <span class="n">id</span><span class="p">,</span>
+    <span class="n">salary</span><span class="p">,</span>
+    <span class="n">lag</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">),</span>
+    <span class="n">lead</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">)</span>
+  <span class="k">from</span> <span class="n">employee</span>
+  <span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>And the result set:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">id</th>
+      <th style="text-align: right">salary</th>
+      <th style="text-align: right">lag</th>
+      <th style="text-align: right">lead</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">8.00</td>
+      <td style="text-align: right"><code class="highlighter-rouge">&lt;null&gt;</code></td>
+      <td style="text-align: right">9.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">9.00</td>
+      <td style="text-align: right">8.00</td>
+      <td style="text-align: right">10.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right">9.00</td>
+      <td style="text-align: right">10.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right">12.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">12.00</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right"><code class="highlighter-rouge">&lt;null&gt;</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The functions have a second argument, that is implicitly 1, which means the number of previously/posterior rows will be queried. If this
+row does not exist, <code class="highlighter-rouge">&lt;null&gt;</code> is returned.</p>
+
+<p>And of course, you can use these functions as expressions and compute, for example, the difference of an employee salary from the one
+greater and/or lesser.</p>
+
 	  </div>
   </div>
 </article>

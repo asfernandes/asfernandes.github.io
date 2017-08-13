@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Window Functions (part2) - cumulative aggregates</title>
-  <meta name="description" content="Continuing with the window functions support for Firebird 3, I have now added another OVER&nbsp;sub-clause: ORDER BY. The&nbsp;ORDER BY&nbsp;sub-clause can b...">
+  <meta name="description" content="Continuing with the window functions support for Firebird 3, I have now added another OVERsub-clause: ORDER BY. The ORDER BY sub-clause can be used with or w...">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -122,7 +122,156 @@
 <article>
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	    Continuing with the <a id="hwz5" href="http://asfernandes.blogspot.com/2010/01/window-functions_19.html" title="window function support for Firebird 3">window functions support for Firebird 3</a>, I have now added another <font class="Apple-style-span" face="'Courier New'">OVER</font>&nbsp;sub-clause: <font class="Apple-style-span" face="'Courier New'">ORDER BY</font>. The&nbsp;<font class="Apple-style-span" face="'Courier New'">ORDER BY</font>&nbsp;sub-clause can be used with or without partitions, and it makes aggregate functions return the partial aggregations as the records are being processed.<div><br></div><div>Considering our employee table has this data:</div><div><br></div><div><div><table id="aa_l" cellpadding="3" cellspacing="0" border="1" class="" bordercolor="#000000"><tbody><tr><td width="50%" style="text-align: right;">id</td><td width="50%" style="text-align: right;">salary</td></tr><tr><td width="50%" style="text-align: right;">1</td><td width="50%" style="text-align: right;">10.00</td></tr><tr><td width="50%" style="text-align: right;">2</td><td width="50%" style="text-align: right;">12.00</td></tr><tr><td width="50%" style="text-align: right;">3</td><td width="50%" style="text-align: right;">8.00</td></tr><tr><td width="50%" style="text-align: right;">4</td><td width="50%" style="text-align: right;">9.00</td></tr><tr><td width="50%" style="text-align: right;">5</td><td width="50%" style="text-align: right;">10.00</td></tr></tbody></table></div></div><div><br></div>And we run this query:<div><br><span style="font-family: 'Courier New'">select<br></span><span style="font-family: 'Courier New'">&nbsp;&nbsp; &nbsp;id, salary, sum(salary) over (order by salary) cum_salary<br></span><span style="font-family: 'Courier New'">&nbsp;&nbsp;from employee</span><br><div><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;order by salary;</font></div><div><br></div>The result set produced will be:<div><br><div><div><table id="nav." cellpadding="3" cellspacing="0" border="1" class="" bordercolor="#000000"><tbody><tr><td width="33.333333333333336%" style="text-align: right;">id</td><td width="33.333333333333336%" style="text-align: right;">salary</td><td width="33.333333333333336%" style="text-align: right;">cum_salary</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">3</td><td width="33.333333333333336%" style="text-align: right;">8.00</td><td width="33.333333333333336%" style="text-align: right;">8.00</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">4</td><td width="33.333333333333336%" style="text-align: right;">9.00</td><td width="33.333333333333336%" style="text-align: right;">17.00</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">1</td><td width="33.333333333333336%" style="text-align: right;">10.00</td><td width="33.333333333333336%" style="text-align: right;">37.00</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">5</td><td width="33.333333333333336%" style="text-align: right;">10.00</td><td width="33.333333333333336%" style="text-align: right;">37.00</td></tr><tr><td width="33.333333333333336%" style="text-align: right;">2</td><td width="33.333333333333336%" style="text-align: right;">12.00</td><td width="33.333333333333336%" style="text-align: right;">49.00</td></tr></tbody></table></div></div><div><br></div>So cum_salary returns the partial/accumulated aggregation (of the <font class="Apple-style-span" face="'Courier New'">SUM</font> function). You may found strange the 37.00 repeated for the ids 1 and 5, but that is how it should work. The <font class="Apple-style-span" face="'Courier New'">ORDER BY</font> keys are grouped together and the aggregation is computed once (but summing the two 10.00).<div><br></div><div>You can use multiple windows with different orders, and <font class="Apple-style-span" face="'Courier New'">ORDER BY</font> parts like <font class="Apple-style-span" face="'Courier New'">DESC</font>,<font class="Apple-style-span" face="'Courier New'"> NULLS LAST</font>, etc. Here is a weird example:</div><br><span style="font-family: 'Courier New'"><div></div>select</span><br><span style="font-family: 'Courier New'">&nbsp;&nbsp; &nbsp;id, salary,</span><br><span style="font-family: 'Courier New'">&nbsp;&nbsp; &nbsp;sum(salary) over (order by salary) cum_salary,</span><br><span style="font-family: 'Courier New'">&nbsp;&nbsp; &nbsp;sum(salary) over (order by salary desc) cum_salary_desc</span><br><span style="font-family: 'Courier New'">&nbsp;&nbsp;from employee</span><br><font class="Apple-style-span" face="'Courier New'">&nbsp;&nbsp;order by salary;</font></div><div><br><font size="2">The result set produced will be:</font></div><div><font size="2"><br></font><div><div><div><div><table id="c33t" cellpadding="3" cellspacing="0" border="1" class="" bordercolor="#000000"><tbody><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">id</font></td><td width="25%" style="text-align: right;"><font size="2">salary</font></td><td width="25%" style="text-align: right;"><font size="2">cum_salary</font></td><td width="25%" style="text-align: right;"><font size="2">cum_salary_desc</font></td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">3</font></td><td width="25%" style="text-align: right;"><font size="2">8.00</font></td><td width="25%" style="text-align: right;"><font size="2">8.00</font></td><td width="25%" style="text-align: right;">49.00</td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">4</font></td><td width="25%" style="text-align: right;"><font size="2">9.00</font></td><td width="25%" style="text-align: right;"><font size="2">17.00</font></td><td width="25%" style="text-align: right;">41.00</td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">1</font></td><td width="25%" style="text-align: right;"><font size="2">10.00</font></td><td width="25%" style="text-align: right;"><font size="2">37.00</font></td><td width="25%" style="text-align: right;">32.00</td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">5</font></td><td width="25%" style="text-align: right;"><font size="2">10.00</font></td><td width="25%" style="text-align: right;"><font size="2">37.00</font></td><td width="25%" style="text-align: right;">32.00</td></tr><tr style="text-align: left"><td width="25%" style="text-align: right;"><font size="2">2</font></td><td width="25%" style="text-align: right;"><font size="2">12.00</font></td><td width="25%" style="text-align: right;"><font size="3"><font size="2">49.00</font><br></font></td><td width="25%" style="text-align: right;">12.00</td></tr></tbody></table></div></div></div><div><br></div><div>With a partition&nbsp;<font class="Apple-style-span" face="'Courier New'">ORDER BY</font> works the same way, but at each partition boundary the aggregation is reset.</div></div><br><div>All aggregation functions are usable with <font class="Apple-style-span" face="'Courier New'">ORDER BY</font>, except the <font class="Apple-style-span" face="'Courier New'">LIST</font> function. As <font class="Apple-style-span" face="'Courier New'">LIST</font> returns blob, it would be slow to return multiple blobs (one for each order group), trick to implement, and I don't see an usage scenario for it.</div></div></div><br>
+	    <p>Continuing with the <a href="/2010/01/19/window-functions_19.html">window functions support for Firebird 3</a>, I have now added another <code class="highlighter-rouge">OVER</code>
+sub-clause: <code class="highlighter-rouge">ORDER BY</code>. The <code class="highlighter-rouge">ORDER BY</code> sub-clause can be used with or without partitions, and it makes aggregate functions return the
+partial aggregations as the records are being processed.</p>
+
+<p>Considering our employee table has this data:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">id</th>
+      <th style="text-align: right">salary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">10.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">12.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">8.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">9.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">10.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>And we run this query:</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">select</span>
+    <span class="n">id</span><span class="p">,</span> <span class="n">salary</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">)</span> <span class="n">cum_salary</span>
+  <span class="k">from</span> <span class="n">employee</span>
+  <span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>The result set produced will be:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">id</th>
+      <th style="text-align: right">salary</th>
+      <th style="text-align: right">cum_salary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">8.00</td>
+      <td style="text-align: right">8.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">9.00</td>
+      <td style="text-align: right">17.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right">37.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right">37.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">12.00</td>
+      <td style="text-align: right">49.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>So cum_salary returns the partial/accumulated aggregation (of the <code class="highlighter-rouge">SUM</code> function). You may found strange the 37.00 repeated for the ids
+1 and 5, but that is how it should work. The <code class="highlighter-rouge">ORDER BY</code> keys are grouped together and the aggregation is computed once (but summing the
+two 10.00).</p>
+
+<p>You can use multiple windows with different orders, and <code class="highlighter-rouge">ORDER BY</code> parts like <code class="highlighter-rouge">DESC</code>, <code class="highlighter-rouge">NULLS LAST</code>, etc. Here is a weird example:</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">select</span>
+    <span class="n">id</span><span class="p">,</span> <span class="n">salary</span><span class="p">,</span>
+    <span class="k">sum</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">)</span> <span class="n">cum_salary</span><span class="p">,</span>
+    <span class="k">sum</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">salary</span> <span class="k">desc</span><span class="p">)</span> <span class="n">cum_salary_desc</span>
+  <span class="k">from</span> <span class="n">employee</span>
+  <span class="k">order</span> <span class="k">by</span> <span class="n">salary</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>The result set produced will be:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">id</th>
+      <th style="text-align: right">salary</th>
+      <th style="text-align: right">cum_salary</th>
+      <th style="text-align: right">cum_salary_desc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">8.00</td>
+      <td style="text-align: right">8.00</td>
+      <td style="text-align: right">49.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">9.00</td>
+      <td style="text-align: right">17.00</td>
+      <td style="text-align: right">41.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right">37.00</td>
+      <td style="text-align: right">32.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">10.00</td>
+      <td style="text-align: right">37.00</td>
+      <td style="text-align: right">32.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">12.00</td>
+      <td style="text-align: right">49.00</td>
+      <td style="text-align: right">12.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>With a partition <code class="highlighter-rouge">ORDER BY</code> works the same way, but at each partition boundary the aggregation is reset.</p>
+
+<p>All aggregation functions are usable with <code class="highlighter-rouge">ORDER BY</code>, except the <code class="highlighter-rouge">LIST</code> function. As <code class="highlighter-rouge">LIST</code> returns blob, it would be slow to return
+multiple blobs (one for each order group), trick to implement, and I don’t see an usage scenario for it.</p>
+
 	  </div>
   </div>
 </article>
