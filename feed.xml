@@ -1,647 +1,341 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>asfernandes' blog</title>
-    <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
-    <link>https://asfernandes.github.io/</link>
-    <atom:link href="https://asfernandes.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 12 Aug 2017 21:58:16 -0300</pubDate>
-    <lastBuildDate>Sat, 12 Aug 2017 21:58:16 -0300</lastBuildDate>
-    <generator>Jekyll v3.2.1</generator>
-    
-      <item>
-        <title>A game with React Native</title>
-        <description>&lt;p&gt;A have written &lt;a href=&quot;https://play.google.com/store/apps/details?id=asfernandes.senha2&quot;&gt;a game&lt;/a&gt; (Senha - Mastermind) with React Native and
-TypeScript and deployed it in the &lt;a href=&quot;https://play.google.com/store/apps/details?id=asfernandes.senha2&quot;&gt;Google Play store&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;The game is translated to Portuguese and English. It’s the first mobile app I’ve made and I liked the result (final app, code and
-development process). It’s surely much more fun to write than with Java / Android Studio (and Swift / Xcode).&lt;/p&gt;
+    <rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom'>
+      <channel>
+        <title>asfernandes' blog</title>
+        <link>https://asfernandes.github.io</link>
+        <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
+        <language>en</language>
+        <lastBuildDate>Sun, 06 Aug 2017 00:00:00 GMT</lastBuildDate>
+        <atom:link href='class URL {
+  constructor(input, base) {
+    // toUSVString is not needed.
+    input = `${input}`;
+    let base_context;
+    if (base !== undefined) {
+      base_context = new URL(base)[context];
+    }
+    this[context] = new URLContext();
+    parse(input, -1, base_context, undefined, onParseComplete.bind(this),
+          onParseError);
+  }
 
-&lt;p&gt;&lt;img src=&quot;/img/2017-08-06-a-game-with-react-native-android.png&quot; alt=&quot;Senha - Mastermind for Android&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
+  get [special]() {
+    return (this[context].flags & URL_FLAGS_SPECIAL) !== 0;
+  }
 
-&lt;p&gt;In each match a secret is randomly chosen and you need to guess the colors in the right sequence.&lt;/p&gt;
+  get [cannotBeBase]() {
+    return (this[context].flags & URL_FLAGS_CANNOT_BE_BASE) !== 0;
+  }
 
-&lt;p&gt;After each try are shown hints of how near you are. Black pins means the count of colors in the right position. White pins means the count of correct colors but in wrong positions.&lt;/p&gt;
+  // https://url.spec.whatwg.org/#cannot-have-a-username-password-port
+  get [cannotHaveUsernamePasswordPort]() {
+    const { host, scheme } = this[context];
+    return ((host == null || host === '') ||
+            this[cannotBeBase] ||
+            scheme === 'file:');
+  }
 
-&lt;p&gt;You need to put the four colors in the correct positions to win.&lt;/p&gt;
+  [inspect.custom](depth, opts) {
+    if (this == null ||
+        ObjectGetPrototypeOf(this[context]) !== URLContext.prototype) {
+      throw new ERR_INVALID_THIS('URL');
+    }
 
-&lt;p&gt;I liked to play the physical version of this game when I was a child :smiley:.&lt;/p&gt;
+    if (typeof depth === 'number' && depth < 0)
+      return this;
 
-&lt;p&gt;&lt;img src=&quot;/img/2017-08-06-a-game-with-react-native-senha-grow.jpg&quot; alt=&quot;Senha - Grow&quot; class=&quot;img-responsive&quot; /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sun, 06 Aug 2017 00:00:00 -0300</pubDate>
-        <link>https://asfernandes.github.io/2017/08/06/a-game-with-react-native.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2017/08/06/a-game-with-react-native.html</guid>
+    const constructor = getConstructorOf(this) || URL;
+    const obj = ObjectCreate({ constructor });
+
+    obj.href = this.href;
+    obj.origin = this.origin;
+    obj.protocol = this.protocol;
+    obj.username = this.username;
+    obj.password = this.password;
+    obj.host = this.host;
+    obj.hostname = this.hostname;
+    obj.port = this.port;
+    obj.pathname = this.pathname;
+    obj.search = this.search;
+    obj.searchParams = this.searchParams;
+    obj.hash = this.hash;
+
+    if (opts.showHidden) {
+      obj.cannotBeBase = this[cannotBeBase];
+      obj.special = this[special];
+      obj[context] = this[context];
+    }
+
+    return `${constructor.name} ${inspect(obj, opts)}`;
+  }
+}/feed.xml' rel='self' type='application/rss+xml'/>
         
-        <category>react-native</category>
-        
-        <category>typescript</category>
-        
-        <category>android</category>
-        
-        <category>react</category>
-        
-        <category>javascript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Node.js Firebird Drivers now works in Windows</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/asfernandes/node-firebird-native-api&quot;&gt;node-firebird-native-api&lt;/a&gt; and
-&lt;a href=&quot;https://github.com/asfernandes/node-firebird-driver-native&quot;&gt;node-firebird-driver-native&lt;/a&gt; were updated with Windows support.&lt;/p&gt;
-
-&lt;p&gt;They also have a fix for a crash when unloading.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 02 Apr 2017 00:00:00 -0300</pubDate>
-        <link>https://asfernandes.github.io/2017/04/02/node-firebird-drivers-windows.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2017/04/02/node-firebird-drivers-windows.html</guid>
-        
-        <category>firebird</category>
-        
-        <category>nodejs</category>
-        
-        <category>javascript</category>
-        
-        <category>typescript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Node.js Firebird Drivers</title>
-        <description>&lt;p&gt;I’m pleased to announce the initial release of my Firebird drivers projects for Node.js.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;You said projects?&lt;/li&gt;
-  &lt;li&gt;Yes!&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The work is split in three projects, as described below.&lt;/p&gt;
-
-&lt;h1 id=&quot;node-firebird-driver-native&quot;&gt;node-firebird-driver-native&lt;/h1&gt;
-
-&lt;p&gt;Firebird high-level native client for Node.js / TypeScript (&lt;a href=&quot;https://github.com/asfernandes/node-firebird-driver-native&quot;&gt;github&lt;/a&gt; /
-&lt;a href=&quot;https://www.npmjs.com/package/node-firebird-driver-native&quot;&gt;npm&lt;/a&gt;)&lt;/p&gt;
-
-&lt;p&gt;This is the more interesting project for now. It allows to use Firebird (via Firebird v3+ client library) with a good high-level API.&lt;/p&gt;
-
-&lt;p&gt;Example usage:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;createNativeClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getDefaultLibraryFilename&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'node-firebird-driver-native'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-
-&lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;createNativeClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getDefaultLibraryFilename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// Without 'server:', it will use Firebird embedded.&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'server:/tmp/new-db.fdb'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'sysdba'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'masterkey'&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;startTransaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s1&quot;&gt;'create table t1 (n integer, d date)'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;commitRetaining&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;statement1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prepare&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s1&quot;&gt;'insert into t1 values (?, ?)'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;statement1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()]);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;statement1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()]);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;statement1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()]);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;statement1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dispose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;resultSet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;executeQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;s1&quot;&gt;'select n, d from t1 where n &amp;lt;= ?'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;resultSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;columns&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'n: '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;', d: '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;resultSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dropDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dispose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Finish...'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;More examples can be found &lt;a href=&quot;https://github.com/asfernandes/node-firebird-driver-native/blob/master/src/test/test.ts&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h1 id=&quot;node-firebird-driver&quot;&gt;node-firebird-driver&lt;/h1&gt;
-
-&lt;p&gt;Firebird client interfaces for Node.js / TypeScript (&lt;a href=&quot;https://github.com/asfernandes/node-firebird-driver&quot;&gt;github&lt;/a&gt; /
-&lt;a href=&quot;https://www.npmjs.com/package/node-firebird-driver&quot;&gt;npm&lt;/a&gt;)&lt;/p&gt;
-
-&lt;p&gt;This project currently has only TypeScript interfaces for a Firebird client. In the future it may have common code for any Firebird client,
-like connection pools and utility functions.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;node-firebird-driver-native&lt;/code&gt; implements the interfaces from this project. In the future, we may have another socket-based project also
-implementing these interfaces, so all drivers will be type-compatible.&lt;/p&gt;
-
-&lt;h1 id=&quot;node-firebird-native-api&quot;&gt;node-firebird-native-api&lt;/h1&gt;
-
-&lt;p&gt;Firebird low-level API for Node.js / TypeScript (&lt;a href=&quot;https://github.com/asfernandes/node-firebird-native-api&quot;&gt;github&lt;/a&gt; /
-&lt;a href=&quot;https://www.npmjs.com/package/node-firebird-native-api&quot;&gt;npm&lt;/a&gt;)&lt;/p&gt;
-
-&lt;p&gt;This project converts Firebird cloop interfaces to TypeScript and NAN bindings to access the native fbclient code. It’s a dependency project
-for &lt;code class=&quot;highlighter-rouge&quot;&gt;node-firebird-driver-native&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;It’s currently not complete and you should use it directly only if you know what are you doing.&lt;/p&gt;
-
-&lt;h1 id=&quot;disclaimer&quot;&gt;Disclaimer&lt;/h1&gt;
-
-&lt;p&gt;All the projects are currently in ALPHA version, so changes are expected without caring about semver breaks.&lt;/p&gt;
-</description>
-        <pubDate>Wed, 29 Mar 2017 00:00:00 -0300</pubDate>
-        <link>https://asfernandes.github.io/2017/03/29/node-firebird-drivers.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2017/03/29/node-firebird-drivers.html</guid>
-        
-        <category>firebird</category>
-        
-        <category>nodejs</category>
-        
-        <category>javascript</category>
-        
-        <category>typescript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Pausable observable with KnockoutJS</title>
-        <description>&lt;p&gt;Sometimes when working with &lt;a href=&quot;http://knockoutjs.com&quot;&gt;Knockout&lt;/a&gt; you may be in a situation when you want to update a set of observables without delivering notifications to they subscribers (explicitly or by computed observables) as soon each observable is changed. This happens especially when you’re using the &lt;a href=&quot;http://knockoutjs.com/documentation/plugins-mapping.html&quot;&gt;mapping plugin&lt;/a&gt; or something similar.&lt;/p&gt;
-
-&lt;p&gt;However, it’s not easy to achieve this with builtin knockout functions nor it’s very intuitive to do it right.&lt;/p&gt;
-
-&lt;p&gt;So I created a function and an extender that make it. Full code is here and I put this &lt;a href=&quot;https://jsfiddle.net/e8tsnxpa&quot;&gt;jsfiddle&lt;/a&gt; to see the use case.&lt;/p&gt;
-
-&lt;p&gt;Note that when “Just map” is clicked it logs a weird thing. When “Map with pause” is clicked the notification happens after all observables are changed.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pausableObservable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pending&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
-
-    &lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushNotification&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;pending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-    &lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;subscribe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;newValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;newValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pendingCache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;pending&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
-
-            &lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arrayForEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pendingCache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-            &lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arrayForEach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pendingCache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notifySubscribers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;observable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;ko&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extenders&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pausable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pausable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;oldNotifySubscribers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notifySubscribers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;pushed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-    &lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;notifySubscribers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pausable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;peek&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                &lt;span class=&quot;nx&quot;&gt;pausable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushNotification&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;conf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;oldNotifySubscribers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-</description>
-        <pubDate>Tue, 29 Nov 2016 00:00:00 -0200</pubDate>
-        <link>https://asfernandes.github.io/2016/11/29/pausable-observable-knockoutjs.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2016/11/29/pausable-observable-knockoutjs.html</guid>
-        
-        <category>knockout</category>
-        
-        <category>javascript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Node.js Firebird API</title>
-        <description>&lt;p&gt;I started a personal project to create a Node.js Firebird driver based on the FB 3 OO API.&lt;/p&gt;
-
-&lt;p&gt;Why another driver if there are others? Althrough it’s a manual work for now as I understand the technology, the idea is to generate the driver based in the cloop interface file and always have a up-to-date driver. As a personal project, it will probably take some time having to conciliate two jobs.&lt;/p&gt;
-
-&lt;p&gt;The API will be based in promises instead of callback. A nice thing I already see is the capability to use the asynchronous functions as synchronous ones using TypeScript (and future JavaScript) async/await functions.&lt;/p&gt;
-
-&lt;p&gt;Here is a test demonstrating multi-threaded use of two databases. It’s so simple to write multi-threaded code that I think it would be much better to write tools (a multi-threaded gbak?) than currently is with C++.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;test()&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;master&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getStatus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;stmt1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;create table t1 (n1 integer)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;stmt2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;insert into t1 values (1)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-            &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dispatcher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;startTransaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;stmt1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;commitRetaining&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-                    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                        &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;stmt2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;transaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;attachment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;detach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dispose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;//await f(&quot;/tmp/f1.fdb&quot;);&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//await f(&quot;/tmp/f2.fdb&quot;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/tmp/f1.fdb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/tmp/f2.fdb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;It also would be much simpler to write tests than it’s with currently used tools (C++ and Python). The Firebird Python test suite is a monster with lots of manual dependencies that I never managed to install.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 20 Oct 2016 00:00:00 -0200</pubDate>
-        <link>https://asfernandes.github.io/2016/10/20/node-firebird-api.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2016/10/20/node-firebird-api.html</guid>
-        
-        <category>firebird</category>
-        
-        <category>nodejs</category>
-        
-        <category>javascript</category>
-        
-        <category>typescript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Funny Firebird operators</title>
-        <description>&lt;p&gt;Here is a table with Firebird operators you probably don’t know that exist:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Funny&lt;/th&gt;
-      &lt;th&gt;Standard equivalent&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x !&amp;lt; y&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;lt; y)&lt;/code&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ^&amp;lt; y&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;lt; y)&lt;/code&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ~&amp;lt; y&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;lt; y)&lt;/code&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x !&amp;gt; y&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;gt; y)&lt;/code&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ^&amp;gt; y&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;gt; y)&lt;/code&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ~&amp;gt; y&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;not (x &amp;gt; y)&lt;/code&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x != y&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x &amp;lt;&amp;gt; y&lt;/code&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ^= y&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x &amp;lt;&amp;gt; y&lt;/code&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x ~= y&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x &amp;lt;&amp;gt; y&lt;/code&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Fri, 23 Sep 2016 00:00:00 -0300</pubDate>
-        <link>https://asfernandes.github.io/2016/09/23/funny-firebird-operators.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2016/09/23/funny-firebird-operators.html</guid>
-        
-        <category>firebird</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Blogging with Jekyll and Github</title>
-        <description>&lt;p&gt;I’ve migrated the &lt;a href=&quot;http://asfernandes.blogspot.com&quot;&gt;old blog&lt;/a&gt; to this new platform. It uses &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; and is hosted in github.&lt;/p&gt;
-
-&lt;p&gt;The blog’s source code is in a private repository and I’ll only push the generated content to the github repository.&lt;/p&gt;
-
-&lt;p&gt;I did manually converted some old posts from Blogger to markdown for this blog. This is clear when you see a code listing. The others posts I just throwed here and is probably ok.&lt;/p&gt;
-
-&lt;p&gt;This platform seems much cooler to write than with Blogger, which was a nightmare to write posts and change the layout.&lt;/p&gt;
-</description>
-        <pubDate>Wed, 07 Sep 2016 00:00:00 -0300</pubDate>
-        <link>https://asfernandes.github.io/2016/09/07/blogging-with-jekyll-and-github.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2016/09/07/blogging-with-jekyll-and-github.html</guid>
-        
-        <category>others</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>JavaScript x Java - closures e lambdas</title>
-        <description>&lt;p&gt;Em geral as linguagens de programação são bem parecidas e por esse motivo acho fácil aprender novas linguagens. E o que dizer então quando uma se chama Java e a outra JavaScript? :smiley:&lt;/p&gt;
-
-&lt;p&gt;Ultimamente tenho programado bastante em JavaScript. Apesar de não conhecer ainda todos os detalhes da linguagem, tenho me virado bem, porém, hoje perdi um certo tempo programando em JavaScript como se estivesse programando em Java.&lt;/p&gt;
-
-&lt;p&gt;Simplificação do código em JavaScript:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    
-    &lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]());&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]());&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Neste trecho de código acima, esperava que imprimisse as linhas 0 e 1, como no código abaixo equivalente em Java, porém imprime 1 e 1.&lt;/p&gt;
-
-&lt;p&gt;Código em Java (8) supostamente equivalente:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Supplier&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 0&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Enquanto que o código Java carrega o valor de “n” (“closure” - entre aspas porque no Java isso não é bem uma closure) para a expressão lambda com o valor de cada iteração do while, o código JavaScript carrega apenas uma variável “n”, que é alterada em cada iteração. Isso acontece porque as regras de escopo de variáveis do JavaScript são totalmente diferentes de Java.&lt;/p&gt;
-
-&lt;p&gt;O código JavaScript abaixo que é equivalente ao código Java e retorna 0 e 1:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;})(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 0&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]());&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Passando “i” para o parâmetro “n” da função anônima, criamos um novo escopo.&lt;/p&gt;
-</description>
-        <pubDate>Wed, 11 Feb 2015 21:41:00 -0200</pubDate>
-        <link>https://asfernandes.github.io/2015/02/11/javascript-x-java-closures-e-lambdas.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2015/02/11/javascript-x-java-closures-e-lambdas.html</guid>
-        
-        <category>javascript</category>
-        
-        <category>developer</category>
-        
-        <category>java</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</title>
-        <description>&lt;p&gt;Na &lt;a href=&quot;http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=2Z%20kcHOdpHs=&quot;&gt;Nota Técnica 2014/002&lt;/a&gt; da Nota Fiscal Eletrônica, o governo &lt;del&gt;brasileiro&lt;/del&gt; do PT, &lt;del&gt;por falta do que fazer&lt;/del&gt; com o intuito de evoluir o sistema, substituiu o web service de consulta de NF-e emitidas por terceiros pelo web service de distribuição de documentos fiscais.&lt;/p&gt;
-
-&lt;p&gt;Definiram que a partir de 06/10/2014 o novo web service já estaria funcionando no ambiente de produção, enquanto o antigo seria desativado em 02/02/2015. Estava tentando há duas semanas usar o novo web service e ele ainda não funcionava. Hoje consegui.&lt;/p&gt;
-
-&lt;p&gt;O web service retornou resposta, mas é claro, resposta errada que não é validada pelo próprio &lt;a href=&quot;http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=cI%202zLXpcts=&quot;&gt;schema&lt;/a&gt; distribuído por eles. Como uso Java com JAXB, após desativar a validação da resposta, o conteúdo do arquivo não estava sendo “desserializado” corretamente.&lt;/p&gt;
-
-&lt;p&gt;Eles criaram uma tag DocZip que armazena um XML compactado com GZIP no formato BASE-64 e declararam o conteúdo da tag como se tivesse um documento XML. É óbvio que algo em BASE-64 não é um XML válido.&lt;/p&gt;
-
-&lt;p&gt;Como o governo incompetente não testa o que faz, tive que corrigir o schema e estou disponibilizando para que outros também não percam tempo. Mesmo sem saber escrever schemas XML, cheguei &lt;a href=&quot;http://stackoverflow.com/questions/376582/xml-schema-element-with-attributes-containing-only-text&quot;&gt;nessa dúvida&lt;/a&gt; que me ajudou a fazer a correção.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://pastebin.com/bNRspBSd&quot;&gt;Link para o arquivo retDistDFeInt_v1.00.xsd corrigido&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://pastebin.com/8c1RSCKZ&quot;&gt;Link para o diff/patch contra o arquivo XSD original&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Edit:&lt;/p&gt;
-
-&lt;p&gt;Se tem uma coisa pior que incompetência que acontece com muita frequência na Receita Federal do PT ultimamente é a sacanagem. Após escrever esse artigo, mandei a mesma informação através do Fale Conosco, e antes mesmo de obter resposta (geralmente é um robô que responde algo sem sentido), desconfiei de uma coisa e fui verificar.&lt;/p&gt;
-
-&lt;p&gt;A Receita Federal, na tentativa de esconder seus erros, costuma lançar correções de arquivos e disponibilizá-los com o mesmo número de versão. E não é que aconteceu exatamente isso agora?&lt;/p&gt;
-
-&lt;p&gt;Tenho o arquivo PL_NFeDistDFe_100.zip com data de 07/01/2015 que tinha o problema. O arquivo presente &lt;a href=&quot;http://www.nfe.fazenda.gov.br/portal/listaConteudo.aspx?tipoConteudo=/fwLvLUSmU8=&quot;&gt;nesta página&lt;/a&gt; nesse momento tem o mesmo nome e diz que foi atualizado em 19/09/2014, porém ele já está corrigido!&lt;/p&gt;
-</description>
-        <pubDate>Thu, 22 Jan 2015 13:22:00 -0200</pubDate>
-        <link>https://asfernandes.github.io/2015/01/22/corrigindo-schemas-do-web-service.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2015/01/22/corrigindo-schemas-do-web-service.html</guid>
-        
-        <category>nf-e</category>
-        
-        <category>java</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Artigo &quot;Novidades do Firebird 2.5&quot;: Linguagem PSQL</title>
-        <description>&lt;p&gt;A linguagem procedural do Firebird, a PSQL, foi incrementada com novos comandos e outras melhorias. A primeira melhoria que irei apresentar se trata do uso de subqueries como expressões PSQL. Antes, o desenvolvedor era obrigado a criar uma variável e fazer um &lt;code class=&quot;highlighter-rouge&quot;&gt;SELECT INTO&lt;/code&gt; para obter um valor e usá-lo posteriormente em outro comando. Agora as subqueries fazem parte do conjunto de expressões PSQL e podem ser usadas da mesma maneira que já podiam ser usadas em comandos SQL. A &lt;a href=&quot;#listagem15&quot;&gt;listagem 15&lt;/a&gt; mostra o uso de uma subquery em uma comparação e em seguida na atribuição de um valor retornado a uma variável.&lt;/p&gt;
-
-&lt;p&gt;&lt;a name=&quot;listagem15&quot;&gt;Listagem 15&lt;/a&gt;: Usando subqueries como expressões PSQL.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;RETURNS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;COD&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;IF&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;COUNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DOCUMENTOS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;THEN&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-     &lt;span class=&quot;n&quot;&gt;COD&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CODIGO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DOCUMENTOS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-     &lt;span class=&quot;n&quot;&gt;SUSPEND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Na &lt;a href=&quot;#listagem15&quot;&gt;listagem 15&lt;/a&gt; o parâmetro de retorno COD foi definido com o tipo &lt;code class=&quot;highlighter-rouge&quot;&gt;VARCHAR(10)&lt;/code&gt; e recebe um valor lido da coluna CODIGO da tabela DOCUMENTOS. Uma alteração do tipo desta coluna poderia deixar este bloco de código inconsistente ou inválido. No Firebird 2.1 foi adicionado o suporte ao uso de domains em PSQL. Neste caso, o desenvolvedor precisaria criar um domínio e usá-lo na definição da tabela e na definição do parâmetro de retorno do &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE BLOCK&lt;/code&gt; para ter um código consistente. Dependendo da situação, a criação de domínios para todas as colunas pode se tornar uma tarefa extremamente burocrática. Pensando nisso, o Firebird 2.5 adiciona a cláusula &lt;code class=&quot;highlighter-rouge&quot;&gt;TYPE OF COLUMN&lt;/code&gt;. Com essa cláusula é possível declarar parâmetros e variáveis ou fazer casts usando o tipo definido de uma coluna. Ao alterar o tipo da coluna, a alteração se reflete automaticamente em todas as stored procedures e triggers que façam uso de seu tipo. A &lt;a href=&quot;#listagem16&quot;&gt;listagem 16&lt;/a&gt; mostra o mesmo código da &lt;a href=&quot;#listagem15&quot;&gt;listagem 15&lt;/a&gt; mas usando &lt;code class=&quot;highlighter-rouge&quot;&gt;TYPE OF COLUMN&lt;/code&gt; para o parâmetro COD.&lt;/p&gt;
-
-&lt;p&gt;&lt;a name=&quot;listagem16&quot;&gt;Listagem 16&lt;/a&gt;: Usando a cláusula &lt;code class=&quot;highlighter-rouge&quot;&gt;TYPE OF COLUMN&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;RETURNS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;COD&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TYPE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;OF&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;COLUMN&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DOCUMENTOS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CODIGO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;IF&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;COUNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DOCUMENTOS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;THEN&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-     &lt;span class=&quot;n&quot;&gt;COD&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CODIGO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DOCUMENTOS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-     &lt;span class=&quot;n&quot;&gt;SUSPEND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;No Firebird 2.1 foram acrescentados os triggers de eventos de banco de dados, como o evento ON CONNECT. Uma das funcionalidades que podiam ser feitas com este tipo de trigger era a rejeição de uma conexão, permitindo que os desenvolvedores implementassem um sistema de segurança dentro do banco de dados. Para rejeitar uma conexão é necessário lançar uma exceção dentro do trigger. Nota: este tipo de segurança não impede que o usuário SYSDBA tenha acesso ao banco, pois os administradores podem desativar os triggers de banco de dados conectando-se usando a opção -nodbtriggers do ISQL. O problema é que alguns desenvolvedores gostariam de gravar uma entrada em uma tabela de log registrando o evento, mas a exceção causava o rollback da criação deste registro. Esta e outras situações (como comunicação com outros sistemas através de UDFs) agora podem se beneficiar de um novo comando, o &lt;code class=&quot;highlighter-rouge&quot;&gt;IN AUTONOMOUS TRANSACTION&lt;/code&gt;. Assim como um &lt;code class=&quot;highlighter-rouge&quot;&gt;IF&lt;/code&gt; ou &lt;code class=&quot;highlighter-rouge&quot;&gt;WHILE&lt;/code&gt;, este comando aceita um subcomando (ou vários, com o uso de BEGIN END). No início da execução do &lt;code class=&quot;highlighter-rouge&quot;&gt;IN AUTONOMOUS TRANSACTION&lt;/code&gt; é aberta uma nova transação e o subcomando é executado dentro desta transação. Caso o subcomando execute por completo, é feito um &lt;code class=&quot;highlighter-rouge&quot;&gt;COMMIT&lt;/code&gt; na transação criada. Caso ocorra uma exceção, é feito um rollback. A &lt;a href=&quot;#listagem17&quot;&gt;listagem 17&lt;/a&gt; apresenta um trigger ON CONNECT que aceita apenas conexões dos usuários SYSDBA e ADMIN e grava o nome dos outros usuários que tiverem a conexão rejeitada. Note que a exceção usada para rejeitar a conexão é lançada fora do bloco &lt;code class=&quot;highlighter-rouge&quot;&gt;IN AUTONOMOUS TRANSACTION&lt;/code&gt;, que já havia terminado e, consequentemente, inserido o registro e finalizado a transação com &lt;code class=&quot;highlighter-rouge&quot;&gt;COMMIT&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a name=&quot;listagem17&quot;&gt;Listagem 17&lt;/a&gt;: Usando o comando &lt;code class=&quot;highlighter-rouge&quot;&gt;IN AUTONOMOUS TRANSACTION&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CONN_LOG&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;USUARIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;DATA&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EXCEPTION&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E_CONN&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Acesso negado.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TRIGGER&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T_CONN&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ON&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;CONNECT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;IF&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;CURRENT_USER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'SYSDBA'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;CURRENT_USER&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ADMIN'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;THEN&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-     &lt;span class=&quot;k&quot;&gt;IN&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AUTONOMOUS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TRANSACTION&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;DO&lt;/span&gt;
-     &lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CONN_LOG&lt;/span&gt;
-          &lt;span class=&quot;k&quot;&gt;VALUES&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;CURRENT_USER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;CURRENT_TIMESTAMP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-     &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;
-
-     &lt;span class=&quot;n&quot;&gt;EXCEPTION&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;E_CONN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;O comando &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; ganha algumas novidades importantes na versão 2.5. Uma delas é uma das funcionalidades mais pedidas pelos usuários: ler e atualizar dados em outros bancos de dados. Através da cláusula ON EXTERNAL DATA SOURCE é possível especificar o banco de dados em que o comando executará. É permitido também que o desenvolvedor especifique o nome, senha e role do usuário para fazer a conexão, e o funcionamento da transação iniciada para rodar o comando no banco de dados externo. Com WITH COMMON TRANSACTION (opção default), a transação da conexão externa é agrupada à transação interna atual e o comando &lt;code class=&quot;highlighter-rouge&quot;&gt;COMMIT&lt;/code&gt; ou &lt;code class=&quot;highlighter-rouge&quot;&gt;ROLLBACK&lt;/code&gt; executado na transação atual é propagado às transações externas. Com WITH AUTONOMOUS TRANSACTION o funcionamento se torna similar as transações autônomas, sendo feito o &lt;code class=&quot;highlighter-rouge&quot;&gt;COMMIT&lt;/code&gt; ou &lt;code class=&quot;highlighter-rouge&quot;&gt;ROLLBACK&lt;/code&gt; logo após a execução sucedida ou não do comando externo. A &lt;a href=&quot;#listagem18&quot;&gt;listagem 18&lt;/a&gt; mostra o uso deste comando para ler e gravar dados em outro banco de dados.&lt;/p&gt;
-
-&lt;p&gt;&lt;a name=&quot;listagem18&quot;&gt;Listagem 18&lt;/a&gt;: Executando comandos em outros bancos de dados com &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;RETURNS&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BANCO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;60&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'localhost:/db/pessoas.fdb'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;USUARIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'SYSDBA'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SENHA&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'masterke'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOME_INSERIR&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Sicrano'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;FOR&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;STATEMENT&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'SELECT NOME FROM PESSOAS'&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;ON&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;EXTERNAL&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;DATA&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;SOURCE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BANCO&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;USER&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;USUARIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PASSWORD&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SENHA&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;INTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;DO&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;SUSPEND&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;STATEMENT&lt;/span&gt;
-    &lt;span class=&quot;s1&quot;&gt;'INSERT INTO PESSOAS (NOME) VALUES (&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOME_INSERIR&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;)'&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;ON&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;EXTERNAL&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;DATA&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;SOURCE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BANCO&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;USER&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;USUARIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PASSWORD&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SENHA&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;WITH&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AUTONOMOUS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TRANSACTION&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;A &lt;a href=&quot;#listagem18&quot;&gt;listagem 18&lt;/a&gt; mostra como era feita a criação de strings de SQL dinâmico, usando concatenação de strings. A criação de comandos com concatenação é insegura, pois um usuário mal-intencionado pode gerar comandos não previstos pelo desenvolvedor, causando o ataque conhecido como injeção de SQL &lt;a href=&quot;#nota1&quot;&gt;[1]&lt;/a&gt;. No novo &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; é possível passar parâmetros de duas formas diferentes. A &lt;a href=&quot;#listagem19&quot;&gt;listagem 19&lt;/a&gt; mostra o uso de parâmetros anônimos, com o símbolo de interrogação.&lt;/p&gt;
-
-&lt;p&gt;&lt;a name=&quot;listagem19&quot;&gt;Listagem 19&lt;/a&gt;: Usando &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; com parâmetros anônimos.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Sicrano'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATA_NASCIMENTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'2000-01-01'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;STATEMENT&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'INSERT INTO PESSOAS (NOME, DATA_NASCIMENTO) VALUES (?, ?)'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATA_NASCIMENTO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Além da passagem de parâmetros anônimos, o comando &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; agora suporta o uso de parâmetros nomeados. As vantagens dos parâmetros nomeados são que o desenvolvedor não precisa se preocupar com a ordem e também pode usar um mesmo parâmetro mais de uma vez sem a necessidade de criação de variáveis. O uso dos parâmetros dentro da string é similar a passagem de parâmetros feita com o símbolo dois-pontos em bibliotecas Delphi, como expliquei na parte referente à construção &lt;code class=&quot;highlighter-rouge&quot;&gt;? IS NULL&lt;/code&gt;. Os valores são associados aos nomes dos parâmetros usando-se o operador &lt;code class=&quot;highlighter-rouge&quot;&gt;:=&lt;/code&gt; (dois pontos, igual). A &lt;a href=&quot;#listagem20&quot;&gt;listagem 20&lt;/a&gt; mostra o uso de parâmetros nomeados.&lt;/p&gt;
-
-&lt;p&gt;&lt;a name=&quot;listagem20&quot;&gt;Listagem 20&lt;/a&gt;: Usando &lt;code class=&quot;highlighter-rouge&quot;&gt;EXECUTE STATEMENT&lt;/code&gt; com parâmetros nomeados.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOCK&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;VARCHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Sicrano'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;DECLARE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATA_NASCIMENTO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'2000-01-01'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;BEGIN&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;STATEMENT&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'INSERT INTO PESSOAS (NOME, DATA_NASCIMENTO)
-        VALUES (:P_NOME, :P_DATA_NASCIMENTO)'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P_DATA_NASCIMENTO&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DATA_NASCIMENTO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P_NOME&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOME&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;END&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;SET&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TERM&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;nota&quot;&gt;Nota&lt;/h4&gt;
-
-&lt;p&gt;&lt;a name=&quot;nota1&quot;&gt;[1]&lt;/a&gt; Injeção de SQL é o nome de um ataque em que o usuário mal-intencionado preenche dados de um formulário de forma que um comando gerado no servidor através de concatenação de strings seja alterado. Geralmente o ataque é feito usando-se aspas simples e um restante de código que termine o comando iniciado pelo desenvolvedor, seguindo com outro comando completo e o símbolo de início de comentário (&lt;code class=&quot;highlighter-rouge&quot;&gt;--&lt;/code&gt;) para invalidar o restante do comando.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 01 Dec 2014 22:12:00 -0200</pubDate>
-        <link>https://asfernandes.github.io/2014/12/01/artigo-novidades-do-firebird-25.html</link>
-        <guid isPermaLink="true">https://asfernandes.github.io/2014/12/01/artigo-novidades-do-firebird-25.html</guid>
-        
-        <category>artigo</category>
-        
-        <category>firebird</category>
-        
-        
-      </item>
-    
-  </channel>
-</rss>
+    <item>
+      <guid>https://asfernandes.github.io/2017/08/06/a-game-with-react-native</guid>
+      <title>A game with React Native</title>
+      <link>https://asfernandes.github.io/2017/08/06/a-game-with-react-native</link>
+      <pubDate>Sun, 06 Aug 2017 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2017/04/02/node-firebird-drivers-windows</guid>
+      <title>Node.js Firebird Drivers now works in Windows</title>
+      <link>https://asfernandes.github.io/2017/04/02/node-firebird-drivers-windows</link>
+      <pubDate>Sun, 02 Apr 2017 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2017/03/29/node-firebird-drivers</guid>
+      <title>Node.js Firebird Drivers</title>
+      <link>https://asfernandes.github.io/2017/03/29/node-firebird-drivers</link>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2016/11/29/pausable-observable-knockoutjs</guid>
+      <title>Pausable observable with KnockoutJS</title>
+      <link>https://asfernandes.github.io/2016/11/29/pausable-observable-knockoutjs</link>
+      <pubDate>Tue, 29 Nov 2016 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2016/10/20/node-firebird-api</guid>
+      <title>Node.js Firebird API</title>
+      <link>https://asfernandes.github.io/2016/10/20/node-firebird-api</link>
+      <pubDate>Thu, 20 Oct 2016 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2016/09/23/funny-firebird-operators</guid>
+      <title>Funny Firebird operators</title>
+      <link>https://asfernandes.github.io/2016/09/23/funny-firebird-operators</link>
+      <pubDate>Fri, 23 Sep 2016 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2016/09/07/blogging-with-jekyll-and-github</guid>
+      <title>Blogging with Jekyll and Github</title>
+      <link>https://asfernandes.github.io/2016/09/07/blogging-with-jekyll-and-github</link>
+      <pubDate>Wed, 07 Sep 2016 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2015/02/11/javascript-x-java-closures-e-lambdas</guid>
+      <title>JavaScript x Java - closures e lambdas</title>
+      <link>https://asfernandes.github.io/2015/02/11/javascript-x-java-closures-e-lambdas</link>
+      <pubDate>Wed, 11 Feb 2015 23:41:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2015/01/22/corrigindo-schemas-do-web-service</guid>
+      <title>Corrigindo schemas do Web Service Distribuição de DF-e da NF-e</title>
+      <link>https://asfernandes.github.io/2015/01/22/corrigindo-schemas-do-web-service</link>
+      <pubDate>Thu, 22 Jan 2015 15:22:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2014/12/01/artigo-novidades-do-firebird-25</guid>
+      <title>Artigo "Novidades do Firebird 2.5": Linguagem PSQL</title>
+      <link>https://asfernandes.github.io/2014/12/01/artigo-novidades-do-firebird-25</link>
+      <pubDate>Tue, 02 Dec 2014 00:12:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2014/11/18/c-argument-dependent-name-lookup</guid>
+      <title>C++: Argument-dependent name lookup</title>
+      <link>https://asfernandes.github.io/2014/11/18/c-argument-dependent-name-lookup</link>
+      <pubDate>Wed, 19 Nov 2014 01:25:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2014/03/31/artigo-novidades-do-firebird-25</guid>
+      <title>Artigo "Novidades do Firebird 2.5": Expressões, literais e funções</title>
+      <link>https://asfernandes.github.io/2014/03/31/artigo-novidades-do-firebird-25</link>
+      <pubDate>Tue, 01 Apr 2014 00:47:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2014/01/12/artigo-novidades-do-firebird-25_12</guid>
+      <title>Artigo "Novidades do Firebird 2.5": Comandos DDL</title>
+      <link>https://asfernandes.github.io/2014/01/12/artigo-novidades-do-firebird-25_12</link>
+      <pubDate>Sun, 12 Jan 2014 23:52:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2014/01/05/artigo-novidades-do-firebird-25_5</guid>
+      <title>Artigo "Novidades do Firebird 2.5": Character Sets e Collates</title>
+      <link>https://asfernandes.github.io/2014/01/05/artigo-novidades-do-firebird-25_5</link>
+      <pubDate>Sun, 05 Jan 2014 23:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2014/01/02/artigo-novidades-do-firebird-25</guid>
+      <title>Artigo "Novidades do Firebird 2.5": A arquitetura SuperClassic</title>
+      <link>https://asfernandes.github.io/2014/01/02/artigo-novidades-do-firebird-25</link>
+      <pubDate>Thu, 02 Jan 2014 13:34:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2013/12/22/artigo-novidades-do-firebird-25_22</guid>
+      <title>Artigo "Novidades do Firebird 2.5": Migrando de versões anteriores</title>
+      <link>https://asfernandes.github.io/2013/12/22/artigo-novidades-do-firebird-25_22</link>
+      <pubDate>Sun, 22 Dec 2013 22:49:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2013/12/20/artigo-novidades-do-firebird-25</guid>
+      <title>Artigo "Novidades do Firebird 2.5": Introdução</title>
+      <link>https://asfernandes.github.io/2013/12/20/artigo-novidades-do-firebird-25</link>
+      <pubDate>Fri, 20 Dec 2013 02:01:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2013/12/18/artigo-novidades-do-firebird-25_18</guid>
+      <title>Artigo "Novidades do Firebird 2.5"</title>
+      <link>https://asfernandes.github.io/2013/12/18/artigo-novidades-do-firebird-25_18</link>
+      <pubDate>Wed, 18 Dec 2013 13:34:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2012/04/26/dsqlblr-compilers-internals</guid>
+      <title>DSQL/BLR compilers internals</title>
+      <link>https://asfernandes.github.io/2012/04/26/dsqlblr-compilers-internals</link>
+      <pubDate>Fri, 27 Apr 2012 02:12:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2011/08/20/beautiful-fonts-in-ubuntu</guid>
+      <title>Beautiful fonts in Ubuntu</title>
+      <link>https://asfernandes.github.io/2011/08/20/beautiful-fonts-in-ubuntu</link>
+      <pubDate>Sat, 20 Aug 2011 15:58:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2011/05/01/ubuntu-natty-narwhal-in-vmware</guid>
+      <title>Ubuntu Natty Narwhal in VMware</title>
+      <link>https://asfernandes.github.io/2011/05/01/ubuntu-natty-narwhal-in-vmware</link>
+      <pubDate>Sun, 01 May 2011 17:05:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2011/04/20/alguns-links-de-artigos-e-videos-que</guid>
+      <title>Alguns links de artigos e vídeos que acho interessantes</title>
+      <link>https://asfernandes.github.io/2011/04/20/alguns-links-de-artigos-e-videos-que</link>
+      <pubDate>Wed, 20 Apr 2011 17:54:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2011/01/01/novidades-do-firebird-25-revista</guid>
+      <title>Novidades do Firebird 2.5 - Revista ClubeDelphi</title>
+      <link>https://asfernandes.github.io/2011/01/01/novidades-do-firebird-25-revista</link>
+      <pubDate>Sat, 01 Jan 2011 22:05:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2010/12/18/introducing-boolean-datatype</guid>
+      <title>Introducing the boolean datatype</title>
+      <link>https://asfernandes.github.io/2010/12/18/introducing-boolean-datatype</link>
+      <pubDate>Sat, 18 Dec 2010 12:36:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2010/12/14/problema-com-java-16022-e-nf-e-de-sp</guid>
+      <title>Problema com Java 1.6.0_22 e NF-e de SP</title>
+      <link>https://asfernandes.github.io/2010/12/14/problema-com-java-16022-e-nf-e-de-sp</link>
+      <pubDate>Tue, 14 Dec 2010 21:18:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2010/10/04/firebird-25-introduces-new-audit</guid>
+      <title>Firebird 2.5 Introduces New Audit Features and Improved Scalability</title>
+      <link>https://asfernandes.github.io/2010/10/04/firebird-25-introduces-new-audit</link>
+      <pubDate>Tue, 05 Oct 2010 00:16:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2010/09/30/firebird-25-launch</guid>
+      <title>Firebird 2.5 launch</title>
+      <link>https://asfernandes.github.io/2010/09/30/firebird-25-launch</link>
+      <pubDate>Thu, 30 Sep 2010 23:53:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2010/07/31/firebird-10th-anniversary-how-i-came-to</guid>
+      <title>Firebird 10th anniversary. How I came to it.</title>
+      <link>https://asfernandes.github.io/2010/07/31/firebird-10th-anniversary-how-i-came-to</link>
+      <pubDate>Sat, 31 Jul 2010 17:31:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2010/02/19/window-functions-part3-new-functions</guid>
+      <title>Window functions (part3) - new functions</title>
+      <link>https://asfernandes.github.io/2010/02/19/window-functions-part3-new-functions</link>
+      <pubDate>Fri, 19 Feb 2010 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2010/02/13/firebird-history-in-9-minutes-video</guid>
+      <title>Firebird History in 9 minutes video</title>
+      <link>https://asfernandes.github.io/2010/02/13/firebird-history-in-9-minutes-video</link>
+      <pubDate>Sun, 14 Feb 2010 01:28:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2010/01/24/window-functions-part2-cumulative_24</guid>
+      <title>Window Functions (part2) - cumulative aggregates</title>
+      <link>https://asfernandes.github.io/2010/01/24/window-functions-part2-cumulative_24</link>
+      <pubDate>Sun, 24 Jan 2010 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2010/01/19/window-functions_19</guid>
+      <title>Window Functions</title>
+      <link>https://asfernandes.github.io/2010/01/19/window-functions_19</link>
+      <pubDate>Tue, 19 Jan 2010 00:00:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2009/12/10/integracao-da-jvm-ao-firebird</guid>
+      <title>Integração da JVM ao Firebird</title>
+      <link>https://asfernandes.github.io/2009/12/10/integracao-da-jvm-ao-firebird</link>
+      <pubDate>Fri, 11 Dec 2009 00:11:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2009/11/02/ubuntu-910-review</guid>
+      <title>Ubuntu 9.10 review</title>
+      <link>https://asfernandes.github.io/2009/11/02/ubuntu-910-review</link>
+      <pubDate>Mon, 02 Nov 2009 16:44:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2009/08/09/buggy-const</guid>
+      <title>The buggy const</title>
+      <link>https://asfernandes.github.io/2009/08/09/buggy-const</link>
+      <pubDate>Sun, 09 Aug 2009 15:45:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2009/08/08/ddl-execution-architecture-in-firebird_4841</guid>
+      <title>DDL execution architecture in Firebird - why we need to move on</title>
+      <link>https://asfernandes.github.io/2009/08/08/ddl-execution-architecture-in-firebird_4841</link>
+      <pubDate>Sat, 08 Aug 2009 22:17:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2009/08/02/cvsnt-client-is-slow</guid>
+      <title>CVSNT client is slow</title>
+      <link>https://asfernandes.github.io/2009/08/02/cvsnt-client-is-slow</link>
+      <pubDate>Sun, 02 Aug 2009 23:45:00 GMT</pubDate>
+    </item>
+  
+    <item>
+      <guid>https://asfernandes.github.io/2009/07/12/network-latency-influence-on-firebird</guid>
+      <title>Influence of network latency in the Firebird wire protocol</title>
+      <link>https://asfernandes.github.io/2009/07/12/network-latency-influence-on-firebird</link>
+      <pubDate>Mon, 13 Jul 2009 02:25:00 GMT</pubDate>
+    </item>
+  
+      </channel>
+    </rss>
+  
