@@ -6,69 +6,7 @@
         <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
         <language>en</language>
         <lastBuildDate>Sun, 06 Aug 2017 00:00:00 GMT</lastBuildDate>
-        <atom:link href='class URL {
-  constructor(input, base) {
-    // toUSVString is not needed.
-    input = `${input}`;
-    let base_context;
-    if (base !== undefined) {
-      base_context = new URL(base)[context];
-    }
-    this[context] = new URLContext();
-    parse(input, -1, base_context, undefined, onParseComplete.bind(this),
-          onParseError);
-  }
-
-  get [special]() {
-    return (this[context].flags & URL_FLAGS_SPECIAL) !== 0;
-  }
-
-  get [cannotBeBase]() {
-    return (this[context].flags & URL_FLAGS_CANNOT_BE_BASE) !== 0;
-  }
-
-  // https://url.spec.whatwg.org/#cannot-have-a-username-password-port
-  get [cannotHaveUsernamePasswordPort]() {
-    const { host, scheme } = this[context];
-    return ((host == null || host === '') ||
-            this[cannotBeBase] ||
-            scheme === 'file:');
-  }
-
-  [inspect.custom](depth, opts) {
-    if (this == null ||
-        ObjectGetPrototypeOf(this[context]) !== URLContext.prototype) {
-      throw new ERR_INVALID_THIS('URL');
-    }
-
-    if (typeof depth === 'number' && depth < 0)
-      return this;
-
-    const constructor = getConstructorOf(this) || URL;
-    const obj = ObjectCreate({ constructor });
-
-    obj.href = this.href;
-    obj.origin = this.origin;
-    obj.protocol = this.protocol;
-    obj.username = this.username;
-    obj.password = this.password;
-    obj.host = this.host;
-    obj.hostname = this.hostname;
-    obj.port = this.port;
-    obj.pathname = this.pathname;
-    obj.search = this.search;
-    obj.searchParams = this.searchParams;
-    obj.hash = this.hash;
-
-    if (opts.showHidden) {
-      obj.cannotBeBase = this[cannotBeBase];
-      obj.special = this[special];
-      obj[context] = this[context];
-    }
-
-    return `${constructor.name} ${inspect(obj, opts)}`;
-  }
-}/feed.xml' rel='self' type='application/rss+xml'/>
+        <atom:link href='https://asfernandes.github.io/feed.xml' rel='self' type='application/rss+xml'/>
         
     <item>
       <guid>https://asfernandes.github.io/2017/08/06/a-game-with-react-native</guid>
