@@ -5,9 +5,16 @@
         <link>https://asfernandes.github.io</link>
         <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
         <language>en</language>
-        <lastBuildDate>Mon, 07 Jun 2021 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 14 Jul 2021 00:00:00 GMT</lastBuildDate>
         <atom:link href='https://asfernandes.github.io/feed.xml' rel='self' type='application/rss+xml'/>
         
+    <item>
+      <guid>https://asfernandes.github.io/2021/07/14/firebird-raspberry-pi</guid>
+      <title>Firebird 4.0.0 build for Raspberry Pi (aarch64)</title>
+      <link>https://asfernandes.github.io/2021/07/14/firebird-raspberry-pi</link>
+      <pubDate>Wed, 14 Jul 2021 00:00:00 GMT</pubDate>
+    </item>
+  
     <item>
       <guid>https://asfernandes.github.io/2021/06/07/node-firebird-driver-supporting-fb4</guid>
       <title>Node.js Firebird Driver now supports Firebird 4 data types</title>
