@@ -5,9 +5,16 @@
         <link>https://asfernandes.github.io</link>
         <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
         <language>en</language>
-        <lastBuildDate>Wed, 14 Jul 2021 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 19 Jul 2021 00:00:00 GMT</lastBuildDate>
         <atom:link href='https://asfernandes.github.io/feed.xml' rel='self' type='application/rss+xml'/>
         
+    <item>
+      <guid>https://asfernandes.github.io/2021/07/19/firebird-nodejs-engine-survey</guid>
+      <title>Survey: JavaScript/Node.js routines in Firebird</title>
+      <link>https://asfernandes.github.io/2021/07/19/firebird-nodejs-engine-survey</link>
+      <pubDate>Mon, 19 Jul 2021 00:00:00 GMT</pubDate>
+    </item>
+  
     <item>
       <guid>https://asfernandes.github.io/2021/07/14/firebird-raspberry-pi</guid>
       <title>Firebird 4.0.0 build for Raspberry Pi (aarch64)</title>
