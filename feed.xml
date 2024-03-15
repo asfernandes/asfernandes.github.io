@@ -5,9 +5,16 @@
         <link>https://asfernandes.github.io</link>
         <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
         <language>en</language>
-        <lastBuildDate>Sun, 10 Mar 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 14 Mar 2024 00:00:00 GMT</lastBuildDate>
         <atom:link href='https://asfernandes.github.io/feed.xml' rel='self' type='application/rss+xml'/>
         
+    <item>
+      <guid>https://asfernandes.github.io/2024/03/14/rinha-backend-2024-q1-lmdb</guid>
+      <title>Rinha de Backend - 2024/Q1 - LMDB</title>
+      <link>https://asfernandes.github.io/2024/03/14/rinha-backend-2024-q1-lmdb</link>
+      <pubDate>Thu, 14 Mar 2024 00:00:00 GMT</pubDate>
+    </item>
+  
     <item>
       <guid>https://asfernandes.github.io/2024/03/10/rinha-backend-2024-q1</guid>
       <title>Rinha de Backend - 2024/Q1</title>
