@@ -5,9 +5,16 @@
         <link>https://asfernandes.github.io</link>
         <description>Adriano dos Santos Fernandes on Software development, Firebird and others things</description>
         <language>en</language>
-        <lastBuildDate>Sun, 22 Feb 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 04 May 2026 00:00:00 GMT</lastBuildDate>
         <atom:link href='https://asfernandes.github.io/feed.xml' rel='self' type='application/rss+xml'/>
         
+    <item>
+      <guid>https://asfernandes.github.io/2026/05/04/node-firebird-driver-wire</guid>
+      <title>Introducing node-firebird-driver-wire</title>
+      <link>https://asfernandes.github.io/2026/05/04/node-firebird-driver-wire</link>
+      <pubDate>Mon, 04 May 2026 00:00:00 GMT</pubDate>
+    </item>
+  
     <item>
       <guid>https://asfernandes.github.io/2026/02/22/jwtauth-plugin-firebird-pt</guid>
       <title>Plugin JwtAuth para Firebird</title>
