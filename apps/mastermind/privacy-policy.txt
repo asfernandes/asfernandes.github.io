@@ -1,0 +1,51 @@
+Mastermind Privacy Policy
+=========================
+
+Effective date: 2026-11-16
+Application: Mastermind (Senha) for Android (asfernandes.senha2)
+Developer: Adriano dos Santos Fernandes
+Contact: adrianosf@gmail.com
+
+
+1. Overview
+-----------
+
+Mastermind is an offline game. It has no accounts, no ads, no analytics
+and no network access. We operate no servers and never receive any data
+from you or your device.
+
+
+2. Data stored on your device
+-----------------------------
+
+The app keeps only game data in its private storage on your device:
+win and loss counts and the best records for each game mode (date and
+time of the match, time taken and number of tries).
+
+This data is not personal and never leaves your device. It is not
+included in Android backups.
+
+
+3. Sharing
+----------
+
+We do not collect, sell or share any data.
+
+
+4. Retention and deletion
+-------------------------
+
+Game data is kept until you clear the app's data or uninstall the app.
+
+
+5. Children
+-----------
+
+The app does not collect personal data from anyone, including children.
+
+
+6. Changes
+----------
+
+We will update this policy when the app or the law changes, and update
+the effective date above.
